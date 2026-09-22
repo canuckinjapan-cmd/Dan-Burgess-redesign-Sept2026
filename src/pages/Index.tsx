@@ -198,7 +198,7 @@ const Index = () => {
                 <div className="landscape:col-span-5 lg:col-span-5 w-full flex flex-col gap-8 landscape:pt-4 lg:pt-4">
                   <p className="max-w-[42ch] portrait:text-[15.3px] portrait:leading-[1.42] sm:portrait:text-lg sm:portrait:leading-relaxed text-lg md:landscape:text-base lg:landscape:text-base xl:landscape:text-lg xl:text-lg lg:text-lg text-ink/85 leading-relaxed">
                     {t(
-                      <>Expanding into international markets requires more than translation. TEST
+                      <>Expanding into international markets requires more than translation.
 I help Japanese businesses communicate effectively with English-speaking audiences through web design, UI design, and localization.<br />
 Based in Japan since 1992, I bring over 30 years of experience working between English and Japanese in software, product development, and digital design.</>,
                       <>
