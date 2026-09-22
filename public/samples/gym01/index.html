@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        const localStorageLang = localStorage.getItem('site-lang');
+        let isJa = false;
+        if (urlLang) {
+          isJa = urlLang === 'ja' || urlLang === 'ja-JP' || urlLang === 'jp';
+        } else if (localStorageLang) {
+          isJa = localStorageLang === 'JP';
+        } else {
+          isJa = navigator.language === 'ja' || navigator.language.startsWith('ja-');
+        }
+        if (isJa) {
+          document.documentElement.lang = "ja";
+        } else {
+          document.documentElement.lang = "en";
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Takasaki Fitness | 高崎フィットネス</title>
+    <meta name="description" content="Takasaki No.1 Fitness Gym. State-of-the-art gear, expert trainers, and the ultimate environment." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <script type="module" crossorigin src="/samples/gym01/assets/index-BvCkoBfF.js"></script>
+    <link rel="stylesheet" crossorigin href="/samples/gym01/assets/index-DYTQRlmW.css">
+    <style>
+      #gym-booking-col {
+        grid-column: span 1 / span 1 !important;
+      }
+      @media (min-width: 768px) {
+        #gym-booking-col {
+          grid-column: span 2 / span 2 !important;
+        }
+      }
+      
+      /* Standard responsive 2-column grid row */
+      #gym-booking-form .grid-row-2col {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 16px !important;
+      }
+      @media (max-width: 639px) {
+        #gym-booking-form .grid-row-2col {
+          grid-template-columns: 1fr !important;
+          gap: 12px !important;
+        }
+      }
+      
+      /* Pure custom CSS overrides to ensure medium-grey outlines and dark grey background */
+      #gym-booking-form input[type="text"], 
+      #gym-booking-form input[type="email"], 
+      #gym-booking-form select {
+        background-color: #1c1f26 !important; /* Rich Dark Slate Grey background */
+        border: 1px solid #71717a !important; /* Visible Medium Grey outline */
+        outline: none !important;
+        height: 40px !important; /* Normal height proportions */
+        padding: 0 14px !important;
+        box-sizing: border-box !important;
+        border-radius: 6px !important;
+      }
+      #gym-booking-form select {
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23a1a1aa%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 14px center !important;
+        background-size: 16px !important;
+        padding-right: 36px !important;
+      }
+      #gym-booking-form textarea {
+        background-color: #1c1f26 !important; /* Rich Dark Slate Grey background */
+        border: 1px solid #71717a !important; /* Visible Medium Grey outline */
+        outline: none !important;
+        padding: 10px 14px !important;
+        box-sizing: border-box !important;
+        border-radius: 6px !important;
+      }
+      #gym-booking-form input[type="text"]:focus, 
+      #gym-booking-form input[type="email"]:focus, 
+      #gym-booking-form select:focus, 
+      #gym-booking-form textarea:focus {
+        border-color: #f97316 !important; /* Accent Orange border on focus */
+        box-shadow: 0 0 0 1px #f97316 !important;
+      }
+      
+      /* Submit button proportioned like a normal action button with balanced padding */
+      #gym-booking-form #gym-submit-btn {
+        background-color: #f97316 !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        font-size: 13px !important;
+        font-family: inherit !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        height: 40px !important; /* Matching standard input height of 40px */
+        padding: 0 24px !important; /* Beautiful normal padding around text */
+        border-radius: 6px !important;
+        border: 0 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        transition: all 0.15s ease-in-out !important;
+        white-space: nowrap !important;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+      }
+      #gym-booking-form #gym-submit-btn:hover {
+        background-color: #ea580c !important;
+      }
+      #gym-booking-form #gym-submit-btn:active {
+        transform: scale(0.985) !important;
+      }
+      
+      /* Custom checkbox to guarantee theme background and border styling */
+      #gym-booking-form input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background-color: #1c1f26 !important; /* same dark grey bg as inputs */
+        border: 1px solid #71717a !important; /* same medium grey border outline */
+        border-radius: 4px !important;
+        width: 1.15rem !important;
+        height: 1.15rem !important;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        vertical-align: middle;
+        outline: none;
+        margin: 0 !important;
+      }
+      #gym-booking-form input[type="checkbox"]:checked {
+        background-color: #f97316 !important; /* Accent orange when checked */
+        border-color: #f97316 !important;
+      }
+      #gym-booking-form input[type="checkbox"]:checked::after {
+        content: "";
+        width: 5px;
+        height: 9px;
+        border: solid white;
+        border-width: 0 2.5px 2.5px 0;
+        transform: rotate(45deg);
+        position: absolute;
+        top: 1.5px;
+        left: 4.5px;
+      }
+      /* Tight spacing container for the booking checkbox */
+      #gym-booking-form .checkbox-container {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important; /* Clean, tight modern spacing between check icon and label */
+      }
+      #gym-booking-form .checkbox-container label {
+        padding: 0 !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+      }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-zinc-50 antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
+    <div id="root"></div>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        let isSubmitting = false;
+
+        function initForm() {
+          const localStorageLang = localStorage.getItem('site-lang');
+          const htmlLang = document.documentElement.lang;
+          const urlParams = new URLSearchParams(window.location.search);
+          const urlLang = urlParams.get('lang');
+          
+          let isJa = false;
+          if (localStorageLang) {
+            isJa = localStorageLang === 'JP';
+          } else if (htmlLang) {
+            isJa = htmlLang === 'ja' || htmlLang === 'ja-JP' || htmlLang === 'jp';
+          } else if (urlLang) {
+            isJa = urlLang === 'ja' || urlLang === 'ja-JP' || urlLang === 'jp';
+          } else {
+            isJa = navigator.language === 'ja' || navigator.language.startsWith('ja-');
+          }
+
+          const currentLangStr = isJa ? 'ja' : 'en';
+          const existingCol = document.getElementById('gym-booking-col');
+          if (existingCol) {
+            const renderedLang = existingCol.getAttribute('data-rendered-lang');
+            if (renderedLang === currentLangStr) {
+              return; // Already exists in correct language
+            }
+            existingCol.remove(); // Force re-inject with updated language
+          }
+
+          const footer = document.querySelector('footer') || document.querySelector('#footer');
+          if (!footer) return;
+
+          // Find the footer grid container.
+          // It has class "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16"
+          const gridContainer = footer.querySelector('div.grid');
+          if (!gridContainer) return;
+
+          const cols = Array.from(gridContainer.children);
+          let contactCol = null;
+          let newsletterCol = null;
+
+          cols.forEach(col => {
+            const text = col.innerHTML || "";
+            if (/Contact Us|お問い合わせ|1-1 Yashimacho/i.test(text)) {
+              contactCol = col;
+            }
+            if (/Newsletter|ニュースレター|Subscribe|最新のキャンペーン/i.test(text)) {
+              newsletterCol = col;
+            }
+          });
+
+          if (!contactCol && !newsletterCol) return;
+
+          // Hide the old columns
+          if (contactCol) contactCol.style.display = 'none';
+          if (newsletterCol) newsletterCol.style.display = 'none';
+
+          // Create the booking form column spanning 2 cols on md/lg
+          const formCol = document.createElement('div');
+          formCol.id = 'gym-booking-col';
+          formCol.setAttribute('data-rendered-lang', currentLangStr);
+          formCol.className = 'lg:col-span-2 md:col-span-2 col-span-1 bg-zinc-900/40 p-5 sm:p-6 rounded-xl shadow-xl';
+          
+          formCol.innerHTML = `
+            <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-sm">
+              ` + (isJa ? '無料体験レッスンのご予約' : 'BOOK A FREE TRIAL') + `
+            </h4>
+            <p class="text-zinc-400 text-xs mb-6 leading-relaxed">
+              ` + (isJa ? '体験レッスンを無料でご予約いただけます。下記フォームより必要事項をお送りください。' : 'Reserve your complimentary session. Fill out your details below and our team will get in touch.') + `
+            </p>
+
+            <form id="gym-booking-form" class="space-y-4">
+              <!-- Name and Email on the same row horizontally -->
+              <div class="grid-row-2col">
+                <div>
+                  <label for="name" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5">
+                    ` + (isJa ? 'お名前' : 'Full Name') + `
+                  </label>
+                  <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required 
+                    placeholder="` + (isJa ? '山田 太郎' : 'John Doe') + `"
+                    class="w-full text-white text-sm transition-all text-ellipsis overflow-hidden"
+                    style="height: 40px !important; background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 6px !important; padding: 0 14px !important; box-sizing: border-box !important;"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5">
+                    ` + (isJa ? 'メールアドレス' : 'Email Address') + `
+                  </label>
+                  <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="you@example.com"
+                    class="w-full text-white text-sm transition-all text-ellipsis overflow-hidden"
+                    style="height: 40px !important; background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 6px !important; padding: 0 14px !important; box-sizing: border-box !important;"
+                  />
+                </div>
+              </div>
+
+              <!-- Select Program and Referral on the same row horizontally -->
+              <div class="grid-row-2col">
+                <div>
+                  <label for="serviceOfInterest" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5">
+                    ` + (isJa ? 'ご興味のあるプログラム' : 'Select Program') + `
+                  </label>
+                  <select 
+                    id="serviceOfInterest" 
+                    name="serviceOfInterest"
+                    required
+                    class="w-full text-white text-sm transition-all cursor-pointer"
+                    style="height: 40px !important; background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 6px !important; padding: 0 14px !important; box-sizing: border-box !important;"
+                  >
+                    <option value="">` + (isJa ? '-- 選択してください --' : '-- Select a program --') + `</option>
+                    <option value="Personal training">` + (isJa ? 'パーソナルトレーニング' : 'Personal training') + `</option>
+                    <option value="Yoga & pilates">` + (isJa ? 'ヨガ ＆ ピラティス' : 'Yoga & Pilates') + `</option>
+                    <option value="HIIT">` + (isJa ? 'HIIT高強度インターバル' : 'HIIT program') + `</option>
+                    <option value="Classes">` + (isJa ? 'グループクラス' : 'Group classes') + `</option>
+                    <option value="Physiotherapy">` + (isJa ? '整体フィジオ' : 'Physiotherapy') + `</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="heardAboutUs" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5">
+                    ` + (isJa ? '当ジムを知ったきっかけ' : 'How did you hear about us?') + `
+                  </label>
+                  <select 
+                    id="heardAboutUs" 
+                    name="heardAboutUs"
+                    class="w-full text-white text-sm transition-all cursor-pointer"
+                    style="height: 40px !important; background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 6px !important; padding: 0 14px !important; box-sizing: border-box !important;"
+                  >
+                    <option value="">` + (isJa ? '-- 選択してください --' : '-- Select an option --') + `</option>
+                    <option value="Another client">` + (isJa ? 'ご紹介' : 'Introduced by client') + `</option>
+                    <option value="Social media">` + (isJa ? 'SNS (Instagramなど)' : 'Social media') + `</option>
+                    <option value="Search engine">` + (isJa ? '検索型ネット(Web)' : 'Search engine') + `</option>
+                    <option value="Walk in">` + (isJa ? '直接来店' : 'Walk in') + `</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="message" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5">
+                  ` + (isJa ? 'メッセージ / ご要望 (任意)' : 'Message (optional)') + `
+                </label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="3" 
+                  placeholder="` + (isJa ? 'ご質問や体験希望日などございましたらご記入ください。' : 'Any special requests, fitness level or scheduling objectives...') + `"
+                  class="w-full text-white text-sm transition-all resize-none"
+                  style="background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 6px !important; padding: 10px 14px !important; box-sizing: border-box !important; outline: none !important;"
+                ></textarea>
+              </div>
+
+              <!-- Footer with Checkbox (Left) and Submit Button (Right) with whitespace-nowrap and wrap preservation -->
+              <div class="flex flex-wrap items-center justify-between gap-4 pt-4">
+                <div class="checkbox-container">
+                  <input 
+                    type="checkbox" 
+                    id="bookFreeTrial" 
+                    name="bookFreeTrial" 
+                  />
+                  <label for="bookFreeTrial" class="text-xs text-zinc-300 font-medium select-none cursor-pointer hover:text-white transition-colors whitespace-nowrap">
+                    ` + (isJa ? '無料体験レッスンを予約する' : 'Book free trial') + `
+                  </label>
+                </div>
+ 
+                <button 
+                  type="submit" 
+                  id="gym-submit-btn"
+                >
+                  ` + (isJa ? '無料体験を申し込む' : 'Submit Booking') + `
+                </button>
+              </div>
+              <div id="form-status" class="hidden text-center text-xs font-medium p-3 rounded mt-3"></div>
+            </form>
+          `;
+
+          // Append to gridContainer. Insert where contactCol was so visual positioning stays beautiful.
+          if (contactCol) {
+            gridContainer.insertBefore(formCol, contactCol);
+          } else {
+            gridContainer.appendChild(formCol);
+          }
+
+          // Form submission logic
+          const formEl = document.getElementById('gym-booking-form');
+          const submitBtn = document.getElementById('gym-submit-btn');
+          const statusEl = document.getElementById('form-status');
+
+          if (formEl) {
+            formEl.addEventListener('submit', async (e) => {
+              e.preventDefault();
+
+              const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                heardAboutUs: document.getElementById('heardAboutUs').value || "Not specified",
+                serviceOfInterest: document.getElementById('serviceOfInterest').value || "Not specified",
+                bookFreeTrial: document.getElementById('bookFreeTrial').checked ? "Yes" : "No",
+                message: document.getElementById('message').value || "No message provided."
+              };
+
+              if (isSubmitting) return;
+              isSubmitting = true;
+
+              submitBtn.disabled = true;
+              submitBtn.innerText = isJa ? '送信中...' : 'Submitting...';
+              statusEl.className = 'hidden text-center text-xs font-medium p-3 rounded mt-3';
+
+              try {
+                const response = await fetch('/api/contact', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                  },
+                  body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                  statusEl.innerText = isJa 
+                    ? 'ありがとうございます！無料体験予約を送信しました。折り返しご連絡いたします。' 
+                    : 'Thank you! Your complimentary trial request has been sent successfully. We will contact you shortly.';
+                  statusEl.className = 'text-center text-xs font-medium p-3 rounded bg-green-950/40 text-green-400 border border-green-900/40 mt-3 block';
+                  formEl.reset();
+                } else {
+                  throw new Error('Server response was not ok');
+                }
+              } catch (err) {
+                console.error('Submit error:', err);
+                statusEl.innerText = isJa 
+                  ? '送信中にエラーが発生しました。もう一度お試しいただくか、お電話にてご連絡ください。' 
+                  : 'Failed to submit. Please try again or contact us directly.';
+                statusEl.className = 'text-center text-xs font-medium p-3 rounded bg-red-950/40 text-red-400 border border-red-900/40 mt-3 block';
+              } finally {
+                isSubmitting = false;
+                submitBtn.disabled = false;
+                submitBtn.innerText = isJa ? '無料体験を申し込む' : 'Submit Booking';
+              }
+            });
+          }
+
+          bindButtons();
+        }
+
+        function bindButtons() {
+          const localStorageLang = localStorage.getItem('site-lang');
+          const htmlLang = document.documentElement.lang;
+          const urlParams = new URLSearchParams(window.location.search);
+          const urlLang = urlParams.get('lang');
+          
+          let isJa = false;
+          if (localStorageLang) {
+            isJa = localStorageLang === 'JP';
+          } else if (htmlLang) {
+            isJa = htmlLang === 'ja' || htmlLang === 'ja-JP' || htmlLang === 'jp';
+          } else if (urlLang) {
+            isJa = urlLang === 'ja' || urlLang === 'ja-JP' || urlLang === 'jp';
+          } else {
+            isJa = navigator.language === 'ja' || navigator.language.startsWith('ja-');
+          }
+
+          const elements = document.querySelectorAll('button, a');
+          elements.forEach(el => {
+            const text = el.innerText || el.textContent || "";
+            if (text.includes("View All Classes") || text.includes("すべてのクラスを見る")) {
+              el.setAttribute('href', 'classes.html' + (isJa ? '?lang=ja' : '?lang=en'));
+            }
+            if (text.includes("Book Free Trial") || text.includes("無料体験") || text.includes("Free Trial") || text.includes("体験レッスン")) {
+              if (el.dataset.scrollerBound === 'true') return;
+              el.dataset.scrollerBound = 'true';
+
+              el.setAttribute('onclick', ''); // Clear existing inline triggers if any
+              
+              el.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                const targetCol = document.getElementById('gym-booking-col');
+                if (targetCol) {
+                  targetCol.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  // Add custom visual glow to highlight the form
+                  targetCol.classList.add('ring-2', 'ring-orange-500', 'transition-all');
+                  setTimeout(() => {
+                    targetCol.classList.remove('ring-2', 'ring-orange-500');
+                  }, 2500);
+                }
+              }, true);
+            }
+          });
+        }
+
+        // Poll for footer render
+        const checkInterval = setInterval(() => {
+          const footer = document.querySelector('footer') || document.querySelector('#footer');
+          if (footer) {
+            initForm();
+            clearInterval(checkInterval);
+          }
+        }, 50);
+
+        // mutation observer to handle spa re-renders and quick language switching
+        const observer = new MutationObserver(() => {
+          const footer = document.querySelector('footer') || document.querySelector('#footer');
+          if (footer) {
+            initForm();
+          }
+          bindButtons();
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    </script>
+  </body>
+</html>

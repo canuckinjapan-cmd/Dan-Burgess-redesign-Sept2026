@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        const localStorageLang = localStorage.getItem('site-lang');
+        let isJa = false;
+        if (urlLang) {
+          isJa = urlLang === 'lang' || urlLang === 'ja' || urlLang === 'ja-JP' || urlLang === 'jp';
+        } else if (localStorageLang) {
+          isJa = localStorageLang === 'JP';
+        } else {
+          isJa = navigator.language === 'ja' || navigator.language.startsWith('ja-');
+        }
+        document.documentElement.lang = isJa ? "ja" : "en";
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Classes | Takasaki Fitness</title>
+    <meta name="description" content="Discover our wide range of professional fitness classes including Yoga, Pilates, HIIT, Personal Training, and Physiotherapy at Takasaki Fitness." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" crossorigin href="/samples/gym01/assets/index-DYTQRlmW.css" />
+    
+    <style>
+      /* Layout & Utility Overrides */
+      #gym-booking-col { grid-column: span 1 / span 1 !important; }
+      @media (min-width: 768px) { #gym-booking-col { grid-column: span 2 / span 2 !important; } }
+
+      html[lang="en"] .lang-jp, html[lang="ja"] .lang-en { display: none !important; }
+
+      #gym-booking-form .grid-row-2col {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 16px !important;
+      }
+      @media (max-width: 639px) {
+        #gym-booking-form .grid-row-2col { grid-template-columns: 1fr !important; gap: 12px !important; }
+      }
+
+      /* Native Consolidated Form Styling */
+      #gym-booking-form input[type="text"], 
+      #gym-booking-form input[type="email"], 
+      #gym-booking-form select,
+      #gym-booking-form textarea {
+        background-color: #1c1f26 !important;
+        border: 1px solid #71717a !important;
+        outline: none !important;
+        box-sizing: border-box !important;
+        border-radius: 6px !important;
+        color: #ffffff !important;
+        font-size: 0.875rem !important;
+      }
+      #gym-booking-form input[type="text"], 
+      #gym-booking-form input[type="email"], 
+      #gym-booking-form select {
+        height: 40px !important;
+        padding: 0 14px !important;
+      }
+      #gym-booking-form select {
+        -webkit-appearance: none !important; -moz-appearance: none !important; appearance: none !important;
+        background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23a1a1aa%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%2F%3E%3C%2Fsvg%3E") !important;
+        background-repeat: no-repeat !important;
+        background-position: right 14px center !important;
+        background-size: 16px !important;
+        padding-right: 36px !important;
+      }
+      #gym-booking-form textarea { padding: 10px 14px !important; }
+      
+      #gym-booking-form input:focus, #gym-booking-form select:focus, #gym-booking-form textarea:focus {
+        border-color: #f97316 !important;
+        box-shadow: 0 0 0 1px #f97316 !important;
+      }
+      #gym-booking-form #gym-submit-btn {
+        background-color: #f97316 !important; color: #ffffff !important; font-weight: 700 !important; font-size: 13px !important;
+        text-transform: uppercase !important; letter-spacing: 0.05em !important; height: 40px !important; padding: 0 24px !important;
+        border-radius: 6px !important; border: 0 !important; cursor: pointer !important; display: inline-flex !important;
+        align-items: center !important; justify-content: center !important; transition: all 0.15s ease-in-out !important; white-space: nowrap !important;
+      }
+      #gym-booking-form #gym-submit-btn:hover { background-color: #ea580c !important; }
+      #gym-booking-form input[type="checkbox"] {
+        -webkit-appearance: none; -moz-appearance: none; appearance: none;
+        background-color: #1c1f26 !important; border: 1px solid #71717a !important; border-radius: 4px !important;
+        width: 1.15rem !important; height: 1.15rem !important; display: inline-flex; align-items: center; justify-content: center;
+        cursor: pointer; position: relative; vertical-align: middle; outline: none; margin: 0 !important;
+      }
+      #gym-booking-form input[type="checkbox"]:checked { background-color: #f97316 !important; border-color: #f97316 !important; }
+      #gym-booking-form input[type="checkbox"]:checked::after {
+        content: ""; width: 5px; height: 9px; border: solid white; border-width: 0 2.5px 2.5px 0;
+        transform: rotate(45deg); position: absolute; top: 1.5px; left: 4.5px;
+      }
+      #gym-booking-form .checkbox-container { display: flex !important; align-items: center !important; gap: 8px !important; }
+
+      /* Structural Layout Adjustments */
+      .pt-36 { padding-top: 9rem !important; }
+      .pt-24 { padding-top: 6rem !important; }
+
+      section.custom-hero-spacing { padding-bottom: 80px !important; }
+      main.custom-classes-container { padding-bottom: 100px !important; }
+      .custom-footer-spacing { margin-top: 0px !important; padding-top: 60px !important; }
+      
+      @media (max-width: 768px) {
+        section.custom-hero-spacing { padding-bottom: 40px !important; }
+        main.custom-classes-container { padding-bottom: 60px !important; }
+        .custom-footer-spacing { padding-top: 40px !important; }
+      }
+      
+      main.bg-zinc-900 section, main.bg-zinc-950 section { margin-bottom: 9rem !important; }
+      main.bg-zinc-900 section:last-of-type, main.bg-zinc-950 section:last-of-type { margin-bottom: 0px !important; }
+      @media (max-width: 639px) {
+        main.bg-zinc-900 section, main.bg-zinc-950 section { margin-bottom: 6rem !important; }
+      }
+
+      /* Custom Badges */
+      .custom-class-badge-container { position: absolute !important; bottom: 1.5rem !important; left: 40px !important; display: flex !important; align-items: center !important; gap: 0.5rem !important; z-index: 10 !important; }
+      .custom-class-badge-span {
+        background-color: rgba(249, 115, 22, 0.2) !important; color: #fb923c !important; border: 1px solid rgba(249, 115, 22, 0.15) !important;
+        font-size: 9px !important; font-weight: 700 !important; letter-spacing: 0.1em !important; text-transform: capitalize !important;
+        padding: 6px 10px !important; border-radius: 9999px !important; backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important;
+        display: inline-flex !important; line-height: 1 !important; align-items: center !important;
+      }
+
+      @media (min-width: 1024px) {
+        .lg\:flex-row { display: flex !important; flex-direction: row !important; }
+        .lg\:flex-row-reverse { display: flex !important; flex-direction: row-reverse !important; }
+        .lg\:w-1\/2 { width: 50% !important; }
+        .lg\:gap-16 { gap: 4rem !important; }
+        .lg\:col-span-2 { grid-column: span 2 / span 2 !important; }
+        .lg\:pt-52 { padding-top: 13rem !important; }
+        .lg\:pt-40 { padding-top: 10rem !important; }
+      }
+      @media (min-width: 768px) {
+        .md\:flex-row { display: flex !important; flex-direction: row !important; }
+        .md\:flex-row-reverse { display: flex !important; flex-direction: row-reverse !important; }
+        .md\:w-1\/2 { width: 50% !important; }
+        .md\:col-span-2 { grid-column: span 2 / span 2 !important; }
+        .md\:pt-44 { padding-top: 11rem !important; }
+      }
+      @media (min-width: 640px) {
+        .sm\:border-t-0 { border-top-width: 0px !important; }
+        .sm\:border-l { border-left-width: 1px !important; border-top-width: 0px !important; }
+        .sm\:pt-0 { padding-top: 0px !important; }
+        .sm\:pl-6 { padding-left: 24px !important; }
+        .sm\:flex-row { display: flex !important; flex-direction: row !important; }
+        .sm\:aspect-\[16\/10\] { aspect-ratio: 16/10 !important; }
+        .sm\:pt-40 { padding-top: 10rem !important; }
+        .sm\:pt-32 { padding-top: 8rem !important; }
+      }
+    </style>
+  </head>
+  <body class="bg-zinc-950 text-zinc-50 antialiased overflow-x-hidden selection:bg-orange-500/30 selection:text-orange-200">
+    
+    <nav id="main-nav" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center">
+          <a href="index.html" class="flex items-center gap-2 select-none group">
+            <i data-lucide="dumbbell" class="h-8 w-8 text-orange-500 transition-transform group-hover:rotate-12 duration-300"></i>
+            <span class="text-2xl font-black text-white">
+              Takasaki<span class="text-orange-500">Fitness</span>
+            </span>
+          </a>
+
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html#home" class="text-zinc-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wider">
+              <span class="lang-en">Home</span><span class="lang-jp">ホーム</span>
+            </a>
+            <a href="index.html#features" class="text-zinc-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wider">
+              <span class="lang-en">Features</span><span class="lang-jp">特徴</span>
+            </a>
+            <span class="text-orange-500 font-bold text-sm uppercase tracking-wider select-none cursor-default border-b-2 border-orange-500 pb-1">
+              <span class="lang-en">Classes</span><span class="lang-jp">クラス</span>
+            </span>
+            <a href="index.html#trainers" class="text-zinc-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wider">
+              <span class="lang-en">Trainers</span><span class="lang-jp">トレーナー</span>
+            </a>
+            <a href="index.html#pricing" class="text-zinc-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wider">
+              <span class="lang-en">Pricing</span><span class="lang-jp">料金プラン</span>
+            </a>
+            <a href="#footer" class="text-zinc-300 hover:text-orange-500 font-medium transition-colors text-sm uppercase tracking-wider">
+              <span class="lang-en">Contact</span><span class="lang-jp">お問い合わせ</span>
+            </a>
+            <div class="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-md p-1 ml-2">
+              <button onclick="setLanguage('EN')" id="lang-btn-en" class="px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold focus:outline-none">EN</button>
+              <button onclick="setLanguage('JP')" id="lang-btn-jp" class="px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold focus:outline-none">JP</button>
+            </div>
+          </div>
+
+          <div class="md:hidden flex items-center gap-4">
+            <div class="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-md p-1">
+              <button onclick="setLanguage('EN')" id="mobile-lang-btn-en" class="px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold focus:outline-none">EN</button>
+              <button onclick="setLanguage('JP')" id="mobile-lang-btn-jp" class="px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold focus:outline-none">JP</button>
+            </div>
+            <button id="mobile-toggle-btn" class="text-zinc-300 hover:text-white focus:outline-none" aria-label="Toggle Menu">
+              <i data-lucide="menu" id="menu-icon-open" class="h-6 w-6"></i>
+              <i data-lucide="x" id="menu-icon-close" class="h-6 w-6 hidden"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-dropdown" class="hidden md:hidden bg-zinc-950 border-t border-zinc-900 absolute w-full left-0 mt-4 shadow-xl">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <a href="index.html#home" class="block px-3 py-3 text-base font-medium text-zinc-300 hover:text-orange-500 hover:bg-zinc-900 rounded-md">
+            <span class="lang-en">Home</span><span class="lang-jp">ホーム</span>
+          </a>
+          <a href="index.html#features" class="block px-3 py-3 text-base font-medium text-zinc-300 hover:text-orange-500 hover:bg-zinc-900 rounded-md">
+            <span class="lang-en">Features</span><span class="lang-jp">特徴</span>
+          </a>
+          <div class="block px-3 py-3 text-base font-bold text-orange-500 border-l-2 border-orange-500 pl-4 select-none cursor-default">
+            <span class="lang-en">Classes</span><span class="lang-jp">クラス</span>
+          </div>
+          <a href="index.html#trainers" class="block px-3 py-3 text-base font-medium text-zinc-300 hover:text-orange-500 hover:bg-zinc-900 rounded-md">
+            <span class="lang-en">Trainers</span><span class="lang-jp">トレーナー</span>
+          </a>
+          <a href="index.html#pricing" class="block px-3 py-3 text-base font-medium text-zinc-300 hover:text-orange-500 hover:bg-zinc-900 rounded-md">
+            <span class="lang-en">Pricing</span><span class="lang-jp">料金プラン</span>
+          </a>
+          <a href="#footer" onclick="document.getElementById('mobile-toggle-btn').click()" class="block px-3 py-3 text-base font-medium text-zinc-300 hover:text-orange-500 hover:bg-zinc-900 rounded-md">
+            <span class="lang-en">Contact</span><span class="lang-jp">お問い合わせ</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <section class="relative pt-24 pb-32 sm:pt-28 md:pt-32 lg:pt-36 bg-gradient-to-b from-zinc-900 to-zinc-950 overflow-hidden custom-hero-spacing">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-20"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-orange-500 tracking-tight mb-6 uppercase">
+          <span class="lang-en">Our Classes & Programs</span><span class="lang-jp">クラス & プログラム紹介</span>
+        </h1>
+        <p class="max-w-3xl mx-auto text-base sm:text-lg text-zinc-400 leading-relaxed">
+          <span class="lang-en">Explore our high-end, scientifically tailored programs led by professional trainers inside Takasaki's premiere fitness sanctuary.</span>
+          <span class="lang-jp">高崎を代表する最先端のフィットネス空間で、一流のプロトレーナーが科学的なアプローチで設計し、皆様の可能性を引き出す珠玉のプログラム。</span>
+        </p>
+      </div>
+    </section>
+
+    <main class="mt-12 pt-24 sm:pt-32 lg:pt-40 bg-zinc-900 relative custom-classes-container">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 sm:space-y-32">
+        
+        <section class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          <div class="w-full lg:w-1/2 relative group overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl aspect-[4/3] sm:aspect-[16/10]">
+            <img src="/samples/gym01/dlQTHRs.jpg" alt="Yoga & Pilates" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
+            <div class="custom-class-badge-container"><span class="custom-class-badge-span"><span class="lang-en">Flexibility & Core</span><span class="lang-jp">柔軟性＆体幹</span></span></div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              <span class="lang-en">Yoga & Pilates</span><span class="lang-jp">ヨガ & ピラティス</span>
+            </h2>
+            <div class="text-zinc-300 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p class="lang-en">Our Yoga & Pilates sessions combine ancient physical practices with modern core stabilization techniques. Focused on deep breathing, mindfulness, and precise alignment, this class is designed to decompress your spine, lengthen tight muscles, and build deep structural core strength that supports your posture all day long.</p>
+              <p class="lang-en">Perfect for all experience levels, each class is adapted to your individual flow and goals. Whether you are looking to regain flexibility, recover from high-impact sports, or find a sanctuary of mental clarity amid a busy schedule, our premium studio environment offers the perfect space to reconnect with your body.</p>
+              <p class="lang-jp">ヨガ＆ピラティスセッションは、伝統的な身体の動きと現代の体幹安定化技術を融合させたプログラムです。深い呼吸、マインドフルネス、そして正確なアライメントに焦点を当て、背骨を伸ばし、硬くなった筋肉をほぐし、日常生活の姿勢を支える深層筋肉（インナーマッスル）を効果的に鍛えます。</p>
+              <p class="lang-jp">初心者から上級者まで、すべての皆様のレベルや目標に合わせて丁寧に指導します。柔軟性を取り戻したい方、激しいスポーツ後の疲労を回復させたい方、または忙しい日々の生活の中で心身をリセットしてリラックスしたい方に最適です。細部までこだわり抜いた専用スタジオで、ご自身の身体と向き合う上質な時間をご体験ください。</p>
+            </div>
+            <div class="p-5 rounded-xl border border-zinc-900 bg-zinc-900/40 flex flex-col sm:flex-row gap-6">
+              <div class="flex items-start gap-3">
+                <img src="/samples/gym01/WtBii9X.jpg" alt="Kenji Sato" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs"><span class="lang-en">Kenji Sato</span><span class="lang-jp">佐藤 健二</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Head Coach</span><span class="lang-jp">ヘッドコーチ</span></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 border-t sm:border-t-0 sm:border-l border-zinc-800 pt-3 sm:pt-0 sm:pl-6">
+                <img src="/samples/gym01/YaDKIZi.jpg" alt="Yuki Tanaka" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs"><span class="lang-en">Yuki Tanaka</span><span class="lang-jp">田中 結衣</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Pilates Instructor</span><span class="lang-jp font-bold">ピラティスインストラクター</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16">
+          <div class="w-full lg:w-1/2 relative group overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl aspect-[4/3] sm:aspect-[16/10]">
+            <img src="/samples/gym01/5WlsKOF.jpg" alt="HIIT Program" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
+            <div class="custom-class-badge-container"><span class="custom-class-badge-span"><span class="lang-en">High Intensity & Burn</span><span class="lang-jp">高強度インターバル＆脂肪燃焼</span></span></div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              <span class="lang-en">HIIT Program</span><span class="lang-jp">HIITプログラム</span>
+            </h2>
+            <div class="text-zinc-300 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p class="lang-en">Our High-Intensity Interval Training (HIIT) program is a fast-paced, heart-pumping class designed to maximize calorie burn and supercharge your metabolic rate. By alternating between bursts of explosive exercise and short periods of active recovery, you will challenge your athletic limits and trigger the "afterburn effect," burning calories long after you leave the gym.</p>
+              <p class="lang-en">Led by our Head Trainer, this class uses varied movements including athletic drills, kettlebells, and bodyweight training to build cardiovascular performance while preserving lean muscle. It is efficient, demanding, and incredibly rewarding for anyone looking to push their endurance to the next level.</p>
+              <p class="lang-jp">HIIT（高強度インターバル）プログラムは、短時間で限界に挑むことで消費カロリーを最大化し、代謝を劇的に向上させるエキサイティングなクラスです。爆発的な有酸素・無酸素運動と短時間のインターバル（休息）を交互に繰り返すことで、アスリートレベルの限界を引き出し、運動終了後も長時間にわたって脂肪燃焼効果が持続する「アフターバーン効果」を引き出します。</p>
+              <p class="lang-jp">ヘッドトレーナー主導のもと、ケトルベル、自重、そしてファンクショナルトレーニングを自在に組み合わせて、筋力を維持しながら心肺機能を極限まで高めます。効率よく最大の成果を手に入れたいすべての皆様、ぜひこの興奮と達成感を体験してください。</p>
+            </div>
+            <div class="p-5 rounded-xl border border-zinc-900 bg-zinc-900/40 flex flex-col sm:flex-row gap-6">
+              <div class="flex items-start gap-3">
+                <img src="/samples/gym01/WtBii9X.jpg" alt="Kenji Sato" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs"><span class="lang-en">Kenji Sato</span><span class="lang-jp">佐藤 健二</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Head Trainer</span><span class="lang-jp">ヘッドトレーナー</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          <div class="w-full lg:w-1/2 relative group overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl aspect-[4/3] sm:aspect-[16/10]">
+            <img src="/samples/gym01/2siWX4B.jpg" alt="Group Classes" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
+            <div class="custom-class-badge-container"><span class="custom-class-badge-span"><span class="lang-en">Community & Energy</span><span class="lang-jp">コミュニティ＆エナジー</span></span></div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              <span class="lang-en">Group Classes</span><span class="lang-jp">グループフィットネスクラス</span>
+            </h2>
+            <div class="text-zinc-300 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p class="lang-en">Experience the infectious energy of a collective weight-training and aerobic program! Our Group Classes are designed around community, music, and shared motivation. Combining high-energy cardiovascular tracks with resistance exercises using dumbbells, barbell plates, and resistance bands, we turn hard work into an engaging, collaborative experience.</p>
+              <p class="lang-en">Training in a collective environment not only keeps you accountable but also guarantees a supportive, dynamic atmosphere. Under the careful guidance of our coaches, you'll master proper form while fueling your growth through group synergy. Together, we rise, sweat, and achieve our fitness goals.</p>
+              <p class="lang-jp">みんなで一緒に汗を流すことで得られる、圧倒的な一体感とポジティブなプログラムをご体験ください。グループフィットネスクラスは、心地よい音楽と最高のモチベーションに囲まれながら、体幹の強化や脂肪燃焼、全身のコンディショニングを楽しく行うクラスです。ダンベルやバーベルプレートを使い、一人ではくじけそうなハードなワークアウトを爽快なエンターテインメントに昇華させます。</p>
+              <p class="lang-jp">仲間と同じスタジオ空間で競い支え合うことで、継続が力となり、限界を難なく超えることができます。専属コーチの正確なフォーム指導のもと、怪我を防ぎながらグループレッスンならではのダイナミックな高揚感と確実なボディメイク効果をご体験ください。</p>
+            </div>
+            <div class="p-5 rounded-xl border border-zinc-900 bg-zinc-900/40 flex flex-col sm:flex-row gap-6">
+              <div class="flex items-start gap-3">
+                <img src="/samples/gym01/WtBii9X.jpg" alt="Kenji Sato" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display"><span class="lang-en">Kenji Sato</span><span class="lang-jp">佐藤 健二</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Head Coach</span><span class="lang-jp font-bold">ヘッドコーチ</span></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 border-t sm:border-t-0 sm:border-l border-zinc-800 pt-3 sm:pt-0 sm:pl-6">
+                <img src="/samples/gym01/YaDKIZi.jpg" alt="Yuki Tanaka" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display"><span class="lang-en">Yuki Tanaka</span><span class="lang-jp">田中 結衣</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Rhythm Instructor</span><span class="lang-jp font-bold">リズムインストラクター</span></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 border-t sm:border-t-0 sm:border-l border-zinc-800 pt-3 sm:pt-0 sm:pl-6">
+                <img src="/samples/gym01/M2DBg2s.jpg" alt="Daiki Nakamura" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display"><span class="lang-en">Daiki Nakamura</span><span class="lang-jp">中村 大樹</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Physio Specialist</span><span class="lang-jp font-bold">フィジオスペシャリスト</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col lg:flex-row-reverse items-center gap-8 lg:gap-16">
+          <div class="w-full lg:w-1/2 relative group overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl aspect-[4/3] sm:aspect-[16/10]">
+            <img src="/samples/gym01/YaDKIZi.jpg" alt="Personal Training" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
+            <div class="custom-class-badge-container"><span class="custom-class-badge-span"><span class="lang-en">One-on-One Custom</span><span class="lang-jp">マンツーマン完全フルカスタム</span></span></div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              <span class="lang-en">Personal Training</span><span class="lang-jp">パーソナルトレーニング</span>
+            </h2>
+            <div class="text-zinc-300 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p class="lang-en">Get a certified expert by your side to fast-track your success. Personal Training is the gold standard of results-driven fitness at Takasaki Fitness. We begin with a comprehensive body composition analysis and functional movement assessment, allowing us to engineer a custom-tailored programming routine that operates strictly on your unique biomechanical profile.</p>
+              <p class="lang-en">Every individual session is a masterclass in biomechanics and proper form. Your personal coach will guide you through elite weightlifting, resistance, and functional movements with precision. From elite athletes to beginners restarting their fitness journey, this customized track is the most efficient highway to body sculpting and strength development.</p>
+              <p class="lang-jp">あなたの目標、体力レベル、骨格に100％合わせた「フルカスタム」のマンツーマン指導プログラム。高崎フィットネスが提供するパーソナルトレーニングは、まず詳細な体組成分析と機能的な関節可動域評価（FMS）からスタートし、解剖力学の視点から完全に個別化された指導を行います。</p>
+              <p class="lang-jp">怪我を防ぎながら全身の筋肉群を連動させるウエイト、抵抗、そしてファンクショナルトレーニングを正確無比にマスターすることが可能です。何から始めればよいかわからない初心者から、確固たる目標を掲げるアスリートまで、専属トレーナーがモチベーションを完璧に管理し理想まで導きます。</p>
+            </div>
+            <div class="p-5 rounded-xl border border-zinc-900 bg-zinc-900/40 flex flex-col sm:flex-row gap-6">
+              <div class="flex items-start gap-3">
+                <img src="/samples/gym01/WtBii9X.jpg" alt="Kenji Sato" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display text-balance"><span class="lang-en">Kenji Sato</span><span class="lang-jp">佐藤 健二</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Head Coach</span><span class="lang-jp font-bold flex-shrink-0">ヘッドコーチ</span></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 border-t sm:border-t-0 sm:border-l border-zinc-800 pt-3 sm:pt-0 sm:pl-6">
+                <img src="/samples/gym01/YaDKIZi.jpg" alt="Yuki Tanaka" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display text-balance"><span class="lang-en">Yuki Tanaka</span><span class="lang-jp">田中 結衣</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Pilates Instructor</span><span class="lang-jp font-bold flex-shrink-0">ピラティスインストラクター</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16">
+          <div class="w-full lg:w-1/2 relative group overflow-hidden rounded-2xl bg-zinc-900 shadow-2xl aspect-[4/3] sm:aspect-[16/10]">
+            <img src="/samples/gym01/M2DBg2s.jpg" alt="Physiotherapy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-transparent opacity-60"></div>
+            <div class="custom-class-badge-container"><span class="custom-class-badge-span"><span class="lang-en">Adjustment & Rehab</span><span class="lang-jp">関節調整＆機能回復リハビリ</span></span></div>
+          </div>
+          <div class="w-full lg:w-1/2 space-y-6">
+            <h2 class="text-3xl sm:text-4xl font-black text-white">
+              <span class="lang-en">Physiotherapy & Conditioning</span><span class="lang-jp">整体フィジオ & コンディショニング</span>
+            </h2>
+            <div class="text-zinc-300 space-y-4 text-sm sm:text-base leading-relaxed">
+              <p class="lang-en">Bridge the gap between rehabilitation and peak physical performance. Our Physiotherapy & Conditioning clinic specializes in joint rehabilitation, postural alignment corrections, and deep tissue activation. By identifying muscle imbalances and skeletal misalignments, we deliver custom physical adjustments and movement therapies to dissolve pain and restore active mobility.</p>
+              <p class="lang-en">Whether you are dealing with chronic lower back tightness, desk-work posture fatigue, or recovering from a sports injury, our scientific approach goes straight to the root cause of the discomfort. Reclaim a pain-free life, restore full freedom of movement, and build joint resilience with our evidence-based, medically supported body restoration sessions.</p>
+              <p class="lang-jp">治療リハビリと理想的なパフォーマンスの「架け橋」となり、運動する喜びを極限まで高めます。整体フィジオ＆コンディショニングプログラムでは、関節可動域の確実な改善、骨盤や全身アライメントの補正、設置部分や深層筋のアクティベーションを行います。日常の動作パターンから筋肉の不均衡や骨格のねじれを徹底評価し、痛みの根本的な解決をめざす独自の運動療法を行います。</p>
+              <p class="lang-jp">慢性的な腰痛や肩こり、デスクワークによるストレートネック、スポーツでの痛みを解決。科学的な証拠に基づき、安全で無痛の関節可動域解放・コンディショニングプログラムを提供し、柔軟な関節と本来のアクティブな生活、怪我に負けない健やかな強さを取り戻します。</p>
+            </div>
+            <div class="p-5 rounded-xl border border-zinc-900 bg-zinc-900/40 flex flex-col sm:flex-row gap-6">
+              <div class="flex items-start gap-3">
+                <img src="/samples/gym01/M2DBg2s.jpg" alt="Daiki Nakamura" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display"><span class="lang-en">Daiki Nakamura</span><span class="lang-jp">中村 大樹</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Sports Science Therapist</span><span class="lang-jp font-bold">整体フィジオセラピスト</span></p>
+                </div>
+              </div>
+              <div class="flex items-start gap-3 border-t sm:border-t-0 sm:border-l border-zinc-800 pt-3 sm:pt-0 sm:pl-6">
+                <img src="/samples/gym01/YaDKIZi.jpg" alt="Yuki Tanaka" class="w-10 h-10 rounded-full object-cover border border-orange-500/30 p-0.5 shrink-0" />
+                <div>
+                  <h4 class="text-white font-bold text-xs font-serif-display"><span class="lang-en">Yuki Tanaka</span><span class="lang-jp">田中 結衣</span></h4>
+                  <p class="text-zinc-500 text-[10px] uppercase mt-0.5"><span class="lang-en">Yoga Instructor</span><span class="lang-jp font-bold">ヨガインストラクター</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <footer id="footer" class="bg-zinc-950 border-t border-zinc-900 pb-32 sm:pb-40 lg:pb-44 px-4 custom-footer-spacing">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+          
+          <div>
+            <div class="flex items-center gap-2 mb-6">
+              <i data-lucide="dumbbell" class="h-6 w-6 text-orange-500 shrink-0"></i>
+              <span class="text-2xl font-black text-white select-none">Takasaki<span class="text-orange-500">Fitness</span></span>
+            </div>
+            <p class="text-zinc-400 text-sm leading-relaxed mb-6">
+              <span class="lang-en">The best fitness experience in Takasaki, Gunma. Latest machines and professional trainers support your ideal body building.</span>
+              <span class="lang-jp">群馬県高崎市で最高のフィットネス体験を。最新のマシンとプロのトレーナーがあなたの理想の身体づくりをサポートします。</span>
+            </p>
+            <div class="flex gap-4">
+              <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-orange-500 transition-colors" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a>
+              <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-orange-500 transition-colors" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+              <a href="#" class="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-orange-500 transition-colors" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="text-white font-bold mb-6 uppercase tracking-wider text-sm"><span class="lang-en">Quick Links</span><span class="lang-jp">クイックリンク</span></h4>
+            <ul class="space-y-3">
+              <li><a href="index.html#home" class="text-zinc-400 hover:text-orange-500 text-sm transition-colors"><span class="lang-en">Home</span><span class="lang-jp">ホーム</span></a></li>
+              <li><a href="index.html#features" class="text-zinc-400 hover:text-orange-500 text-sm transition-colors"><span class="lang-en">Features</span><span class="lang-jp">特徴</span></a></li>
+              <li><span class="text-orange-500 font-bold text-sm cursor-default select-none"><span class="lang-en">Classes</span><span class="lang-jp">クラス</span></span></li>
+              <li><a href="index.html#trainers" class="text-zinc-400 hover:text-orange-500 text-sm transition-colors"><span class="lang-en">Trainers</span><span class="lang-jp">トレーナー</span></a></li>
+              <li><a href="index.html#pricing" class="text-zinc-400 hover:text-orange-500 text-sm transition-colors"><span class="lang-en">Pricing</span><span class="lang-jp">料金プラン</span></a></li>
+            </ul>
+          </div>
+
+          <div id="gym-booking-col" class="lg:col-span-2 md:col-span-2 col-span-1 bg-zinc-900/40 p-5 sm:p-6 rounded-xl shadow-xl">
+            <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-sm"><span class="lang-en">BOOK A FREE TRIAL</span><span class="lang-jp">無料体験レッスンのご予約</span></h4>
+            <p class="text-zinc-400 text-xs mb-6 leading-relaxed">
+              <span class="lang-en">Reserve your complimentary session. Fill out your details below and our team will get in touch.</span>
+              <span class="lang-jp">体験レッスンを無料でご予約いただけます。下記フォームより必要事項をお送りください。</span>
+            </p>
+            <form id="gym-booking-form" class="space-y-4">
+              <div class="grid-row-2col">
+                <div>
+                  <label for="name" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5"><span class="lang-en">Full Name</span><span class="lang-jp">お名前</span></label>
+                  <input type="text" id="name" name="name" required placeholder="John Doe" class="w-full" />
+                </div>
+                <div>
+                  <label for="email" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5"><span class="lang-en">Email Address</span><span class="lang-jp">メールアドレス</span></label>
+                  <input type="email" id="email" name="email" required placeholder="you@example.com" class="w-full" />
+                </div>
+              </div>
+              <div class="grid-row-2col">
+                <div>
+                  <label for="serviceOfInterest" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5"><span class="lang-en">Select Program</span><span class="lang-jp">ご興味のあるプログラム</span></label>
+                  <select id="serviceOfInterest" name="serviceOfInterest" required class="w-full transition-all cursor-pointer">
+                    <option value="" class="lang-en">-- Select a program --</option>
+                    <option value="" class="lang-jp">-- 選択してください --</option>
+                    <option value="Personal training" class="lang-en">Personal training</option>
+                    <option value="Personal training" class="lang-jp">パーソナルトレーニング</option>
+                    <option value="Yoga & pilates" class="lang-en">Yoga & Pilates</option>
+                    <option value="Yoga & pilates" class="lang-jp">ヨガ ＆ ピラティス</option>
+                    <option value="HIIT" class="lang-en">HIIT program</option>
+                    <option value="HIIT" class="lang-jp">HIIT高強度インターバル</option>
+                    <option value="Classes" class="lang-en">Group classes</option>
+                    <option value="Classes" class="lang-jp">グループクラス</option>
+                    <option value="Physiotherapy" class="lang-en">Physiotherapy</option>
+                    <option value="Physiotherapy" class="lang-jp">整体フィジオ</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="heardAboutUs" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5"><span class="lang-en">How did you hear about us?</span><span class="lang-jp">当ジムを知ったきっかけ</span></label>
+                  <select id="heardAboutUs" name="heardAboutUs" class="w-full transition-all cursor-pointer">
+                    <option value="" class="lang-en">-- Select an option --</option>
+                    <option value="" class="lang-jp">-- 選択してください --</option>
+                    <option value="Another client" class="lang-en">Introduced by client</option>
+                    <option value="Another client" class="lang-jp">ご紹介</option>
+                    <option value="Social media" class="lang-en">Social media</option>
+                    <option value="Social media" class="lang-jp">SNS (Instagramなど)</option>
+                    <option value="Search engine" class="lang-en">Search engine</option>
+                    <option value="Search engine" class="lang-jp">検索型ネット(Web)</option>
+                    <option value="Walk in" class="lang-en">Walk in</option>
+                    <option value="Walk in" class="lang-jp">直接来店</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label for="message" class="block font-medium text-[10px] uppercase tracking-widest text-zinc-400 mb-1.5"><span class="lang-en">Message (optional)</span><span class="lang-jp">メッセージ / ご要望 (任意)</span></label>
+                <textarea id="message" name="message" rows="3" class="w-full transition-all resize-none"></textarea>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-4 pt-4">
+                <div class="checkbox-container">
+                  <input type="checkbox" id="bookFreeTrial" name="bookFreeTrial" />
+                  <label for="bookFreeTrial" class="text-xs text-zinc-300 font-medium select-none cursor-pointer hover:text-white transition-colors whitespace-nowrap">
+                    <span class="lang-en">Book free trial</span><span class="lang-jp">無料体験レッスンを予約する</span>
+                  </label>
+                </div>
+                <button type="submit" id="gym-submit-btn">
+                  <span class="lang-en">Submit Booking</span><span class="lang-jp">無料体験を申し込む</span>
+                </button>
+              </div>
+              <div id="form-status" class="hidden text-center text-xs font-medium p-3 rounded mt-3"></div>
+            </form>
+          </div>
+
+        </div>
+
+        <div class="pt-8 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-4 pb-12">
+          <p class="text-zinc-500 text-sm text-center md:text-left">
+            © <span id="current-year">2026</span> Takasaki Fitness. All rights reserved.
+            <span class="lang-en"> Website design sample by </span><span class="lang-jp"> ウェブサイトデザインサンプル: </span>
+            <a href="http://www.danburgess.com" class="text-zinc-500 hover:text-white text-sm transition-colors">Dan Burgess Design</a>
+          </p>
+          <div class="flex gap-6">
+            <a href="#" class="text-zinc-500 hover:text-white text-sm transition-colors"><span class="lang-en">Privacy Policy</span><span class="lang-jp">プライバシーポリシー</span></a>
+            <a href="#" class="text-zinc-500 hover:text-white text-sm transition-colors"><span class="lang-en">Terms of Service</span><span class="lang-jp">利用規約</span></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      function getLanguage() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlLang = urlParams.get('lang');
+        const localStorageLang = localStorage.getItem('site-lang');
+        if (urlLang) return (urlLang === 'ja' || urlLang === 'ja-JP' || urlLang === 'jp') ? 'JP' : 'EN';
+        if (localStorageLang) return localStorageLang === 'JP' ? 'JP' : 'EN';
+        return (navigator.language === 'ja' || navigator.language.startsWith('ja-')) ? 'JP' : 'EN';
+      }
+
+      function setLanguage(lang) {
+        localStorage.setItem('site-lang', lang);
+        document.documentElement.lang = lang === 'JP' ? 'ja' : 'en';
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', lang === 'JP' ? 'ja' : 'en');
+        window.location.href = url.pathname + url.search;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('current-year').innerText = new Date().getFullYear();
+        lucide.createIcons();
+
+        // Sync Select Dropdowns Placeholders Natively
+        const isJa = getLanguage() === 'JP';
+        document.getElementById('message').placeholder = isJa ? 'ご質問や体験希望日などございましたらご記入ください。' : 'Any special requests, fitness level or scheduling objectives...';
+        
+        // Form & Nav Engine Highlight Updates
+        const activeLang = getLanguage();
+        const activeClass = 'px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold bg-orange-500 text-white shadow-md focus:outline-none';
+        const inactiveClass = 'px-1.5 py-0.5 transition-all duration-200 rounded-sm cursor-pointer text-xs font-bold text-zinc-400 hover:text-white focus:outline-none';
+
+        ['lang-btn-', 'mobile-lang-btn-'].forEach(prefix => {
+          const enBtn = document.getElementById(prefix + 'en');
+          const jpBtn = document.getElementById(prefix + 'jp');
+          if(enBtn && jpBtn) {
+            enBtn.className = activeLang === 'EN' ? activeClass : inactiveClass;
+            jpBtn.className = activeLang === 'JP' ? activeClass : inactiveClass;
+          }
+        });
+
+        // Toggle mobile nav window trigger
+        const toggleBtn = document.getElementById('mobile-toggle-btn');
+        const mobileDropdown = document.getElementById('mobile-dropdown');
+        if (toggleBtn && mobileDropdown) {
+          toggleBtn.addEventListener('click', () => {
+            mobileDropdown.classList.toggle('hidden');
+            document.getElementById('menu-icon-open').classList.toggle('hidden');
+            document.getElementById('menu-icon-close').classList.toggle('hidden');
+          });
+        }
+
+        // Window tracking navigation updates
+        const mainNav = document.getElementById('main-nav');
+        function handleScroll() {
+          if (!mainNav) return;
+          if (window.scrollY > 50) {
+            mainNav.classList.remove('bg-transparent', 'py-6');
+            mainNav.classList.add('bg-zinc-950/90', 'backdrop-blur-md', 'py-4', 'shadow-lg');
+          } else {
+            mainNav.classList.remove('bg-zinc-950/90', 'backdrop-blur-md', 'py-4', 'shadow-lg');
+            mainNav.classList.add('bg-transparent', 'py-6');
+          }
+        }
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        // Async Form submissions
+        let isSubmitting = false;
+        const formEl = document.getElementById('gym-booking-form');
+        if (formEl) {
+          formEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (isSubmitting) return;
+            isSubmitting = true;
+
+            const submitBtn = document.getElementById('gym-submit-btn');
+            const statusEl = document.getElementById('form-status');
+            submitBtn.disabled = true;
+            submitBtn.innerText = isJa ? '送信中...' : 'Submitting...';
+
+            const formData = {
+              name: document.getElementById('name').value,
+              email: document.getElementById('email').value,
+              heardAboutUs: document.getElementById('heardAboutUs').value || "Not specified",
+              serviceOfInterest: document.getElementById('serviceOfInterest').value || "Not specified",
+              bookFreeTrial: document.getElementById('bookFreeTrial').checked ? "Yes" : "No",
+              message: document.getElementById('message').value || "No message provided."
+            };
+
+            try {
+              const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify(formData)
+              });
+
+              if (response.ok) {
+                statusEl.innerText = isJa ? 'ありがとうございます！無料体験予約を送信しました。' : 'Thank you! Your trial request has been sent.';
+                statusEl.className = 'text-center text-xs font-medium p-3 rounded bg-green-950/40 text-green-400 border border-green-900/40 mt-3 block';
+                formEl.reset();
+              } else { throw new Error(); }
+            } catch (err) {
+              statusEl.innerText = isJa ? 'エラーが発生しました。お試し直してください。' : 'Failed to submit. Please try again.';
+              statusEl.className = 'text-center text-xs font-medium p-3 rounded bg-red-950/40 text-red-400 border border-red-900/40 mt-3 block';
+            } finally {
+              isSubmitting = false;
+              submitBtn.disabled = false;
+              submitBtn.innerText = isJa ? '無料体験を申し込む' : 'Submit Booking';
+            }
+          });
+        }
+
+        // Deep Link Dynamic Callouts
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.innerText || el.textContent || "";
+          if (text.includes("Book Free Trial") || text.includes("無料体験") || text.includes("Free Trial")) {
+            el.addEventListener('click', (e) => {
+              e.preventDefault();
+              const target = document.getElementById('gym-booking-col');
+              if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                target.classList.add('ring-2', 'ring-orange-500');
+                setTimeout(() => target.classList.remove('ring-2', 'ring-orange-500'), 2500);
+              }
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
