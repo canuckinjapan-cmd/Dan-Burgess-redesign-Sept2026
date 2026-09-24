@@ -6,6 +6,13 @@ This document provides technical guidelines and implementation patterns for AI a
 - **Framework**: Vite-powered React SPA.
 - **I18n Architecture**: Multi-language support is handled via a custom `LanguageContext`. All UI text must be wrapped in the `t(en, jp)` helper function.
 - **Component Strategy**: High-density components (like `CaseStudies` and `Experience`) should be modular and data-driven via local arrays or constants.
+- **Section Structure**: The page is structured into 5 core editorial sections:
+  - §01 Selected Work (`#work`)
+  - §02 About (`#about`)
+  - §03 Services (`#services`)
+  - §04 Contact (`#contact`)
+  - §05 FAQ & Insights (`#faq`)
+  *(Note: Standalone Pricing section has been removed; project scopes and estimates are discussed directly via Contact).*
 
 ## 🚦 Session Start Protocol
 1.  **Read Directives**: Always consult `DESIGN.md` before making UI changes.

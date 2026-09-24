@@ -117,7 +117,8 @@ const cases: CaseStudy[] = [
     jpMobileImage: new URL("../assets/iPhone-16-index-J.jpg", import.meta.url).href,
     tabletImage: new URL("../assets/iPad-index-E.jpg", import.meta.url).href,
     jpTabletImage: new URL("../assets/iPad-index-J.jpg", import.meta.url).href,
-    link: "https://www.danburgess.com/samples/jdm/",
+    link: "https://canuckinjapan-cmd.github.io/JDM-final-version/?lang=en",
+    jpLink: "https://canuckinjapan-cmd.github.io/JDM-final-version/?lang=ja",
   },
 ];
 

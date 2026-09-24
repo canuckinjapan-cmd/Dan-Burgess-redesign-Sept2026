@@ -25,6 +25,7 @@ This project is a React-based single-page application (SPA) showcasing 30 years 
 
 - **Bilingual Interface**: Seamless English/Japanese switching via `LanguageContext`.
 - **Editorial Layout**: Signature "paper & ink" aesthetic with custom drop-caps and serif display headers.
+- **Curated Sections**: 5 focused sections—§01 Selected Work, §02 About, §03 Services, §04 Contact, and §05 FAQ & Insights (pricing table removed in favor of bespoke consultation).
 - **Kinetic Wordmark**: A smooth, infinite marquee footer for brand presence.
 - **Case Study Hub**: Detailed project breakdowns with role and tech-stack highlights.
 - **Dynamic Portrait**: A dual-phase portrait card that shifts between a professional photo and a manga-style illustration.

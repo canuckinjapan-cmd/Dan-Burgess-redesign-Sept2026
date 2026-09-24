@@ -53,6 +53,6 @@ To enrich sections visually, pristine inline vector SVGs are dynamically rendere
 - **Component Mapping (/src/components/SectionIllustrations.tsx)**:
   - **§01 Selected Work**: `SelectedWorkIllustration` — Sketch-style browser wireframe mockup with custom click arrow and orange CTA action.
   - **§03 Services**: `BilingualServicesIllustration` — Intersecting handwritten dialogue balloons showing bilingual mastery ("ABC" in English serif, "あいう" in Japanese Mincho serif with orange accent).
-  - **§04 Pricing**: `PricingIllustration` — Traditional Japanese wooden soroban (abacus) with select highlighted orange beads.
-  - **§05 Contact**: `ContactIllustration` — Stylized folded origami paper crane carrying an international letter with orange postmark stamp.
-  - **§06 FAQ**: `FAQIllustration` — Integrated custom portrait line-drawing from `danface_only-2025.svg` paired with an elegant floating vector thought bubble enclosing a bold orange question mark (`?`).
+  - **§04 Contact**: `ContactIllustration` — Stylized folded origami paper crane carrying an international letter with orange postmark stamp.
+  - **§05 FAQ**: `FAQIllustration` — Integrated custom portrait line-drawing from `danface_only-2025.svg` paired with an elegant floating vector thought bubble enclosing a bold orange question mark (`?`).
+  *(Note: The standalone Pricing section and table have been removed in favor of bespoke consultation via Contact).*
