@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface CaseStudy {
@@ -32,30 +31,30 @@ const cases: CaseStudy[] = [
   {
     id: "taka",
     index: "01",
-    year: "2025",
-    client: "Takasaki Fitness",
-    clientJp: "高崎フィットネス",
-    title: "A local gym website designed to increase class bookings and memberships.",
-    titleJp: "体験予約と入会につなげる地域密着型ジムサイト",
-    sector: "Fitness · Local Booking - Sample Project",
-    sectorJp: "フィットネス・予約サイト - 制作サンプル",
+    year: "2026",
+    client: "SUKIMA FIT",
+    clientJp: "SUKIMA FIT",
+    title: "A proposed website concept for a new generation of 24-hour smart-access gyms.",
+    titleJp: "日本で増えている、24時間型スマートジムのWebサイト提案",
+    sector: "24-HOUR SMART GYM - PROPOSED SAMPLE PROJECT",
+    sectorJp: "24時間スマートジム - 制作サンプル",
     summary:
-      "Helping a neighborhood gym build a stronger online presence with a welcoming bilingual website and a simple class booking system.",
-    summaryJp: "地域のジムがオンラインで新規会員を獲得できるよう、親しみやすいデザインとシンプルな予約システムを備えたWebサイトを制作しました。",
+      "A contemporary bilingual website concept for a new type of unmanned gym that has been growing in popularity in Japan. Designed around flexible access, allowing members to train at any time - including during hours when staff are not on site.",
+    summaryJp: "スタッフが常駐しない時間帯でも利用できる、スマートアクセス型の24時間ジムを想定したWebサイトの制作サンプルです。日常の「隙間時間」に合わせて、いつでもトレーニングできる新しいジムの利用スタイルを、シンプルで現代的なデザインで表現しました。",
     role: ["Strategy", "UX/UI", "Front-end", "Bilingual Copy"],
     roleJp: ["戦略策定", "UX/UIデザイン", "フロントエンド実装", "コピーライティング"],
     stack: ["Webflow", "GSAP", "Calendar API", "i18n"],
     outcomes: [
-      { value: "EN/JP", label: "Bilingual support", jpLabel: "日英バイリンガル対応" },
-      { value: "UX", label: "Booking flow", jpLabel: "予約導線設計" },
+      { value: "QR / APP", label: "Smart access", jpLabel: "スマートアクセス" },
+      { value: "EN / JP", label: "Bilingual support", jpLabel: "日英バイリンガル対応" },
       { value: "RWD", label: "Responsive design", jpLabel: "レスポンシブ設計" },
     ],
-    image: new URL("../assets/Taka-PCbig-E.jpg", import.meta.url).href,
-    jpImage: new URL("../assets/Taka-PCbig-J.jpg", import.meta.url).href,
-    mobileImage: new URL("../assets/Taka-phone-E.jpeg", import.meta.url).href,
-    jpMobileImage: new URL("../assets/Taka-phone-J.jpeg", import.meta.url).href,
-    tabletImage: new URL("../assets/Taka-tablet-E.jpeg", import.meta.url).href,
-    jpTabletImage: new URL("../assets/Taka-tablet-J.jpeg", import.meta.url).href,
+    image: new URL("../assets/SUKIMA-FIT-desktop-E.jpg", import.meta.url).href,
+    jpImage: new URL("../assets/SUKIMA-FIT-desktop-J.jpg", import.meta.url).href,
+    mobileImage: new URL("../assets/SUKIMA-FIT-phone-E.jpg", import.meta.url).href,
+    jpMobileImage: new URL("../assets/SUKIMA-FIT-phone-J.jpg", import.meta.url).href,
+    tabletImage: new URL("../assets/SUKIMA-FIT-tablet-E.jpg", import.meta.url).href,
+    jpTabletImage: new URL("../assets/SUKIMA-FIT-tablet-J.jpg", import.meta.url).href,
     accent: true,
     link: `${import.meta.env.BASE_URL}samples/gym01/en/`.replace(/\/+/g, '/'),
     jpLink: `${import.meta.env.BASE_URL}samples/gym01/`.replace(/\/+/g, '/'),
@@ -124,41 +123,6 @@ const cases: CaseStudy[] = [
 
 export const CaseStudies = () => {
   const { t, lang } = useLanguage();
-  const [showInstaOverlay, setShowInstaOverlay] = useState(false);
-  const takaRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const element = takaRef.current;
-    if (!element) return;
-
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setShowInstaOverlay(true);
-            if (timeoutId) clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-              setShowInstaOverlay(false);
-            }, 1500);
-          } else {
-            setShowInstaOverlay(false);
-          }
-        });
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    observer.observe(element);
-
-    return () => {
-      observer.disconnect();
-      if (timeoutId) clearTimeout(timeoutId);
-    };
-  }, []);
 
   return (
     <div className="space-y-24 lg:space-y-32">
@@ -172,7 +136,6 @@ export const CaseStudies = () => {
         return (
           <article
             key={c.id}
-            ref={c.id === 'taka' ? takaRef : undefined}
             className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-center"
           >
             {/* Image */}
@@ -211,28 +174,6 @@ export const CaseStudies = () => {
                           className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top transition-transform duration-[20000ms] ease-in-out group-hover:scale-[1.03]`}
                         />
                       </picture>
-                      {c.id === 'taka' && (
-                        <>
-                          <div 
-                            className={`absolute inset-0 bg-black/50 transition-opacity duration-500 pointer-events-none z-[5] ${
-                              showInstaOverlay ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                            }`} 
-                          />
-                          <div 
-                            className={`absolute inset-0 z-10 pointer-events-none transition-all duration-500 ease-in-out ${
-                              showInstaOverlay 
-                                ? "opacity-100 scale-100" 
-                                : "opacity-0 scale-[0.98] group-hover:opacity-100 group-hover:scale-100"
-                            }`}
-                          >
-                            <img 
-                              src={`${import.meta.env.BASE_URL}samples/gym01/Profile-half.png`.replace(/\/+/g, '/')}
-                              alt="Takasaki Fitness Profile Overlay"
-                              className="h-full mr-0 ml-auto object-contain block"
-                            />
-                          </div>
-                        </>
-                      )}
                     </div>
                   </div>
                 </a>
@@ -265,28 +206,6 @@ export const CaseStudies = () => {
                           className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top transition-transform duration-[20000ms] ease-in-out group-hover:scale-[1.03]`}
                         />
                       </picture>
-                      {c.id === 'taka' && (
-                        <>
-                          <div 
-                            className={`absolute inset-0 bg-black/50 transition-opacity duration-500 pointer-events-none z-[5] ${
-                              showInstaOverlay ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                            }`} 
-                          />
-                          <div 
-                            className={`absolute inset-0 z-10 pointer-events-none transition-all duration-500 ease-in-out ${
-                              showInstaOverlay 
-                                ? "opacity-100 scale-100" 
-                                : "opacity-0 scale-[0.98] group-hover:opacity-100 group-hover:scale-100"
-                            }`}
-                          >
-                            <img 
-                              src={`${import.meta.env.BASE_URL}samples/gym01/Profile-half.png`.replace(/\/+/g, '/')}
-                              alt="Takasaki Fitness Profile Overlay"
-                              className="h-full mr-0 ml-auto object-contain block"
-                            />
-                          </div>
-                        </>
-                      )}
                     </div>
                   </div>
                 </div>
