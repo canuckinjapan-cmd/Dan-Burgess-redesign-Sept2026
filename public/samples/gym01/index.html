@@ -252,7 +252,7 @@
 
     <main id="main">
       <!-- ヒーロー -->
-      <section id="hero" class="relative pt-3 pb-14 sm:pt-4 sm:pb-16 lg:pt-4 lg:pb-16 overflow-hidden">
+      <section id="hero" class="relative scroll-mt-24 pt-3 pb-14 sm:pt-4 sm:pb-16 lg:pt-4 lg:pb-16 overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
@@ -1659,6 +1659,13 @@
           window.addEventListener('scroll', updateHeader, { passive: true });
           updateHeader();
         }
+
+        document.querySelectorAll('a[href="#hero"]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        });
 
         const revealSelectors = [
           'main > section:not(#hero) h2',
