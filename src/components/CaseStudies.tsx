@@ -57,8 +57,8 @@ const cases: CaseStudy[] = [
     tabletImage: new URL("../assets/Taka-tablet-E.jpeg", import.meta.url).href,
     jpTabletImage: new URL("../assets/Taka-tablet-J.jpeg", import.meta.url).href,
     accent: true,
-    link: `${import.meta.env.BASE_URL}samples/gym01/index.html?lang=en`.replace(/\/+/g, '/'),
-    jpLink: `${import.meta.env.BASE_URL}samples/gym01/index.html?lang=ja`.replace(/\/+/g, '/'),
+    link: `${import.meta.env.BASE_URL}samples/gym01/en/`.replace(/\/+/g, '/'),
+    jpLink: `${import.meta.env.BASE_URL}samples/gym01/`.replace(/\/+/g, '/'),
   },
   {
     id: "lumina",
