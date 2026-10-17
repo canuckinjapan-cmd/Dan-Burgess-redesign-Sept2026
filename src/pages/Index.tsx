@@ -188,7 +188,7 @@ const Index = () => {
                   />
                   <p className="text-lg sm:text-xl lg:text-[1.35rem] text-ink/90 leading-relaxed font-sans-body hero-support-text relative">
                     {t(
-                      "Combining experience in design, web production, and Japanese-English communication to create websites that communicate clearly across cultures. TEST!!",
+                      "Combining experience in design, web production, and Japanese-English communication to create websites that communicate clearly across cultures.",
                       "デザインとWeb制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。"
                     )}
                   </p>
