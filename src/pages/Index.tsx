@@ -130,10 +130,24 @@ const Index = () => {
             >
               {/* Issue Ribbon */}
               <div className="flex items-center gap-3 font-mono text-[11px] uppercase text-ink/80 mb-8 lg:mb-12 pointer-events-auto w-fit">
-                <span className="size-1.5 rounded-full bg-accent-brand animate-pulse-dot" aria-hidden />
+                <span
+                  className="size-1.5 rounded-full bg-accent-brand motion-safe:animate-pulse-dot"
+                  aria-hidden
+                />
                 <span>ISSUE 01 / 2026</span>
-                <span className="h-px w-8 bg-ink/20" />
-                <span>Fukuoka, JPN · UTC+9</span>
+                <span className="h-px w-8 bg-ink/20" aria-hidden />
+                <a
+                  href="#contact"
+                  className="py-3.5 -my-3.5 text-ink underline decoration-accent-brand decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+                >
+                  {t(
+                    "Open to Web Designer / Front-End Roles",
+                    "Webデザイナー／フロントエンド職を募集中"
+                  )}
+                  <span className="sr-only">
+                    {t(" (go to contact form)", "（お問い合わせへ）")}
+                  </span>
+                </a>
               </div>
 
               {/* Confident Portfolio Hero Typography Hierarchy */}
