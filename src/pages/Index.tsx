@@ -602,7 +602,7 @@ const Index = () => {
           <p className="text-ink-muted">
             &copy; {currentYear} Dan Burgess
           </p>
-          <div className="flex flex-wrap gap-x-4 gap-y-2 -ml-2 font-mono text-[10px] lg:text-[11px] uppercase">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 -ml-2 font-mono text-[12px] lg:text-[13px] uppercase">
             <a href="#work" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Work", "作品")}</a>
             <a href="#about" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("About", "私について")}</a>
             <a href="#skills" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Skills", "スキル・制作")}</a>
