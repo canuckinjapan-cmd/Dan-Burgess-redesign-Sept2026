@@ -198,14 +198,14 @@ const Index = () => {
                 <div className="flex flex-wrap items-center gap-4 pointer-events-auto">
                   <a
                     href="#work"
-                    className="group inline-flex items-center justify-center text-center gap-3 bg-ink text-surface px-7 py-4 font-mono text-[11px] font-bold uppercase hover:bg-accent-brand transition-colors whitespace-nowrap shadow-sm"
+                    className="group inline-flex items-center justify-center text-center gap-3 bg-ink text-surface px-7 py-4 font-mono text-[13px] font-bold uppercase hover:bg-accent-brand transition-colors whitespace-nowrap shadow-sm"
                   >
                     {t("Selected Work", "作品を見る")}
                     <span className="text-[20px] transition-transform group-hover:translate-x-1" aria-hidden>↓</span>
                   </a>
                   <a
                     href="#about"
-                    className="inline-flex items-center justify-center text-center gap-3 px-7 py-4 font-mono text-[11px] font-bold uppercase text-ink hover:text-accent-brand transition-all border-2 border-ink/40 hover:border-accent-brand bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
+                    className="inline-flex items-center justify-center text-center gap-3 px-7 py-4 font-mono text-[13px] font-bold uppercase text-ink hover:text-accent-brand transition-all border-2 border-ink/40 hover:border-accent-brand bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
                   >
                     {t("About", "私について")}
                   </a>
