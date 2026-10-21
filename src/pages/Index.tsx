@@ -134,15 +134,29 @@ const Index = () => {
                   className="size-1.5 rounded-full bg-accent-brand motion-safe:animate-pulse-dot"
                   aria-hidden
                 />
-                <span>ISSUE 01 / 2026</span>
+                <span>
+                  <span className="whitespace-nowrap">ISSUE 01 /</span>
+                  <br className="inline sm:hidden landscape:hidden" />
+                  <span className="hidden sm:inline landscape:inline"> </span>
+                  <span className="whitespace-nowrap">2026</span>
+                </span>
                 <span className="h-px w-8 bg-ink/20" aria-hidden />
                 <a
                   href="#contact"
                   className="py-3.5 -my-3.5 text-ink underline decoration-accent-brand decoration-1 underline-offset-4 hover:decoration-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
                 >
                   {t(
-                    "Open to Web Designer / Front-End Roles",
-                    "Webデザイナー／フロントエンド職を募集中"
+                    <>
+                      <span className="whitespace-nowrap">Open to Web Designer /</span>
+                      <br className="inline sm:hidden landscape:hidden" />
+                      <span className="hidden sm:inline landscape:inline"> </span>
+                      <span className="whitespace-nowrap">Front-End Roles</span>
+                    </>,
+                    <>
+                      <span className="whitespace-nowrap">Webデザイナー／</span>
+                      <br className="inline sm:hidden landscape:hidden" />
+                      <span className="whitespace-nowrap">フロントエンド職を募集中</span>
+                    </>
                   )}
                   <span className="sr-only">
                     {t(" (go to contact form)", "（お問い合わせへ）")}
