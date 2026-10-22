@@ -179,7 +179,8 @@ export const CaseStudies = () => {
                           src={currentImage}
                           alt={`${t(c.client, c.clientJp)} - ${t(c.title, c.titleJp)}`}
                           loading="lazy"
-                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top transition-transform duration-[20000ms] ease-in-out group-hover:scale-[1.03]`}
+                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top ease-in-out group-hover:scale-[1.03]`}
+                          style={{ transitionDuration: '20000ms' }}
                         />
                       </picture>
                     </div>
@@ -211,7 +212,8 @@ export const CaseStudies = () => {
                           src={currentImage}
                           alt={`${t(c.client, c.clientJp)} - ${t(c.title, c.titleJp)}`}
                           loading="lazy"
-                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top transition-transform duration-[20000ms] ease-in-out group-hover:scale-[1.03]`}
+                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top ease-in-out group-hover:scale-[1.03]`}
+                          style={{ transitionDuration: '20000ms' }}
                         />
                       </picture>
                     </div>
