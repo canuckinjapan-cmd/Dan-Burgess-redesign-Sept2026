@@ -5,7 +5,7 @@ import { CaseStudies } from "@/components/CaseStudies";
 import { ContactForm } from "@/components/ContactForm";
 import { PortraitPlate } from "@/components/PortraitPlate";
 import { Globe } from "@/components/ui/globe";
-import aboutBg from "@/assets/images/photo-1570435229357-79dd1692b110-BC.jpg";
+import aboutBg from "@/assets/photo-1570435229357-79dd1692b110-BC.jpg";
 
 import { 
   ContactIllustration 
