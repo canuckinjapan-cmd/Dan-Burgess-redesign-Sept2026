@@ -141,7 +141,7 @@ const NotFound = () => {
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             <Link to="/#work" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Work", "制作事例")}</Link>
             <Link to="/#about" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("About", "私について")}</Link>
-            <Link to="/#services" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Services", "サービス")}</Link>
+            <Link to="/#skills" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Skills", "スキル・制作")}</Link>
             <Link to="/#contact" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Contact", "お問い合わせ")}</Link>
           </div>
           <div className="flex items-center gap-4">

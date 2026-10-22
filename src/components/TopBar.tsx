@@ -12,7 +12,7 @@ const navItems = [
   { label: "Work", jpLabel: "作品", href: "#work" },
   { label: "About", jpLabel: "私について", href: "#about" },
   { label: "Skills", jpLabel: "スキル・制作", href: "#skills" },
-  { label: "Contact", jpLabel: "お問い合わせ", href: "#contact" /* TEST */},
+  { label: "Contact", jpLabel: "お問い合わせ", href: "#contact" },
 ];
 
 export const TopBar = () => {
