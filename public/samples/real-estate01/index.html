@@ -36,7 +36,7 @@
         <section class="relative h-screen flex items-center justify-center overflow-hidden px-6 text-center">
           <div class="max-w-4xl mx-auto space-y-6 z-10">
             <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl tracking-wider leading-tight">
-              日本の田舎<br>暮らし
+              日本の田舎<br class="md:hidden">暮らし
             </h1>
             <p class="text-lg md:text-xl text-gray-300 font-light tracking-wide max-w-2xl mx-auto">
               Premium living in harmony with Nagano's nature. Discover timeless traditional estates and modern mountain retreats in Karuizawa.
@@ -68,7 +68,8 @@
     function updateTitle() {
       const h1 = document.querySelector('main h1');
       if (h1) {
-        if (window.innerWidth < 768) {
+        const isMobilePortrait = window.innerWidth < 768 || (window.innerHeight > window.innerWidth && window.innerWidth < 1024);
+        if (isMobilePortrait) {
           if (h1.innerHTML !== '日本の田舎<br>暮らし') {
             h1.innerHTML = '日本の田舎<br>暮らし';
           }
@@ -80,6 +81,7 @@
       }
     }
     window.addEventListener('resize', updateTitle);
+    window.addEventListener('orientationchange', updateTitle);
     window.addEventListener('DOMContentLoaded', updateTitle);
     const observer = new MutationObserver(updateTitle);
     observer.observe(document.body, { childList: true, subtree: true });
