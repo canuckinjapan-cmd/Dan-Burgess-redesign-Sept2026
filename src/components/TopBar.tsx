@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
 import manga from "@/assets/danface_manga.svg";
 import instagramLogo from "@/assets/instagram-logo-org.svg";
-import bloggerLogo from "@/assets/Blogger-Logo.png";
+import bloggerLogo from "@/assets/blogger-logo-org.svg";
 import linkedinLogo from "@/assets/linkedin-logo-org.svg";
 
 const navItems = [
@@ -48,34 +48,64 @@ export const TopBar = () => {
     } else {
       document.body.style.overflow = "unset";
     }
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isMenuOpen]);
 
   const renderLangSwitcher = (extraClass = "") => (
-    <div className={`flex items-center gap-1 font-mono text-[10px] uppercase border rule rounded-sm px-1 py-0.5 ${extraClass}`}>
+    <div className={`group flex items-center gap-1 font-mono text-[10px] uppercase border rule rounded-sm px-1 py-0.5 ${extraClass}`}>
       <Link
         to="/en/"
         onClick={() => setLang("EN")}
-        className={`px-1.5 py-0.5 transition-colors ${lang === "EN" ? "bg-accent-brand text-surface font-semibold" : "text-ink-muted hover:text-ink"}`}
-        aria-label="Switch to English"
+        aria-current={lang === "EN" ? "page" : undefined}
+        aria-label="English (EN)"
+        className={`w-10 h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "EN" ? "bg-accent-text-large text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
-        EN
+        {lang === "JP" ? (
+          <>
+            <span className="group-hover:hidden w-5 text-center inline-block">EN</span>
+            <span className="hidden group-hover:inline-block w-5 text-center">🍁</span>
+          </>
+        ) : (
+          <span className="inline-block w-5 text-center">EN</span>
+        )}
       </Link>
       <Link
         to="/"
         onClick={() => setLang("JP")}
-        className={`px-1.5 py-0.5 transition-colors ${lang === "JP" ? "bg-accent-brand text-surface font-semibold" : "text-ink-muted hover:text-ink"}`}
-        aria-label="日本語へ切り替え"
+        aria-current={lang === "JP" ? "page" : undefined}
+        aria-label="日本語 (JP)"
+        className={`w-10 h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "JP" ? "bg-accent-text-large text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
-        JP
+        {lang === "EN" ? (
+          <>
+            <span className="group-hover:hidden w-5 text-center inline-block">JP</span>
+            <span className="hidden group-hover:inline-block w-5 text-center group-hover:scale-150 transition-transform">🇯🇵</span>
+          </>
+        ) : (
+          <span className="inline-block w-5 text-center">JP</span>
+        )}
       </Link>
     </div>
   );
 
   return (
-    <div className="h-16 w-full relative">
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-ink focus:text-surface focus:font-mono focus:text-xs focus:uppercase focus:rounded-sm focus:shadow-lg"
+      >
+        {t("Skip to main content", "メインコンテンツへスキップ")}
+      </a>
+      <div className="h-16 w-full relative">
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isMenuOpen
@@ -108,7 +138,7 @@ export const TopBar = () => {
           </span>
           <span className="font-serif-display font-extrabold tracking-tight text-[22px] sm:text-2xl">
             <span className="text-black">DAN</span>
-            <span className="text-accent-brand">BURGESS</span>
+            <span className="text-accent-text-large">BURGESS</span>
             <span className="text-black">DESIGN</span>
           </span>
           {/* Tooltip Balloon - persistent when at bottom, interactive on hover otherwise */}
@@ -129,7 +159,7 @@ export const TopBar = () => {
         {/* Desktop/Tablet Landscape Center: Nav */}
         <nav className="hidden md:landscape:flex lg:portrait:hidden flex-1 items-center justify-center gap-6 xl:gap-8 font-mono text-[12px] lg:text-[13px] uppercase">
           {navItems.map((n) => (
-            <a key={n.label} href={n.href} className="px-1.5 py-1 text-ink-muted hover:text-white hover:bg-accent-brand rounded-sm transition-all whitespace-nowrap">
+            <a key={n.label} href={n.href} className="px-1.5 py-1 text-ink-muted hover:text-white hover:bg-accent-text rounded-sm transition-all whitespace-nowrap">
               {t(n.label, n.jpLabel)}
             </a>
           ))}
@@ -144,7 +174,7 @@ export const TopBar = () => {
           <div className="hidden xl:flex items-center ml-2.5 lg:ml-3">
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 bg-ink text-surface px-3 py-1.5 landscape:px-3 landscape:py-1.5 lg:px-4 lg:py-2 font-mono text-[10px] lg:text-[11px] uppercase hover:bg-accent-brand transition-colors"
+              className="inline-flex items-center gap-2 bg-ink text-surface px-3 py-1.5 landscape:px-3 landscape:py-1.5 lg:px-4 lg:py-2 font-mono text-[10px] lg:text-[11px] uppercase hover:bg-accent-text transition-colors"
             >
               {t("Get in Touch", "お問い合わせ")} <span aria-hidden>→</span>
             </a>
@@ -154,8 +184,9 @@ export const TopBar = () => {
           <div className="relative md:landscape:hidden lg:hidden lg:portrait:flex mr-1 sm:mr-3 h-10 flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-ink hover:text-accent-brand transition-colors flex items-center justify-center relative z-10"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              className="p-2 text-ink hover:text-accent-text transition-colors flex items-center justify-center relative z-10"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -170,11 +201,11 @@ export const TopBar = () => {
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setIsMenuOpen(true)}
-                  className="absolute right-0 top-[calc(100%+8px)] bg-surface text-ink border border-ink shadow-2xl rounded-sm py-1.5 px-3 font-mono text-[9px] uppercase whitespace-nowrap z-30 cursor-pointer hover:bg-accent-brand hover:text-white hover:border-accent-brand transition-all flex items-center group"
+                  className="absolute right-0 top-[calc(100%+8px)] bg-surface text-ink border border-ink shadow-2xl rounded-sm py-1.5 px-3 font-mono text-[9px] uppercase whitespace-nowrap z-30 cursor-pointer hover:bg-accent-text hover:text-white hover:border-accent-text transition-all flex items-center group"
                 >
                   {t("Navigation Menu", "ナビメニュー")}
                   {/* Hollow/Open border-matching triangle at the top pointing up */}
-                  <div className="absolute -top-1 right-4 w-2 h-2 bg-surface border-t border-l border-ink rotate-45 group-hover:bg-accent-brand group-hover:border-accent-brand transition-all" />
+                  <div className="absolute -top-1 right-4 w-2 h-2 bg-surface border-t border-l border-ink rotate-45 group-hover:bg-accent-text group-hover:border-accent-text transition-all" />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -202,7 +233,7 @@ export const TopBar = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}
-                  className="font-serif-display text-4xl landscape:text-lg font-bold tracking-tight text-ink hover:text-accent-brand transition-colors"
+                  className="font-serif-display text-4xl landscape:text-lg font-bold tracking-tight text-ink hover:text-accent-text transition-colors"
                 >
                   {t(n.label, n.jpLabel)}
                 </motion.a>
@@ -260,5 +291,6 @@ export const TopBar = () => {
       </AnimatePresence>
     </header>
   </div>
+    </>
   );
 };

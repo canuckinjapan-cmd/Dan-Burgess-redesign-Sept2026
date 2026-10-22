@@ -99,7 +99,7 @@ export const ContactForm = () => {
     }
   };
 
-  const field = "w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-subtle focus:outline-none focus:border-accent-brand focus:bg-white transition-all";
+  const field = "w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-placeholder focus:outline-none focus:border-accent-text focus:bg-white transition-all";
   const label = "block font-mono text-[12px] uppercase text-ink-muted mb-1.5 font-normal";
 
   return (
@@ -176,7 +176,7 @@ export const ContactForm = () => {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex items-center justify-center gap-3 bg-ink text-surface px-7 py-3.5 font-mono text-[12px] font-normal uppercase hover:bg-accent-brand transition-colors disabled:opacity-60 whitespace-nowrap self-start sm:self-auto cursor-pointer"
+          className="inline-flex items-center justify-center gap-3 bg-ink text-surface px-7 py-3.5 font-mono text-[12px] font-normal uppercase hover:bg-accent-text transition-colors disabled:opacity-60 whitespace-nowrap self-start sm:self-auto cursor-pointer"
         >
           {submitting ? t("Sending…", "送信中…") : t("Send Message", "送信する")}
           <span className="text-[20px] transition-transform group-hover:translate-x-1" aria-hidden>

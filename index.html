@@ -17,77 +17,72 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
     
-    <!-- JSON-LD Structured Data (Japanese) -->
-    <script type="application/ld+json" id="json-ld-structured-data">
+
+<!-- JSON-LD Structured Data (Japanese and English) -->
+<script type="application/ld+json" id="json-ld-structured-data">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "ProfessionalService",
-          "@id": "https://danburgess.com/#service",
-          "name": "ダン・バージェス デザイン",
-          "url": "https://danburgess.com/",
-          "inLanguage": "ja",
-          "logo": "https://danburgess.com/src/assets/danface_manga.svg",
-          "image": "https://danburgess.com/src/assets/danface_manga.svg",
-          "description": "ダン・バージェス デザインは福岡を拠点とするWeb開発、UI/UXデザイン、ローカライズのスタジオです。海外・国内の成果に繋がる高品質なバイリンガルWebサイトを制作します。",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "福岡市",
-            "addressRegion": "福岡県",
-            "addressCountry": "JP"
-          },
-          "knowsAbout": [
-            "Webデザイン",
-            "UI/UXデザイン",
-            "バイリンガルローカライズ",
-            "Web開発",
-            "情報設計"
-          ],
-          "founder": {
-            "@id": "https://danburgess.com/#person"
-          }
-        },
-        {
-          "@type": "Person",
-          "@id": "https://danburgess.com/#person",
-          "name": "ダン・バージェス",
-          "alternateName": "Dan Burgess",
-          "url": "https://danburgess.com/",
-          "jobTitle": "Lead Web Developer & UI/UX Designer",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "福岡市",
-            "addressCountry": "JP"
-          },
-          "knowsLanguage": ["ja", "en"],
-          "knowsAbout": [
-            "Web開発",
-            "UI/UXデザイン",
-            "ローカライズ"
-          ],
-          "sameAs": [
-            "https://www.instagram.com/canuckinjapan/",
-            "https://djb-archviz.blogspot.com"
-          ]
-        },
-        {
-          "@type": "WebSite",
-          "@id": "https://danburgess.com/#website",
-          "url": "https://danburgess.com/",
-          "name": "ダン・バージェス デザイン",
-          "inLanguage": "ja"
-        }
+      "@type": "Person",
+      "@id": "https://danburgess.com/#person",
+      "name": "ダン・バージェス",
+      "alternateName": "Dan Burgess",
+      "url": "https://danburgess.com/",
+      "jobTitle": "Lead Web Developer & UI/UX Designer",
+      "image": "https://danburgess.com/src/assets/danface_manga.svg",
+      "description": "ダン・バージェスは福岡を拠点とするWeb開発、UI/UXデザイン、ローカライズのデザイナーです。海外・国内の成果に繋がる高品質なバイリンガルWebサイトを制作します。就職・フリーランスのお仕事を募集しています。 Dan Burgess is a designer based in Fukuoka who specializes in web development, UI/UX design, and localization. He creates high-quality, bilingual websites that drive results both domestically and internationally. Currently seeking employment and freelance opportunities.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "福岡県",
+        "addressCountry": "JP"
+      },
+      "knowsLanguage": [
+        "ja",
+        "en"
+      ],
+      "knowsAbout": [
+        "Web開発",
+        "Webデザイン",
+        "UI/UXデザイン",
+        "ローカライズ",
+        "バイリンガルWebサイト制作",
+        "情報設計",
+        "Web Development",
+        "Web Design",
+        "UI/UX Design",
+        "Localization",
+        "Bilingual Website Development",
+        "Information Architecture"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/canuckinjapan/",
+        "https://djb-archviz.blogspot.com/"
       ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://danburgess.com/#website",
+      "url": "https://danburgess.com/",
+      "name": "ダン・バージェス デザイン | Dan Burgess Design",
+      "inLanguage": [
+        "ja",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://danburgess.com/#person"
+      }
     }
-    </script>
+  ]
+}
+</script>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://danburgess.com/" />
     <meta property="og:title" content="ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ" />
     <meta property="og:description" content="福岡を拠点に、世界に伝わるWebサイト、UI/UXデザイン、ローカライズを提供。1992年からの実績で日・英コミュニケーションを成功に導きます。" />
-    <meta property="og:image" content="/src/assets/danface_manga.svg" />
+    <meta property="og:image" content="/src/assets/DJB-og-image-JP.png" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/src/assets/danface_manga.svg" />
@@ -108,9 +103,11 @@
       </header>
       <main id="main-content">
         <section id="hero">
-          <h1>福岡発、世界に伝わるWebとUIデザイン。</h1>
-          <p>1992年来日。福岡を拠点に、海外へ発信するバイリンガルWeb開発、UI/UXデザイン、ローカライズを提供しています。</p>
-          <a href="#work">実績を見る</a>
+          <p>ISSUE 01 / 2026 — Webデザイナー／フロントエンド職を募集中</p>
+          <h1>日本企業の海外発信を支援する Webデザイナー</h1>
+          <p>デザインとWeb制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。</p>
+          <a href="#work">作品を見る</a>
+          <a href="#about">私について</a>
         </section>
         <section id="work">
           <h2>01 厳選された実績 / Selected Work</h2>

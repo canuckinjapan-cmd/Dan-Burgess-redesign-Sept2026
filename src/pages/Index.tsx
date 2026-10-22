@@ -12,7 +12,7 @@ import {
 } from "@/components/SectionIllustrations";
 
 import instagramLogo from "@/assets/instagram-logo-org.svg";
-import bloggerLogo from "@/assets/Blogger-Logo.png";
+import bloggerLogo from "@/assets/blogger-logo-org.svg";
 import linkedinLogo from "@/assets/linkedin-logo-org.svg";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -47,7 +47,7 @@ const Index = () => {
       label: "DESIGN",
       jpSubtitle: t("", "デザイン・UI"),
       tag: (
-        <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-ink-muted/90 px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 whitespace-nowrap">
+        <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-wider text-ink-label px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 whitespace-nowrap">
           Layout · Typography · UI
         </span>
       ),
@@ -55,19 +55,44 @@ const Index = () => {
         "Visual design, layout, typography, information hierarchy, and UI.",
         "レイアウト、タイポグラフィ、情報設計を通じて、伝わりやすく使いやすい画面を設計します。"
       ),
+      evidence: t(
+        <>
+          Layout and type systems for bilingual sites. See{" "}
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            SUKIMA FIT
+          </a>
+          .
+        </>,
+        <>
+          日英サイトのレイアウトとタイポグラフィ設計。実例：
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            SUKIMA FIT
+          </a>
+        </>
+      ),
     },
     {
       num: "02",
       label: "BUILD",
       jpSubtitle: t("", "Web制作"),
       tag: (
-        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-muted/90 px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
-          <span className="text-accent-brand">HTML</span> → <span className="text-ink">CSS</span> → <span className="text-ink">JS</span>
+        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-label px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
+          <span className="text-accent-text">HTML</span> → <span className="text-ink">CSS</span> → <span className="text-ink">JS</span>
         </span>
       ),
       body: t(
         "Responsive web production using HTML, CSS, JavaScript, and modern production workflows.",
         "HTML、CSS、JavaScriptを活用し、さまざまな画面サイズに対応するWebサイトを制作します。"
+      ),
+      evidence: t(
+        "Hand-coded since the Notepad era. Today: React, Vite and Tailwind, shipped via GitHub to Cloudflare.",
+        "メモ帳でHTMLを手書きしていた時代から。現在はReact・Vite・Tailwindで構築し、GitHub経由でCloudflareに公開。"
       ),
     },
     {
@@ -75,13 +100,34 @@ const Index = () => {
       label: "CONNECT",
       jpSubtitle: t("", "日英コミュニケーション"),
       tag: (
-        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-muted/90 px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
-          <span className="text-accent-brand">JP</span> ↔ <span className="text-ink">EN</span>
+        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-label px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
+          <span className="text-accent-text">JP</span> ↔ <span className="text-ink">EN</span>
         </span>
       ),
       body: t(
         "Japanese-English communication, localization, and clear communication across languages and cultures.",
         "日本語と英語の両方で情報を整理し、異なる言語や文化の相手にも伝わる表現を考えます。"
+      ),
+      evidence: t(
+        <>
+          Separate EN and JP pages, each written for its own audience. See{" "}
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            SUKIMA FIT
+          </a>
+          .
+        </>,
+        <>
+          日本語版と英語版を別ページとして、それぞれの読者に向けて作成。実例：
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            SUKIMA FIT
+          </a>
+        </>
       ),
     },
     {
@@ -89,7 +135,7 @@ const Index = () => {
       label: "EXPLORE",
       jpSubtitle: t("", "新しい制作手法"),
       tag: (
-        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-muted/90 px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
+        <span className="font-mono text-[10px] sm:text-[11px] tracking-wider text-ink-label px-2 sm:px-2.5 py-1 border border-ink/15 bg-surface-soft/40 font-semibold whitespace-nowrap">
           Concept → Prototype → Code
         </span>
       ),
@@ -97,6 +143,57 @@ const Index = () => {
         "AI-assisted prototyping and development, with hands-on review, refinement, and testing.",
         "AIを活用した試作・実装と、自らの確認・修正・検証を組み合わせて制作します。"
       ),
+      evidence: t(
+        <>
+          AI-assisted prototypes, reviewed and edited by hand. See{" "}
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            the demos above
+          </a>
+          .
+        </>,
+        <>
+          AIで試作し、人の目で確認・修正。
+          <a
+            href="#work"
+            className="text-ink underline decoration-ink underline-offset-4 hover:text-accent-text hover:decoration-accent-text focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+          >
+            上の作品
+          </a>
+          をご覧ください。
+        </>
+      ),
+    },
+  ];
+
+  const toolkitRows = [
+    {
+      label: t("DESIGN", "デザイン"),
+      itemsEn: ["Photoshop", "Affinity", "layout", "typography", "UI"],
+      itemsJp: ["Photoshop", "Affinity", "レイアウト", "タイポグラフィ", "UI"],
+    },
+    {
+      label: t("BUILD", "構築"),
+      itemsEn: ["HTML5", "CSS3", "JavaScript", "React", "Vite", "Tailwind CSS", "Framer Motion", "WordPress"],
+      itemsJp: ["HTML5", "CSS3", "JavaScript", "React", "Vite", "Tailwind CSS", "Framer Motion", "WordPress"],
+    },
+    {
+      label: t("SHIP", "公開"),
+      itemsEn: ["Git / GitHub", "Cloudflare Pages & Functions"],
+      itemsJp: ["Git", "GitHub", "Cloudflare Pages・Functions"],
+    },
+    {
+      label: t("QUALITY", "品質"),
+      // TODO: remove "(target)" / （準拠を目標） once the accessibility fixes have shipped.
+      itemsEn: ["Semantic HTML", "mobile-first", "WCAG 2.1 AA (target)", "performance"],
+      itemsJp: ["セマンティックHTML", "モバイルファースト", "WCAG 2.1 AA（準拠を目標）", "パフォーマンス"],
+    },
+    {
+      label: t("BILINGUAL", "日英"),
+      itemsEn: ["EN/JP interfaces", "Japanese–Latin typography", "localization"],
+      itemsJp: ["日英バイリンガルUI", "和欧混植タイポグラフィ", "ローカライズ"],
     },
   ];
 
@@ -194,14 +291,14 @@ const Index = () => {
                   <h1 className="font-serif-display font-extrabold tracking-[-0.025em] text-left text-ink pointer-events-auto mb-6 sm:mb-8 hero-support-text relative">
                     {t(
                       <span className="block text-[2.75rem] sm:text-[3.75rem] md:text-[4.25rem] lg:text-[4.5rem] xl:text-[5.0rem] leading-[1.04] hero-support-text">
-                        <span className="text-accent-brand">Web Designer</span> <br />
+                        <span className="text-accent-text-large">Web Designer</span> <br />
                         for Japanese Businesses <br />
                         Going Global
                       </span>,
                       <span className="block text-[2.35rem] sm:text-[3.5rem] md:text-[4.0rem] lg:text-[4.25rem] xl:text-[4.75rem] leading-[1.15] hero-support-text">
-                        日本企業の海外<br />
-                        発信を支援する<br />
-                        <span className="text-accent-brand">Webデザイナー</span>
+                        日本の田舎<br className="sm:hidden" />
+                        暮らし<br />
+                        <span className="text-accent-text-large">Webデザイナー</span>
                       </span>
                     )}
                   </h1>
@@ -226,14 +323,14 @@ const Index = () => {
                 <div className="flex flex-wrap items-center gap-4 pointer-events-auto">
                   <a
                     href="#work"
-                    className="group inline-flex items-center justify-center text-center gap-3 bg-ink text-surface px-7 py-4 font-mono text-[13px] font-bold uppercase hover:bg-accent-brand transition-colors whitespace-nowrap shadow-sm"
+                    className="group inline-flex items-center justify-center text-center gap-3 bg-ink text-surface px-7 py-4 font-mono text-[13px] font-bold uppercase hover:bg-accent-text transition-colors whitespace-nowrap shadow-sm"
                   >
                     {t("Selected Work", "作品を見る")}
                     <span className="text-[20px] transition-transform group-hover:translate-x-1" aria-hidden>↓</span>
                   </a>
                   <a
                     href="#about"
-                    className="inline-flex items-center justify-center text-center gap-3 px-7 py-4 font-mono text-[13px] font-bold uppercase text-ink hover:text-accent-brand transition-all border-2 border-ink/40 hover:border-accent-brand bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
+                    className="inline-flex items-center justify-center text-center gap-3 px-7 py-4 font-mono text-[13px] font-bold uppercase text-ink hover:text-accent-text transition-all border-2 border-ink/40 hover:border-accent-text bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
                   >
                     {t("About", "私について")}
                   </a>
@@ -251,19 +348,29 @@ const Index = () => {
             <header className="grid lg:grid-cols-12 gap-8 mb-16 lg:mb-24">
               <div className="lg:col-span-3">
                 <div className="flex items-baseline gap-2.5 sm:gap-3 mb-3">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-brand leading-none select-none tracking-tight">
+                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
                     01
                   </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-brand">
+                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
                     {t("Selected Work", "作品")}
                   </span>
                 </div>
               </div>
               <div className="lg:col-span-9">
-                <h2 className="font-serif-display text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.023em] leading-[1.08] text-balance">
+                <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.023em] leading-[1.12] sm:leading-[1.08] text-balance">
                   {t(
-                    <>Three projects. Three industries.<br /><span className="text-accent-brand">One design approach.</span></>,
-                    <>3つのプロジェクト。3つの業種。<br /><span className="text-accent-brand">一貫したデザインアプローチ。</span></>
+                    <>Three projects. Three industries.<br /><span className="text-accent-text-large">One design approach.</span></>,
+                    <>
+                      <span className="whitespace-nowrap">3つのプロジェクト。</span>
+                      <br className="inline sm:hidden landscape:hidden" />
+                      <span className="whitespace-nowrap">3つの業種。</span>
+                      <br />
+                      <span className="text-accent-text-large">
+                        <span className="whitespace-nowrap">一貫したデザイン</span>
+                        <br className="inline sm:hidden landscape:hidden" />
+                        <span className="whitespace-nowrap">アプローチ。</span>
+                      </span>
+                    </>
                   )}
                 </h2>
                 <p className="mt-6 max-w-[62ch] text-ink-muted text-lg leading-relaxed whitespace-pre-line">
@@ -312,10 +419,10 @@ const Index = () => {
             <div className="grid-cols-1 landscape:col-span-4 md:landscape:col-span-3 lg:col-span-3 flex flex-col gap-8">
               <div>
                 <div className="flex items-baseline gap-2.5 sm:gap-3 mb-0">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-brand leading-none select-none tracking-tight">
+                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text leading-none select-none tracking-tight">
                     02
                   </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-brand">
+                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text-on-photo">
                     {t("About", "私について")}
                   </span>
                 </div>
@@ -368,12 +475,12 @@ const Index = () => {
               )}`}>
                 {t(
                   <>
-                    <span className="text-accent-brand">Design</span>
+                    <span className="text-accent-text">Design</span>
                     <span>, web, and communication across languages.</span>
                   </>,
                   <>
                     <span className="inline-block sm:whitespace-nowrap">
-                      <span className="text-accent-brand">デザイン</span>
+                      <span className="text-accent-text">デザイン</span>
                       <span>とWeb、そして<span className="whitespace-nowrap">日英</span></span>
                     </span>
                     <br className="hidden sm:inline" />
@@ -403,7 +510,7 @@ const Index = () => {
                       href="https://www.linkedin.com/in/danburgessinjapan"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-accent-brand hover:underline font-medium whitespace-nowrap inline-flex items-baseline gap-0.5"
+                      className="text-accent-text-link-on-photo underline decoration-accent-text-link-on-photo hover:underline font-medium whitespace-nowrap inline-flex items-baseline gap-0.5"
                     >
                       <span>LinkedIn</span>
                       <span className="text-[13px] leading-none">↗</span>
@@ -417,7 +524,7 @@ const Index = () => {
                       href="https://www.linkedin.com/in/danburgessinjapan"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-accent-brand hover:underline font-medium whitespace-nowrap inline-flex items-baseline gap-0.5"
+                      className="text-accent-text-link-on-photo underline decoration-accent-text-link-on-photo hover:underline font-medium whitespace-nowrap inline-flex items-baseline gap-0.5"
                     >
                       <span>LinkedInで職歴を見る</span>
                       <span className="text-[13px] leading-none">↗</span>
@@ -478,14 +585,14 @@ const Index = () => {
             <header className="grid lg:grid-cols-12 gap-8 mb-16 lg:mb-20">
               <div className="lg:col-span-3">
                 <div className="flex items-baseline gap-2.5 sm:gap-3 mb-2">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-brand leading-none select-none tracking-tight">
+                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
                     03
                   </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-brand">
+                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
                     {t("Skills & Approach", "スキルと制作アプローチ")}
                   </span>
                 </div>
-                <p className="font-mono text-[11px] uppercase tracking-widest text-ink-muted/70 hidden lg:block">
+                <p className="font-mono text-[11px] uppercase tracking-widest text-ink-label hidden lg:block">
                   {t("Core Capabilities", "主なスキル")}
                 </p>
               </div>
@@ -517,10 +624,10 @@ const Index = () => {
                     {/* Top row: Oversized numeral + meaningful graphic detail */}
                     <div className="flex items-center justify-between gap-3 sm:gap-4 mb-8 sm:mb-10">
                       <div className="flex items-baseline gap-2">
-                        <span className="font-mono text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tighter text-ink/20 group-hover:text-accent-brand transition-colors select-none">
+                        <span className="font-mono text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tighter text-ink/20 group-hover:text-accent-text transition-colors select-none" aria-hidden="true">
                           {c.num}
                         </span>
-                        <span className="hidden sm:inline font-mono text-[10px] uppercase text-ink-muted/50 tracking-wider">
+                        <span className="hidden sm:inline font-mono text-[10px] uppercase text-ink-label tracking-wider">
                           / CAPABILITY
                         </span>
                       </div>
@@ -548,10 +655,53 @@ const Index = () => {
                     <p className="text-ink-muted text-[15px] sm:text-base lg:text-[16px] leading-relaxed max-w-[50ch] mt-4">
                       {c.body}
                     </p>
+                    {c.evidence && (
+                      <p className="text-ink-muted text-[14px] sm:text-[15px] leading-relaxed max-w-[50ch] mt-3">
+                        {c.evidence}
+                      </p>
+                    )}
                   </div>
                 </article>
               ))}
             </div>
+
+            {/* Toolkit Block */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mt-12 lg:mt-16 pt-12 border-t rule"
+            >
+              <h3 className="font-mono text-[11px] uppercase tracking-wider text-ink-muted mb-8">
+                {t("TOOLKIT", "ツールキット")}
+              </h3>
+              <dl className="space-y-6 sm:space-y-5">
+                {toolkitRows.map((row, idx) => {
+                  const items = t(row.itemsEn, row.itemsJp);
+                  const separator = t("·", "／");
+                  return (
+                    <div key={idx} className="grid grid-cols-1 sm:grid-cols-[8rem_1fr] gap-1 sm:gap-6 items-baseline">
+                      <dt className="font-mono text-[11px] uppercase text-ink-muted-strong font-medium">
+                        {row.label}
+                      </dt>
+                      <dd className="font-sans-body text-sm sm:text-base text-ink/80 leading-relaxed" style={{ lineBreak: "strict" }}>
+                        {items.map((item, i) => (
+                          <span key={i} className="inline">
+                            {item}
+                            {i < items.length - 1 && (
+                              <span className="text-ink-muted/50 mx-1.5 sm:mx-2" aria-hidden="true">
+                                {separator}
+                              </span>
+                            )}
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </motion.div>
 
           </motion.div>
         </section>
@@ -567,10 +717,10 @@ const Index = () => {
           >
             <div className="lg:col-span-4 group">
               <div className="flex items-baseline gap-2.5 sm:gap-3 mb-4">
-                <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-brand leading-none select-none tracking-tight">
+                <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
                   04
                 </span>
-                <span className="font-mono font-bold text-[16px] uppercase text-accent-brand">
+                <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
                   {t("Contact", "お問い合わせ")}
                 </span>
               </div>
@@ -631,10 +781,10 @@ const Index = () => {
             &copy; {currentYear} Dan Burgess
           </p>
           <div className="flex flex-wrap gap-x-4 gap-y-2 -ml-2 font-mono text-[12px] lg:text-[13px] uppercase">
-            <a href="#work" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Work", "作品")}</a>
-            <a href="#about" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("About", "私について")}</a>
-            <a href="#skills" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Skills", "スキル・制作")}</a>
-            <a href="#contact" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Contact", "お問い合わせ")}</a>
+            <a href="#work" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Work", "作品")}</a>
+            <a href="#about" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("About", "私について")}</a>
+            <a href="#skills" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Skills", "スキル・制作")}</a>
+            <a href="#contact" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Contact", "お問い合わせ")}</a>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-ink-muted">{t("Social →", "SNS →")}</span>

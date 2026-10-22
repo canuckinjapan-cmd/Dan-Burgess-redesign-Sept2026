@@ -32,6 +32,11 @@ export const SEOHead = ({ lang }: SEOHeadProps) => {
     if (ogDesc) {
       ogDesc.setAttribute("content", description);
     }
+
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      ogImage.setAttribute("content", isEn ? "/src/assets/DJB-og-image-EN.png" : "/src/assets/DJB-og-image-JP.png");
+    }
   }, [lang]);
 
   return null;

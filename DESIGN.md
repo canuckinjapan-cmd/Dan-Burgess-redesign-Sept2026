@@ -9,9 +9,26 @@ The "Ver. 2" aesthetic is inspired by high-end editorial layouts—think premium
 | :--- | :--- | :--- |
 | `--background` | `36 25% 96%` (#F7F3EC) | Warm paper base. |
 | `--foreground` | `220 15% 9%` | Primary ink color for text and borders. |
-| `--accent-brand`| `19 100% 56%` (#FF6A1F) | Signature orange for CTAs, highlights, and drop-caps. |
+| `--accent-brand`| `19 100% 56%` (#FF6A1F) | Signature brand orange for decorative fills only (dots, underlines, rules, blobs, arcs, and buttons/pills carrying dark ink text #111318). Never use as text on light backgrounds. |
+| `--accent-text` | `17 88% 40%` (#C2410C) | WCAG AA compliant (4.57:1 on paper, 3.76:1 on photo wash) for normal-size text, links, small labels, icons, and large headlines over photo washes. |
+| `--accent-text-large` | `19 87% 46%` (#D9500F) | WCAG AA compliant (3.63:1 on paper) for large text (>=24px regular or >=18.66px bold, e.g. hero headline, section headlines, section numerals). |
+| `--accent-text-on-photo` | `#A8360A` | WCAG AA compliant (4.77:1 on photo wash #E1DBD2/#E8D9CE) for small items (e.g. "About" section label) over the About photo background. |
+| `--accent-text-link-on-photo` | `#9A3412` | WCAG AA compliant (5.31:1 on photo wash #E1DBD2/#E8D9CE) for underlined links (e.g. LinkedIn link) over the About photo background. |
+| `--ink-dark` | `#111318` | Dark ink text for active language pill and high-contrast buttons on `#FF6A1F` background (6.49:1). |
+| `--ink-label` | `#5F636A` | High-contrast grey for small uppercase labels (`/ CAPABILITY`, `CORE CAPABILITIES`) and chips on paper/cards (5.46:1 on paper, 6.04:1 on white). |
+| `--ink-placeholder` | `#6B6F76` | Form input placeholder text (5.05:1 on white). |
 | `--surface-elevated`| `0 0% 100%` | High-contrast card backgrounds. |
 | `--rule` | `220 15% 9%` / 12% opacity | Hairline borders for structure. |
+
+### WCAG 2.1 AA Contrast Rules
+1. **Never use #FF6A1F as text on light backgrounds**: Brand orange `#FF6A1F` on paper (~#F4F0EC) measures 2.5–2.7:1 (fails AA). White text on `#FF6A1F` measures 2.86:1 (fails AA). Never use `#FF6A1F` with white text, or as text/icon stroke on light surfaces.
+2. **Standard Text Tokens**: Use `--accent-text` (`#C2410C`) for normal text/icons (>= 4.5:1 on paper), and `--accent-text-large` (`#D9500F`) strictly for large text (>= 3:1 on paper).
+3. **About Section Over Photo Wash**: Background photo wash measures between `#E1DBD2` and `#E8D9CE`. Large items ("02" numeral, "Design" headline) use `--accent-text` (`#C2410C`, 3.76:1). Small labels ("About") use `--accent-text-on-photo` (`#A8360A`, 4.77:1). Links ("LinkedIn ↗") use `--accent-text-link-on-photo` (`#9A3412`, 5.31:1) with an underline.
+4. **Buttons & Pills**: Buttons with `#FF6A1F` background must carry dark ink text (`--ink-dark` / `#111318`, 6.49:1). Buttons/badges with white text must use `--accent-text` (`#C2410C`, 5.18:1).
+5. **Form & Small Greys**: Form placeholders use `--ink-placeholder` (`#6B6F76`, 5.05:1 on white). Small labels and chip text use `--ink-label` (`#5F636A`, 5.46:1 on paper, 6.04:1 on white).
+6. **Decorative Numerals**: Large grey card numerals ("01-04") are decorative and marked with `aria-hidden="true"`.
+7. **Underlines on Links**: Text links must not rely on colour alone; orange text links must use an underline.
+8. **Hover & Focus**: Hover and focus states never place `#FF6A1F` text on light backgrounds. Focus outlines use dark ink or `--accent-text` (>= 3:1).
 
 ## 🖋️ Typography
 | Role | Family | Weights | Details |

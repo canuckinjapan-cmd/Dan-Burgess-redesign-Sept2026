@@ -4,7 +4,7 @@ import { TopBar } from "@/components/TopBar";
 import { useLanguage } from "@/context/LanguageContext";
 import manga from "@/assets/danface_manga.svg";
 import { Instagram } from "lucide-react";
-import bloggerLogo from "@/assets/Blogger-Logo.png";
+import bloggerLogo from "@/assets/blogger-logo-org.svg";
 
 const MatrixRain = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -118,7 +118,7 @@ const NotFound = () => {
 
           <Link 
             to="/" 
-            className="inline-flex items-center gap-3 bg-accent-brand text-white px-10 py-5 font-mono text-[12px] uppercase hover:bg-white hover:text-ink transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(255,106,31,0.5)]"
+            className="inline-flex items-center gap-3 bg-accent-brand text-ink-dark font-bold px-10 py-5 font-mono text-[12px] uppercase hover:bg-white hover:text-ink transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(255,106,31,0.5)]"
           >
             {t("Return to Home", "ホームへ戻る")}
             <span className="text-[24px]" aria-hidden>→</span>
@@ -139,10 +139,10 @@ const NotFound = () => {
             <span>© {currentYear} Dan Burgess Design</span>
           </div>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
-            <Link to="/#work" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Work", "制作事例")}</Link>
-            <Link to="/#about" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("About", "私について")}</Link>
-            <Link to="/#services" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Services", "サービス")}</Link>
-            <Link to="/#contact" className="px-2 py-1 hover:text-white hover:bg-accent-brand rounded-sm transition-all">{t("Contact", "お問い合わせ")}</Link>
+            <Link to="/#work" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Work", "制作事例")}</Link>
+            <Link to="/#about" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("About", "私について")}</Link>
+            <Link to="/#services" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Services", "サービス")}</Link>
+            <Link to="/#contact" className="px-2 py-1 hover:text-white hover:bg-accent-text rounded-sm transition-all">{t("Contact", "お問い合わせ")}</Link>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-ink-muted">{t("MY SOCIALS →", "自分のSNS→")}</span>
@@ -153,7 +153,7 @@ const NotFound = () => {
                 href="https://www.instagram.com/canuckinjapan/" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center justify-center size-8 transition-transform hover:scale-110 text-ink hover:text-accent-brand"
+                className="flex items-center justify-center size-8 transition-transform hover:scale-110 text-ink hover:text-accent-text"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />

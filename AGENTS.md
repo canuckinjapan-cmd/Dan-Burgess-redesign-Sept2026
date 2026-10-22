@@ -26,6 +26,18 @@ This document provides technical guidelines and implementation patterns for AI a
 - **Body**: Use `text-ink-muted` for secondary descriptions to maintain contrast ratios.
 - **Icons**: Exclusively use `lucide-react`. Do not import SVGs directly unless requested.
 
+### Language Switcher (`TopBar.tsx`)
+- **Interaction**: The language switcher uses a hover effect. When EN is active, hover shows the Japanese flag icon; when JP is active, hover shows the Canada maple leaf icon.
+- **Layout Stability**: To prevent layout shifts during hover, ensure the switcher maintains a fixed width using `w-5`, `text-center`, and `border-transparent` for non-hover states.
+- **Outline**: On hover, use an orange outline around the background area (same size and shape as the normal state orange background).
+
+### Toolkit Block (`Index.tsx`)
+- **Structure**: The "Toolkit" section is a bilingual data-driven block. Use the `t()` helper for all labels and text.
+- **Capabilities**: Capability cards should feature `#work` links to related case studies.
+
+### SEO & OG Images
+- **Dynamic OG**: OG images are served dynamically (`DJB-og-image-EN.png` / `DJB-og-image-JP.png`). Ensure `SEOHead.tsx` maintains accurate meta tags.
+
 ### Framer Motion (via `motion/react`)
 - Use `whileHover` for simple interactive states.
 - Performance: Apply `transform: "translateZ(0)"` to animated images or marquees to ensure hardware acceleration and crisp rendering.

@@ -18,17 +18,18 @@ This project is a React-based single-page application (SPA) showcasing 30 years 
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Motion**: [Framer Motion](https://www.framer.com/motion/) (via `motion/react`)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Typography**: [Playfair Display](https://fonts.google.com/specimen/Playfair+Display), [Inter](https://fonts.google.com/specimen/Inter), [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono)
+- **Typography**: [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans), [Noto Sans JP](https://fonts.google.com/specimen/Noto+Sans+JP)
 - **Deployment**: [www.danburgess.com](https://www.danburgess.com/)
 
 ## ✨ Key Features
 
-- **Bilingual Interface**: Seamless English/Japanese switching via `LanguageContext`.
-- **Editorial Layout**: Signature "paper & ink" aesthetic with custom drop-caps and serif display headers.
-- **Curated Sections**: 5 focused sections—§01 Selected Work, §02 About, §03 Services, §04 Contact, and §05 FAQ & Insights (pricing table removed in favor of bespoke consultation).
-- **Kinetic Wordmark**: A smooth, infinite marquee footer for brand presence.
+- **Bilingual Interface**: Seamless English/Japanese switching via `LanguageContext`, featuring interactive hover states (flag/maple icons) and layout-shift prevention.
+- **Editorial Layout**: Signature "paper & ink" aesthetic with minimal typography and clean, accessible headings.
+- **Curated Sections**: 4 focused sections—§01 Selected Work, §02 About, §03 Skills & Approach, and §04 Contact.
 - **Case Study Hub**: Detailed project breakdowns with role and tech-stack highlights.
-- **Dynamic Portrait**: A dual-phase portrait card that shifts between a professional photo and a manga-style illustration.
+- **Portrait Plate**: Professional photo plate with a hover interaction.
+- **Toolkit Block**: A data-driven section showcasing capabilities with links to related project evidence.
+- **SEO & Social Sharing**: Dynamically served OpenGraph images (EN/JP) and optimized meta tags for improved discoverability.
 - **Optimized Favicon**: High-resolution manga avatar integrated as a favicon/shortcut icon.
 
 

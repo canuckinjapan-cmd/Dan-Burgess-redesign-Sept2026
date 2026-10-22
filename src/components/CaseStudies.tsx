@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 interface CaseStudy {
@@ -6,8 +7,8 @@ interface CaseStudy {
   year: string;
   client: string;
   clientJp: string;
-  title: string;
-  titleJp: string;
+  title: string | ReactNode;
+  titleJp: string | ReactNode;
   sector: string;
   sectorJp: string;
   summary: string;
@@ -15,7 +16,7 @@ interface CaseStudy {
   role?: string[];
   roleJp?: string[];
   roleDetails: string;
-  roleDetailsJp: string;
+  roleDetailsJp: string | ReactNode;
   demoAlign: "left" | "right";
   arrowSide?: "left" | "right";
   stack?: string[];
@@ -68,7 +69,13 @@ const cases: CaseStudy[] = [
     client: "Rural Japan Living",
     clientJp: "Rural Japan Living",
     title: "Premium property listings designed for overseas buyers.",
-    titleJp: "海外の購入者に向けた不動産検索サイト",
+    titleJp: (
+      <>
+        <span className="inline-block">海外の購入者に向けた</span>
+        <br />
+        <span className="inline-block">不動産検索サイト</span>
+      </>
+    ),
     sector: "Real Estate · Property DB - PROPOSED CONCEPT",
     sectorJp: "不動産・物件データベース - 提案コンセプト",
     summary:
@@ -76,8 +83,11 @@ const cases: CaseStudy[] = [
     summaryJp: "複雑な不動産情報を整理し、日本国内外の利用者が物件を探しやすい構成にまとめました。",
     roleDetails:
       "concept, visual design (some stock photos used), responsive front end, property database, and EN/JP content",
-    roleDetailsJp:
-      "コンセプト、ビジュアルデザイン（一部ストックフォトを使用）、レスポンシブフロントエンド、物件データベース、英語・日本語のコンテンツ",
+    roleDetailsJp: (
+      <>
+        コンセプト、ビジュアルデザイン（一部ストックフォトを使用）、レスポンシブフロントエンド、物件データベース、英語・日本語の<span className="whitespace-nowrap">コンテンツ</span>
+      </>
+    ),
     demoAlign: "right",
     arrowSide: "right",
     image: new URL("../assets/Real01-PCbig-E.jpg", import.meta.url).href,
@@ -213,7 +223,7 @@ export const CaseStudies = () => {
             {/* Copy */}
             <div className={`lg:col-span-5 ${reverse ? "lg:order-1" : ""}`}>
               <div className="flex items-center gap-3 font-mono text-[11px] uppercase text-ink-muted mb-5">
-                <span className="text-accent-brand">{c.index}</span>
+                <span className="text-accent-text">{c.index}</span>
                 <span className="h-px w-8 bg-ink/20" />
                 <span>{t(c.sector, c.sectorJp)}</span>
               </div>
@@ -226,12 +236,12 @@ export const CaseStudies = () => {
                   href={currentLink} 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="block group/text transition-colors duration-300 hover:text-accent-brand"
+                  className="block group/text transition-colors duration-300 hover:text-accent-text"
                 >
                   <h3 className="font-serif-display text-3xl md:text-4xl font-bold leading-[1.1] tracking-tight text-balance mb-5">
                     {t(c.title, c.titleJp)}
                   </h3>
-                  <p className="text-ink-muted leading-relaxed mb-8 max-w-[52ch] group-hover/text:text-accent-brand transition-colors duration-300">
+                  <p className="text-ink-muted leading-relaxed mb-8 max-w-[52ch] group-hover/text:text-accent-text transition-colors duration-300">
                     {t(c.summary, c.summaryJp)}
                   </p>
                 </a>
@@ -266,7 +276,7 @@ export const CaseStudies = () => {
                       href={currentLink}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-mono text-sm uppercase font-bold tracking-wider text-ink hover:text-accent-brand transition-colors duration-200 cursor-pointer group/demo"
+                      className="inline-flex items-center gap-1.5 font-mono text-sm uppercase font-bold tracking-wider text-ink hover:text-accent-text transition-colors duration-200 cursor-pointer group/demo"
                     >
                       {/* Mobile and tablet displays: Explore the demo ↗ / デモサイトを見る ↗ */}
                       <span className="inline-flex items-center gap-1.5 lg:hidden">

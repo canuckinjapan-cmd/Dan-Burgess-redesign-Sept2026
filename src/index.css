@@ -25,6 +25,10 @@
     --accent-foreground: 0 0% 100%;
     --accent-brand: 19 100% 56%;
     --accent-brand-foreground: 0 0% 100%;
+    --accent-text: 17 88% 40%;
+    --accent-text-large: 19 87% 46%;
+    --accent-text-on-photo: #A8360A;
+    --accent-text-link-on-photo: #9A3412;
     --accent-deep: 19 100% 45%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -33,6 +37,10 @@
     --ring: 19 100% 56%;
     --radius: 0.25rem;
     --ink: 220 15% 9%;
+    --ink-dark: #111318;
+    --ink-label: #5F636A;
+    --ink-muted-strong: #5F636A;
+    --ink-placeholder: #6B6F76;
     --ink-muted: 220 10% 40%;
     --ink-subtle: 220 10% 60%;
   }
