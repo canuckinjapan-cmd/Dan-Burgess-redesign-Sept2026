@@ -295,9 +295,9 @@ const Index = () => {
                         for Japanese Businesses <br />
                         Going Global
                       </span>,
-                      <span className="block text-[2.35rem] sm:text-[3.5rem] md:text-[4.0rem] lg:text-[4.25rem] xl:text-[4.75rem] leading-[1.15] hero-support-text">
-                        日本の田舎<br className="sm:hidden" />
-                        暮らし<br />
+                      <span className="block text-[2rem] sm:text-[3.5rem] md:text-[4.0rem] lg:text-[4.25rem] xl:text-[4.75rem] leading-[1.15] hero-support-text">
+                        日本企業の海外<br />
+                        発信を支援する<br />
                         <span className="text-accent-text-large">Webデザイナー</span>
                       </span>
                     )}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Japan Living | Real Estate & Relocation in Karuizawa & Nagano</title>
+    <meta name="description" content="Rural Japan Living - Premium real estate and relocation guidance in Karuizawa and Nagano, Japan. A proposed website concept by Dan Burgess Design." />
+    <link rel="canonical" href="https://danburgess.com/samples/real-estate01/" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Shippori+Mincho:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/samples/real-estate01/assets/main-ghORXN2M.js"></script>
+  <link rel="stylesheet" crossorigin href="/samples/real-estate01/assets/main-DLpV6kAk.css">
+</head>
+<body class="bg-[#0a0a0a] text-[#f5f5f5]">
+    <div id="root">
+      <!-- Semantic initial HTML for crawlers and non-JS clients -->
+      <aside class="w-full py-2 sm:py-2.5" style="backgroundColor:#161616;border-top:1px solid #262626;border-bottom:1px solid #262626">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 text-xs leading-relaxed text-center text-gray-300">
+          <span class="font-bold text-gold-500 inline-block" style="margin-right: 8px;">Proposed Website Concept</span>
+          <span class="text-gray-300" style="color: #d1d5db;">A concept created by DanBurgess.com for portfolio purposes. Not a commissioned client project.</span>
+        </div>
+      </aside>
+      <header id="navbar" class="py-6 px-6 md:px-12 flex items-center justify-between border-b border-white/5">
+        <div class="flex items-center gap-2">
+          <span class="font-serif text-xl tracking-wider">Rural Japan Living</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-light tracking-widest text-gray-400">
+          <a href="#about" class="hover:text-gold-500 transition-colors">Our Heritage</a>
+          <a href="#portfolio" class="hover:text-gold-500 transition-colors">Listings</a>
+          <a href="#contact" class="hover:text-gold-500 transition-colors">Contact</a>
+        </nav>
+      </header>
+      <main id="main">
+        <section class="relative h-screen flex items-center justify-center overflow-hidden px-6 text-center">
+          <div class="max-w-4xl mx-auto space-y-6 z-10">
+            <h1 class="font-serif text-4xl md:text-6xl lg:text-7xl tracking-wider leading-tight">
+              日本の田舎<br>暮らし
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 font-light tracking-wide max-w-2xl mx-auto">
+              Premium living in harmony with Nagano's nature. Discover timeless traditional estates and modern mountain retreats in Karuizawa.
+            </p>
+            <div>
+              <a href="#portfolio" class="inline-flex items-center gap-2 bg-gold-500 text-dark-900 px-8 py-4 font-medium tracking-widest text-sm uppercase transition-all">
+                Explore Listings
+              </a>
+            </div>
+          </div>
+        </section>
+        <section id="about" class="py-24 md:py-32 px-6 bg-[#141414]">
+          <div class="max-w-4xl mx-auto text-center space-y-6">
+            <h3 class="text-gold-500 tracking-[0.2em] text-sm uppercase">Our Heritage</h3>
+            <h2 class="font-serif text-3xl md:text-5xl leading-snug">
+              Tradition Meets Modern Elegance in Nagano
+            </h2>
+            <p class="text-gray-400 leading-relaxed text-lg md:text-xl font-light">
+              Founded in Karuizawa, Nagano, we connect discerning clients with extraordinary alpine properties that embody the tranquility and beauty of rural Japan.
+            </p>
+          </div>
+        </section>
+      </main>
+      <footer class="bg-black py-12 px-6 md:px-12 text-center text-gray-500 text-sm border-t border-white/5">
+        <p>&copy; Rural Japan Living. All rights reserved. Website design sample by <a href="https://danburgess.com" class="text-gray-300 hover:text-gold-500">Dan Burgess Design</a>.</p>
+      </footer>
+    </div>
+  <script>
+    function updateTitle() {
+      const h1 = document.querySelector('main h1');
+      if (h1) {
+        if (window.innerWidth < 768) {
+          if (h1.innerHTML !== '日本の田舎<br>暮らし') {
+            h1.innerHTML = '日本の田舎<br>暮らし';
+          }
+        } else {
+          if (h1.innerHTML !== '日本の田舎暮らし') {
+            h1.innerHTML = '日本の田舎暮らし';
+          }
+        }
+      }
+    }
+    window.addEventListener('resize', updateTitle);
+    window.addEventListener('DOMContentLoaded', updateTitle);
+    const observer = new MutationObserver(updateTitle);
+    observer.observe(document.body, { childList: true, subtree: true });
+    setTimeout(updateTitle, 100);
+    setTimeout(updateTitle, 500);
+    setTimeout(updateTitle, 1000);
+  </script>
+</body>
+</html>
