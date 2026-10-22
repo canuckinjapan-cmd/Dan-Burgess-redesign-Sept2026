@@ -1,4 +1,4 @@
-import manga from "@/assets/danface_only-2025.svg";
+import headshot from "@/assets/DJB-headshot01.jpg";
 
 export const PortraitPlate = () => {
   return (
@@ -10,7 +10,7 @@ export const PortraitPlate = () => {
       
       {/* Photo Portrait */}
       <img
-        src={manga}
+        src={headshot}
         alt="Photo portrait of Dan Burgess"
         className="w-full h-full object-cover"
         loading="eager"
