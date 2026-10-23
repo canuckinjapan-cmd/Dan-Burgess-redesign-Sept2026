@@ -90,6 +90,33 @@
     0 0 32px rgba(247, 243, 236, 0.85);
 }
 
+/* Enhanced white outline thickness and opacity specifically for mobile portrait viewports */
+@media (max-width: 639px), (max-width: 767px) and (orientation: portrait) {
+  .hero-support-text {
+    text-shadow:
+      -2px -2px 0px #F7F3EC,
+       2px -2px 0px #F7F3EC,
+      -2px  2px 0px #F7F3EC,
+       2px  2px 0px #F7F3EC,
+      -3px  0px 0px #F7F3EC,
+       3px  0px 0px #F7F3EC,
+       0px -3px 0px #F7F3EC,
+       0px  3px 0px #F7F3EC,
+      -1px -2px 0px #F7F3EC,
+       1px -2px 0px #F7F3EC,
+      -1px  2px 0px #F7F3EC,
+       1px  2px 0px #F7F3EC,
+      -2px -1px 0px #F7F3EC,
+       2px -1px 0px #F7F3EC,
+      -2px  1px 0px #F7F3EC,
+       2px  1px 0px #F7F3EC,
+       0 0 10px #F7F3EC,
+       0 0 20px #F7F3EC,
+       0 0 32px #F7F3EC,
+       0 0 44px #F7F3EC;
+  }
+}
+
 /* Custom scrollbars */
 ::-webkit-scrollbar {
   width: 8px;

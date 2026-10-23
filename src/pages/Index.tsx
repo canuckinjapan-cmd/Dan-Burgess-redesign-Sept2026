@@ -267,14 +267,14 @@ const Index = () => {
                 {/* 1. Name */}
                 <div className="mb-7 sm:mb-9 lg:mb-11 pointer-events-auto">
                   {t(
-                    <p className="font-serif-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+                    <p className="font-serif-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight hero-support-text">
                       Dan Burgess
                     </p>,
                     <div>
-                      <p className="font-serif-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight">
+                      <p className="font-serif-display text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-ink leading-tight hero-support-text">
                         Dan Burgess
                       </p>
-                      <small className="block font-sans-body text-xs sm:text-sm lg:text-lg font-medium text-ink/80 tracking-wide mt-1 sm:mt-1.5">
+                      <small className="block font-sans-body text-xs sm:text-sm lg:text-lg font-medium text-ink/80 tracking-wide mt-1 sm:mt-1.5 hero-support-text">
                         ダン・バージェス
                       </small>
                     </div>
@@ -295,7 +295,7 @@ const Index = () => {
                         for Japanese Businesses <br />
                         Going Global
                       </span>,
-                      <span className="block text-[2rem] sm:text-[3.5rem] md:text-[4.0rem] lg:text-[4.25rem] xl:text-[4.75rem] leading-[1.15] hero-support-text">
+                      <span className="block text-[2rem] sm:text-[3.5rem] md:text-[4.0rem] lg:text-[4.25rem] xl:text-[4.75rem] leading-[1.40] hero-support-text">
                         日本企業の海外<br />
                         発信を支援する<br />
                         <span className="text-accent-text-large">Webデザイナー</span>
@@ -313,8 +313,8 @@ const Index = () => {
                   />
                   <p className="text-lg sm:text-xl lg:text-[1.35rem] text-ink/90 leading-relaxed font-sans-body hero-support-text relative">
                     {t(
-                      "Combining experience in design, web production, and Japanese-English communication to create websites that communicate clearly across cultures.TEST",
-                      "デザインとWeb制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。TEST"
+                      "Combining experience in design, web production, and Japanese-English communication to create websites that communicate clearly across cultures.",
+                      "デザインとWeb制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。"
                     )}
                   </p>
                 </div>
