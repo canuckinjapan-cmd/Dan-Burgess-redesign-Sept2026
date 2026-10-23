@@ -10,6 +10,7 @@ export const ContactForm = () => {
     email: "",
     company: "",
     message: "",
+    hp_field: "",
   });
 
   const onSubmit = async (e: FormEvent) => {
@@ -33,25 +34,7 @@ export const ContactForm = () => {
     }
 
     setSubmitting(true);
-    const envBase = import.meta.env.VITE_API_BASE_URL;
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const localStored = localStorage.getItem('AIS_API_URL');
-    const windowBase = (window as Window & { API_BASE_URL?: string }).API_BASE_URL;
-    const currentOrigin = window.location.origin;
-    const aisFallback = "https://ais-pre-r6az2fezg2siatxq2zvtqq-343348950519.asia-east1.run.app";
-    
-    let apiBase = (envBase || windowBase || localStored || "").trim().replace(/\/+$/, "");
-    
-    if (!apiBase) {
-      if (window.location.hostname.includes("run.app") || window.location.hostname === "localhost") {
-        apiBase = currentOrigin;
-      } else {
-        apiBase = (appUrl || aisFallback).trim().replace(/\/+$/, "");
-      }
-    }
-    
-    const targetUrl = '/api/contact';
-    console.log(`Contact form: Submitting to ${targetUrl} (Base: ${apiBase})`);
+    const targetUrl = "/api/contact";
 
     try {
       const payload = {
@@ -59,6 +42,7 @@ export const ContactForm = () => {
         email: form.email.trim(),
         company: form.company.trim(),
         message: form.message.trim(),
+        hp_field: form.hp_field, // honeypot, must stay empty
       };
 
       const response = await fetch(targetUrl, {
@@ -71,8 +55,7 @@ export const ContactForm = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Server error: " + response.status);
+        throw new Error(`HTTP ${response.status}`);
       }
 
       setSubmitting(false);
@@ -85,6 +68,7 @@ export const ContactForm = () => {
         email: "",
         company: "",
         message: "",
+        hp_field: "",
       });
     } catch (error) {
       const err = error as Error;
@@ -94,7 +78,7 @@ export const ContactForm = () => {
       toast({
         variant: "destructive",
         title: t("Error", "エラー"),
-        description: err.message || t("Something went wrong. Please try again later.", "送信中にエラーが発生しました。時間をおいて再度お試しください。"),
+        description: t("Something went wrong. Please try again later.", "送信中にエラーが発生しました。時間をおいて再度お試しください。"),
       });
     }
   };
@@ -183,6 +167,19 @@ export const ContactForm = () => {
             →
           </span>
         </button>
+      </div>
+      {/* Honeypot: off-screen, not focusable, ignored by assistive tech. Bots tend to fill it. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+        <label htmlFor="hp-field">Leave this field empty</label>
+        <input
+          id="hp-field"
+          name="hp_field"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={form.hp_field}
+          onChange={(e) => setForm({ ...form, hp_field: e.target.value })}
+        />
       </div>
     </form>
   );

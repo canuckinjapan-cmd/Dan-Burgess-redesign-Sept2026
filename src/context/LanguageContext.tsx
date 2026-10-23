@@ -21,15 +21,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const langCode = lang === "JP" ? "ja" : "en";
     document.documentElement.lang = langCode;
-    localStorage.setItem("user_lang_preference", langCode);
-    localStorage.setItem("site-lang", lang);
   }, [lang]);
 
   const setLang = (newLang: Language) => {
-    const targetCode = newLang === "JP" ? "ja" : "en";
-    localStorage.setItem("user_lang_preference", targetCode);
-    localStorage.setItem("site-lang", newLang);
-
     if (newLang === "EN" && !isEnPath) {
       navigate("/en/", { replace: false });
     } else if (newLang === "JP" && isEnPath) {

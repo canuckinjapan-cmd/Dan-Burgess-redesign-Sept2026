@@ -61,6 +61,8 @@ interface GlobeProps {
   config?: Partial<GlobeOptions>;
   speed?: number;
   initialPhi?: number;
+  /** User-controlled pause (WCAG 2.2.2). Reduced-motion, off-screen and background-tab pauses are automatic. */
+  paused?: boolean;
 }
 
 export const Globe = React.memo(function Globe({
@@ -69,6 +71,7 @@ export const Globe = React.memo(function Globe({
   speed = 0.0022,
   // phi = 0.65 radians (~37°) positions Japan on the left side of the visible globe
   initialPhi = 0.65,
+  paused = false,
 }: GlobeProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -76,6 +79,8 @@ export const Globe = React.memo(function Globe({
   const lastPointerX = useRef(0);
   const phiRef = useRef(initialPhi);
   const globeRef = useRef<GlobeInstance | null>(null);
+  const pausedRef = useRef(paused);
+  const syncRef = useRef<() => void>(() => {});
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -85,7 +90,7 @@ export const Globe = React.memo(function Globe({
     phiRef.current = initialPhi;
     const theta = config?.theta ?? 0.28;
     let width = container.offsetWidth || 600;
-    let animFrameId: number;
+    let animFrameId = 0;
     let isDestroyed = false;
 
     const markers = config?.markers ?? HERO_MARKERS;
@@ -118,18 +123,56 @@ export const Globe = React.memo(function Globe({
       }
     });
 
-    const animate = () => {
-      if (isDestroyed) return;
+    // Rotation runs only while it is visible, the tab is active, motion is not
+    // reduced and the user has not paused it. Otherwise draw one still frame.
+    const reduceMq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let inView = true;
+    let tabVisible = !document.hidden;
 
+    const shouldAnimate = () =>
+      !isDestroyed && !pausedRef.current && !reduceMq.matches && inView && tabVisible;
+
+    const frame = () => {
+      animFrameId = 0;
+      if (!shouldAnimate()) return;
       if (!pointerInteracting.current) {
         phiRef.current += speed;
       }
-
       globe.update({ phi: phiRef.current });
-      animFrameId = requestAnimationFrame(animate);
+      animFrameId = requestAnimationFrame(frame);
     };
 
-    animFrameId = requestAnimationFrame(animate);
+    const sync = () => {
+      if (isDestroyed) return;
+      if (shouldAnimate()) {
+        if (!animFrameId) animFrameId = requestAnimationFrame(frame);
+      } else {
+        if (animFrameId) {
+          cancelAnimationFrame(animFrameId);
+          animFrameId = 0;
+        }
+        if (inView && tabVisible) globe.update({ phi: phiRef.current });
+      }
+    };
+    syncRef.current = sync;
+
+    const io =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver((entries) => {
+            inView = entries[entries.length - 1]?.isIntersecting ?? true;
+            sync();
+          })
+        : null;
+    io?.observe(container);
+
+    const onVisibility = () => {
+      tabVisible = !document.hidden;
+      sync();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    reduceMq.addEventListener("change", sync);
+
+    sync();
 
     const onResize = () => {
       if (!container || !canvas || isDestroyed) return;
@@ -148,11 +191,20 @@ export const Globe = React.memo(function Globe({
     return () => {
       isDestroyed = true;
       globeRef.current = null;
-      cancelAnimationFrame(animFrameId);
+      syncRef.current = () => {};
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      io?.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      reduceMq.removeEventListener("change", sync);
       window.removeEventListener("resize", onResize);
       globe.destroy();
     };
   }, [config, speed, initialPhi]);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+    syncRef.current();
+  }, [paused]);
 
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     pointerInteracting.current = true;
@@ -192,6 +244,7 @@ export const Globe = React.memo(function Globe({
   return (
     <div
       ref={containerRef}
+      aria-hidden="true"
       className={cn("relative w-full aspect-square flex items-center justify-center", className)}
     >
       <canvas

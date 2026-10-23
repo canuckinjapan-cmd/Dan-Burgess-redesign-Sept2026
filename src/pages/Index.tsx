@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { TopBar } from "@/components/TopBar";
 import { CaseStudies } from "@/components/CaseStudies";
@@ -15,8 +15,12 @@ import instagramLogo from "@/assets/instagram-logo-org.svg";
 import bloggerLogo from "@/assets/blogger-logo-org.svg";
 import linkedinLogo from "@/assets/linkedin-logo-org.svg";
 import { useLanguage } from "@/context/LanguageContext";
+import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
+import { Pause, Play } from "lucide-react";
 
 const Index = () => {
+  const [globePaused, setGlobePaused] = useState(false);
+  const prefersReducedMotion = usePrefersReducedMotion();
   const { t, lang } = useLanguage();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 200]);
@@ -210,7 +214,7 @@ const Index = () => {
               style={{ y }} 
               className="absolute -right-24 sm:-right-16 md:-right-8 lg:right-0 xl:right-12 top-10 sm:top-8 md:top-6 lg:top-8 xl:top-6 w-[560px] sm:w-[680px] md:w-[780px] lg:w-[880px] xl:w-[980px] aspect-square max-w-none pointer-events-auto"
             >
-              <Globe />
+              <Globe paused={globePaused} />
             </motion.div>
             {/* Subtle Vignette fades to blend seamlessly into textured paper canvas */}
             <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-paper via-paper/60 to-transparent pointer-events-none" />
@@ -334,6 +338,22 @@ const Index = () => {
                   >
                     {t("About", "私について")}
                   </a>
+                  {/* WCAG 2.2.2: the globe auto-rotates for more than 5s, so offer a pause control.
+                      Hidden when the OS asks for reduced motion (the globe is already still). */}
+                  {!prefersReducedMotion && (
+                    <button
+                      type="button"
+                      onClick={() => setGlobePaused((p) => !p)}
+                      aria-label={
+                        globePaused
+                          ? t("Resume globe animation", "地球儀のアニメーションを再開")
+                          : t("Pause globe animation", "地球儀のアニメーションを一時停止")
+                      }
+                      className="inline-flex size-12 items-center justify-center border-2 border-ink/40 bg-paper/90 lg:bg-paper/75 text-ink hover:text-accent-text hover:border-accent-text transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                    >
+                      {globePaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
+                    </button>
+                  )}
                 </div>
 
               </div>
@@ -733,7 +753,7 @@ const Index = () => {
               <p className="mt-6 text-ink-muted text-lg leading-relaxed max-w-[44ch]">
                 {t(
                   "Have a question about my work or an opportunity to discuss? I'd be happy to hear from you. I also welcome enquiries about web design and front-end roles within a team.",
-                  "作品についてのご質問や、お仕事に関するご相談など、お気軽にご連絡ください。Webデザイナー・フロントエンド開発者の採用に関するお問い合わせも歓迎しています"
+                  "作品についてのご質問や、お仕事に関するご相談など、お気軽にご連絡ください。Webデザイナー・フロントエンド開発者の採用に関するお問い合わせも歓迎しています。"
                 )}
               </p>
 
@@ -761,7 +781,7 @@ const Index = () => {
                 <div className="flex items-start gap-4">
                   <dt className="text-ink-muted w-20 shrink-0">{t("Role", "職種")}</dt>
                   <dd className="text-ink">
-                    {t("Web Designer / Front End Developer", "ウェブデザイナー／フロントエンド開発者")}
+                    {t("Web Designer / Front-End Developer", "ウェブデザイナー／フロントエンド開発者")}
                   </dd>
                 </div>
               </dl>

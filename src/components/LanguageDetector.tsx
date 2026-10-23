@@ -1,66 +1,40 @@
-import { useEffect, useState, ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+const AUTO_DONE_KEY = "lang_auto_redirect_done";
+const BOT_RE = /bot|crawl|spider|slurp|lighthouse|headless|preview|facebookexternalhit|embedly/i;
+
+/**
+ * The URL is the source of truth: /en/ is English, / is Japanese.
+ *
+ * The only automatic redirect is a one-time hop from the bare root to /en/ for a
+ * first-time visitor whose browser does not list Japanese. It never fires for
+ * crawlers, never fires again after that first visit, and never moves anyone
+ * away from a URL they opened on purpose (shared links, /en/, bookmarks).
+ * Language is otherwise changed only by the switcher.
+ */
 export function LanguageDetector({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // Only perform initial browser language detection redirect on root or en home route
     const currentPath = location.pathname.replace(/\/+$/, "") || "/";
-    const isEnPath = currentPath === "/en";
+    if (currentPath !== "/") return;
 
-    // 1. Check stored user preference first
-    const storedPref = localStorage.getItem("user_lang_preference") || localStorage.getItem("site-lang");
-
-    let targetLang: "ja" | "en" = "ja";
-
-    if (storedPref === "en" || storedPref === "EN") {
-      targetLang = "en";
-    } else if (storedPref === "ja" || storedPref === "JP") {
-      targetLang = "ja";
-    } else {
-      // 2. Fall back to navigator.languages / navigator.language
-      const userLangs = navigator.languages || [navigator.language || "en"];
-      const prefersJa = userLangs.some((l) => l.toLowerCase().startsWith("ja"));
-      targetLang = prefersJa ? "ja" : "en";
-      
-      // Save initial preference so subsequent visits respect it
-      localStorage.setItem("user_lang_preference", targetLang);
+    try {
+      if (localStorage.getItem(AUTO_DONE_KEY)) return;
+      localStorage.setItem(AUTO_DONE_KEY, "1");
+    } catch {
+      return; // storage blocked: do nothing rather than risk a redirect loop
     }
 
-    // 3. Tiny splash loader delay (100–150ms maximum) before redirection or serving
-    const timer = setTimeout(() => {
-      if (targetLang === "en" && !isEnPath) {
-        navigate("/en/", { replace: true });
-      } else if (targetLang === "ja" && isEnPath) {
-        navigate("/", { replace: true });
-      }
-      setChecking(false);
-    }, 120);
+    if (navigator.webdriver || BOT_RE.test(navigator.userAgent)) return;
 
-    return () => clearTimeout(timer);
-  }, [location.pathname, navigate]);
-
-  if (checking) {
-    return (
-      <div 
-        className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F7F3EC] text-[#1A1A1A] transition-opacity duration-150"
-        aria-label="Loading page"
-      >
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-7 h-7 rounded-full border-2 border-[#1A1A1A]/20 border-t-[#FF6A1F] animate-spin" />
-          <span className="font-serif-display font-extrabold tracking-tight text-xl">
-            DAN <span className="text-[#FF6A1F]">BURGESS</span> DESIGN
-          </span>
-        </div>
-        <p className="font-mono text-[10px] uppercase text-[#1A1A1A]/60">
-          Loading...
-        </p>
-      </div>
-    );
-  }
+    const langs = navigator.languages?.length ? navigator.languages : [navigator.language || "en"];
+    const prefersJa = langs.some((l) => l.toLowerCase().startsWith("ja"));
+    if (!prefersJa) navigate("/en/", { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return <>{children}</>;
 }
