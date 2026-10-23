@@ -35,7 +35,12 @@ export const SEOHead = ({ lang }: SEOHeadProps) => {
 
     const ogImage = document.querySelector('meta[property="og:image"]');
     if (ogImage) {
-      ogImage.setAttribute("content", isEn ? "/src/assets/DJB-og-image-EN.png" : "/src/assets/DJB-og-image-JP.png");
+      ogImage.setAttribute("content", isEn ? "https://danburgess.com/DJB-og-image-EN.png" : "https://danburgess.com/DJB-og-image-JP.png");
+    }
+
+    const twitterImage = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImage) {
+      twitterImage.setAttribute("content", isEn ? "https://danburgess.com/DJB-og-image-EN.png" : "https://danburgess.com/DJB-og-image-JP.png");
     }
   }, [lang]);
 
