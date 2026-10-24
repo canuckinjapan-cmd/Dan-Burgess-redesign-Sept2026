@@ -696,12 +696,12 @@ const Index = () => {
                       <dt className="font-mono text-[11px] uppercase text-ink-muted-strong font-medium">
                         {row.label}
                       </dt>
-                      <dd className="font-sans-body text-sm sm:text-base text-ink/80 leading-relaxed" style={{ lineBreak: "strict" }}>
+                      <dd className="font-sans-body text-sm sm:text-base text-ink/80 leading-relaxed flex flex-wrap items-baseline gap-x-1.5 sm:gap-x-2 gap-y-1">
                         {items.map((item, i) => (
-                          <span key={i} className="inline">
-                            {item}
+                          <span key={i} className="inline-flex items-baseline whitespace-nowrap">
+                            <span>{item}</span>
                             {i < items.length - 1 && (
-                              <span className="text-ink-muted/50 mx-1.5 sm:mx-2" aria-hidden="true">
+                              <span className="text-ink-muted/50 ml-1.5 sm:ml-2" aria-hidden="true">
                                 {separator}
                               </span>
                             )}
