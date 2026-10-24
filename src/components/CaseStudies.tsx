@@ -65,7 +65,7 @@ const cases: CaseStudy[] = [
   {
     id: "lumina",
     index: "02",
-    year: "2024",
+    year: "2026",
     client: "Rural Japan Living",
     clientJp: "Rural Japan Living",
     title: "Premium property listings designed for overseas buyers.",

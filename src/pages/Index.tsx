@@ -366,17 +366,14 @@ const Index = () => {
         <section id="work" className="py-24 lg:py-32 w-full overflow-x-hidden relative border-t rule">
           <div className="max-w-[1320px] mx-auto px-6 lg:px-10">
             <header className="grid lg:grid-cols-12 gap-8 mb-16 lg:mb-24">
-              <div className="lg:col-span-3">
-                <div className="flex items-baseline gap-2.5 sm:gap-3 mb-3">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
-                    01
-                  </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
+              <div className="lg:col-span-4 xl:col-span-3">
+                <div className="mb-4 sm:mb-6">
+                  <span className="font-mono font-bold text-[1.375rem] sm:text-[1.65rem] lg:text-[1.65rem] uppercase text-accent-text-large leading-none tracking-tight whitespace-nowrap block">
                     {t("Selected Work", "作品")}
                   </span>
                 </div>
               </div>
-              <div className="lg:col-span-9">
+              <div className="lg:col-span-8 xl:col-span-9">
                 <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.023em] leading-[1.12] sm:leading-[1.08] text-balance">
                   {t(
                     <>Three projects. Three industries.<br /><span className="text-accent-text-large">One design approach.</span></>,
@@ -438,11 +435,8 @@ const Index = () => {
             {/* Left Column Container: Houses Section title and Polaroid */}
             <div className="grid-cols-1 landscape:col-span-4 md:landscape:col-span-3 lg:col-span-3 flex flex-col gap-8">
               <div>
-                <div className="flex items-baseline gap-2.5 sm:gap-3 mb-0">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text leading-none select-none tracking-tight">
-                    02
-                  </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text-on-photo">
+                <div className="mb-0">
+                  <span className="font-mono font-bold text-[1.375rem] sm:text-[1.65rem] lg:text-[1.65rem] uppercase text-accent-text-on-photo leading-none tracking-tight whitespace-nowrap block">
                     {t("About", "私について")}
                   </span>
                 </div>
@@ -603,12 +597,9 @@ const Index = () => {
             transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
             <header className="grid lg:grid-cols-12 gap-8 mb-16 lg:mb-20">
-              <div className="lg:col-span-3">
-                <div className="flex items-baseline gap-2.5 sm:gap-3 mb-2">
-                  <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
-                    03
-                  </span>
-                  <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
+              <div className="lg:col-span-4 xl:col-span-3">
+                <div className="mb-3 sm:mb-4">
+                  <span className="font-mono font-bold text-[1.375rem] sm:text-[1.65rem] lg:text-[1.65rem] uppercase text-accent-text-large leading-none tracking-tight whitespace-nowrap block">
                     {t("Skills & Approach", "スキルと制作アプローチ")}
                   </span>
                 </div>
@@ -616,7 +607,7 @@ const Index = () => {
                   {t("Core Capabilities", "主なスキル")}
                 </p>
               </div>
-              <div className="lg:col-span-9">
+              <div className="lg:col-span-8 xl:col-span-9">
                 <h2 className="font-serif-display text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.023em] leading-[1.12] text-balance text-ink">
                   {t(
                     <>Design with purpose. <br className="hidden sm:inline" />Build with intent.</>,
@@ -736,11 +727,8 @@ const Index = () => {
             transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
           >
             <div className="lg:col-span-4 group">
-              <div className="flex items-baseline gap-2.5 sm:gap-3 mb-4">
-                <span className="font-mono font-bold text-3xl sm:text-4xl lg:text-5xl text-accent-text-large leading-none select-none tracking-tight">
-                  04
-                </span>
-                <span className="font-mono font-bold text-[16px] uppercase text-accent-text">
+              <div className="mb-4 sm:mb-6">
+                <span className="font-mono font-bold text-[1.375rem] sm:text-[1.65rem] lg:text-[1.65rem] uppercase text-accent-text-large leading-none tracking-tight whitespace-nowrap block">
                   {t("Contact", "お問い合わせ")}
                 </span>
               </div>
