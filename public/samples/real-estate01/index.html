@@ -107,5 +107,149 @@
     setTimeout(updateTitle, 500);
     setTimeout(updateTitle, 1000);
   </script>
+  <script>
+    // Enhancing all listing images with magnifying glass icon and full slideshow carousel
+    const listingImagesMap = {
+      "150 year old Meiji era farmhouse in Iida": ["./hSI60Ok.jpg", "./hSI60Ok-a.jpg", "./hSI60Ok-b.jpg"],
+      "32 year old house in the Karuizawa area": ["./QgbXp5U.jpg", "./QgbXp5U-a.jpg", "./QgbXp5U-b.jpg"],
+      "85 year old house in the Shiojiri area": ["./COeS6y7.jpg", "./COeS6y7a.jpg", "./COeS6y7c.jpg"]
+    };
+
+    function initLightboxes() {
+      document.querySelectorAll('img').forEach(img => {
+        const alt = img.getAttribute('alt');
+        if (listingImagesMap[alt] && !img.dataset.lightboxInitialized) {
+          img.dataset.lightboxInitialized = "true";
+          const images = listingImagesMap[alt];
+          
+          const wrapper = document.createElement('div');
+          wrapper.style.position = 'relative';
+          wrapper.style.cursor = 'pointer';
+          if (img.parentNode) {
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+          }
+
+          const badge = document.createElement('div');
+          badge.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+          badge.style.cssText = 'position:absolute; bottom:16px; right:16px; background:rgba(0,0,0,0.7); backdrop-filter:blur(4px); color:#fff; width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity 0.3s ease; border:1px solid rgba(255,255,255,0.2); z-index:10; pointer-events:none;';
+          wrapper.appendChild(badge);
+
+          wrapper.addEventListener('mouseenter', () => { badge.style.opacity = '1'; });
+          wrapper.addEventListener('mouseleave', () => { badge.style.opacity = '0'; });
+
+          wrapper.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openLightbox(images, 0);
+          });
+
+          // Bind View Details link in the same listing group to open the carousel
+          const card = wrapper.closest('.group') || wrapper.parentElement?.parentElement;
+          if (card) {
+            const viewDetailsLink = Array.from(card.querySelectorAll('a')).find(a => 
+              a.textContent.includes('View Details') || a.textContent.includes('詳細を見る') || a.getAttribute('href') === '#contact'
+            );
+            if (viewDetailsLink && !viewDetailsLink.dataset.lightboxBound) {
+              viewDetailsLink.dataset.lightboxBound = "true";
+              viewDetailsLink.style.cursor = "pointer";
+              viewDetailsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                openLightbox(images, 0);
+              });
+            }
+          }
+        }
+      });
+    }
+
+    let activeModal = null;
+    function openLightbox(images, startIndex) {
+      if (activeModal) activeModal.remove();
+      let currentIndex = startIndex;
+
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999999; background:rgba(5,5,5,0.95); display:flex; align-items:center; justify-content:center; user-select:none;';
+      
+      const closeBtn = document.createElement('button');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.style.cssText = 'position:fixed; top:24px; right:24px; z-index:1000000; width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.12); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; border:none; cursor:pointer;';
+      closeBtn.onclick = () => modal.remove();
+      modal.appendChild(closeBtn);
+
+      const imgEl = document.createElement('img');
+      imgEl.src = images[currentIndex];
+      imgEl.style.cssText = 'max-width:90vw; max-height:75vh; object-fit:contain; border-radius:4px; box-shadow:0 10px 40px rgba(0,0,0,0.8);';
+      modal.appendChild(imgEl);
+
+      const leftBtn = document.createElement('button');
+      leftBtn.innerHTML = '&#10094;';
+      leftBtn.style.cssText = 'position:fixed; left:28px; top:50%; transform:translateY(-50%); z-index:1000000; width:52px; height:52px; border-radius:50%; background:#1f1f1f; color:#fff; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.2); cursor:pointer; font-size:20px;';
+      leftBtn.onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1; update(); };
+      modal.appendChild(leftBtn);
+
+      const rightBtn = document.createElement('button');
+      rightBtn.innerHTML = '&#10095;';
+      rightBtn.style.cssText = 'position:fixed; right:28px; top:50%; transform:translateY(-50%); z-index:1000000; width:52px; height:52px; border-radius:50%; background:#1f1f1f; color:#fff; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,0.2); cursor:pointer; font-size:20px;';
+      rightBtn.onclick = (e) => { e.stopPropagation(); currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1; update(); };
+      modal.appendChild(rightBtn);
+
+      const footer = document.createElement('div');
+      footer.style.cssText = 'position:fixed; bottom:24px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; z-index:1000000;';
+      
+      const counter = document.createElement('div');
+      counter.style.cssText = 'font-size:13px; font-family:monospace; letter-spacing:1px; color:#e5e7eb;';
+      footer.appendChild(counter);
+
+      const dots = document.createElement('div');
+      dots.style.cssText = 'display:flex; align-items:center; gap:6px;';
+      footer.appendChild(dots);
+      modal.appendChild(footer);
+
+      function update() {
+        imgEl.src = images[currentIndex];
+        counter.textContent = `${currentIndex + 1} / ${images.length}`;
+        dots.innerHTML = '';
+        images.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.style.cssText = `width:${idx === currentIndex ? '20px' : '6px'}; height:6px; border-radius:${idx === currentIndex ? '3px' : '50%'}; background:${idx === currentIndex ? '#eab308' : 'rgba(255,255,255,0.3)'}; border:none; cursor:pointer; transition:all 0.3s;`;
+          dot.onclick = (e) => { e.stopPropagation(); currentIndex = idx; update(); };
+          dots.appendChild(dot);
+        });
+      }
+      update();
+
+      modal.onclick = (e) => {
+        if (e.target === modal) modal.remove();
+      };
+
+      const keyHandler = (e) => {
+        if (e.key === 'Escape') { modal.remove(); window.removeEventListener('keydown', keyHandler); }
+        if (e.key === 'ArrowLeft') { currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1; update(); }
+        if (e.key === 'ArrowRight') { currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1; update(); }
+      };
+      window.addEventListener('keydown', keyHandler);
+
+      let touchStartX = 0;
+      modal.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, {passive: true});
+      modal.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].clientX;
+        if (touchStartX - touchEndX > 50) {
+          currentIndex = (currentIndex === images.length - 1) ? 0 : currentIndex + 1; update();
+        } else if (touchEndX - touchStartX > 50) {
+          currentIndex = (currentIndex === 0) ? images.length - 1 : currentIndex - 1; update();
+        }
+      }, {passive: true});
+
+      document.body.appendChild(modal);
+      activeModal = modal;
+    }
+
+    const observer2 = new MutationObserver(initLightboxes);
+    observer2.observe(document.body, { childList: true, subtree: true });
+    setTimeout(initLightboxes, 500);
+    setTimeout(initLightboxes, 1500);
+  </script>
 </body>
 </html>
