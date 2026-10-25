@@ -324,17 +324,17 @@ const Index = () => {
                 </div>
 
                 {/* 4. Action navigation */}
-                <div className="flex flex-wrap items-center gap-4 pointer-events-auto">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 pointer-events-auto">
                   <a
                     href="#work"
-                    className="group inline-flex items-center justify-center text-center gap-3 bg-ink text-surface px-7 py-4 font-mono text-[13px] font-bold uppercase hover:bg-accent-text transition-colors whitespace-nowrap shadow-sm"
+                    className="group inline-flex items-center justify-center text-center gap-2 sm:gap-3 bg-ink text-surface px-3 sm:px-7 py-3 sm:py-4 font-mono text-[11px] sm:text-[13px] font-bold uppercase hover:bg-accent-text transition-colors whitespace-nowrap shadow-sm"
                   >
                     {t("Selected Work", "作品を見る")}
-                    <span className="text-[20px] transition-transform group-hover:translate-x-1" aria-hidden>↓</span>
+                    <span className="text-[16px] sm:text-[20px] transition-transform group-hover:translate-x-1" aria-hidden>↓</span>
                   </a>
                   <a
                     href="#about"
-                    className="inline-flex items-center justify-center text-center gap-3 px-7 py-4 font-mono text-[13px] font-bold uppercase text-ink hover:text-accent-text transition-all border-2 border-ink/40 hover:border-accent-text bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
+                    className="inline-flex items-center justify-center text-center gap-2 sm:gap-3 px-3 sm:px-7 py-3 sm:py-4 font-mono text-[11px] sm:text-[13px] font-bold uppercase text-ink hover:text-accent-text transition-all border-2 border-ink/40 hover:border-accent-text bg-paper/90 lg:bg-paper/75 hover:bg-surface-elevated shadow-sm whitespace-nowrap backdrop-blur-[2px]"
                   >
                     {t("About", "私について")}
                   </a>
@@ -349,7 +349,7 @@ const Index = () => {
                           ? t("Resume globe animation", "地球儀のアニメーションを再開")
                           : t("Pause globe animation", "地球儀のアニメーションを一時停止")
                       }
-                      className="inline-flex size-12 items-center justify-center border-2 border-ink/40 bg-paper/90 lg:bg-paper/75 text-ink hover:text-accent-text hover:border-accent-text transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                      className="inline-flex items-center justify-center px-3 sm:px-4 py-3 sm:py-4 border-2 border-ink/40 bg-paper/90 lg:bg-paper/75 text-ink hover:text-accent-text hover:border-accent-text transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink whitespace-nowrap shadow-sm backdrop-blur-[2px]"
                     >
                       {globePaused ? <Play className="size-4" aria-hidden="true" /> : <Pause className="size-4" aria-hidden="true" />}
                     </button>
