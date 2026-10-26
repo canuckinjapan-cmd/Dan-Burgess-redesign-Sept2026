@@ -44,4 +44,4 @@ User-agent: *
 Allow: /
 
 # Sitemaps (if any)
-Sitemap: https://www.danburgess.com/sitemap.xml
+Sitemap: https://danburgess.com/sitemap.xml

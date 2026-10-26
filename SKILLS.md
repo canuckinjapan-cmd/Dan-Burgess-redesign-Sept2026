@@ -167,6 +167,16 @@ const { t, lang, setLang } = useLanguage();
 <p>{t(item.summaryEn, item.summaryJp)}</p>
 ```
 
+### Japanese Typography & Natural Word-Breaking
+- **Auto-phrase Line Breaking**: Standard CJK line-breaking can awkwardly break semantic phrases and compound kanji words across lines.
+- **Implementation**:
+  ```css
+  :lang(ja) {
+    word-break: auto-phrase;
+  }
+  ```
+  This activates browser-native phrase segmentation (using machine-learning models like BudouX in Chromium and WebKit), preventing single-character orphan lines and keeping grammatical phrases together naturally on responsive and mobile displays.
+
 ### Layout Stability (Zero Cumulative Layout Shift)
 - Ensure language switchers have fixed widths (`w-5` or fixed padding) so toggling between "EN" and "JP" or hover flag icons does not trigger layout shifts.
 - Maintain consistent button and badge heights across both languages.

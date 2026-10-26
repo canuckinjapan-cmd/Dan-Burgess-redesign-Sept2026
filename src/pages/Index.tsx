@@ -253,11 +253,11 @@ const Index = () => {
                       <span className="hidden sm:inline landscape:inline"> </span>
                       <span className="whitespace-nowrap">Front-End Roles</span>
                     </>,
-                    <>
+                    <span className="normal-case">
                       <span className="whitespace-nowrap">Webデザイナー／</span>
                       <br className="inline sm:hidden landscape:hidden" />
-                      <span className="whitespace-nowrap">フロントエンド職を募集中</span>
-                    </>
+                      <span className="whitespace-nowrap">フロントエンド職を希望</span>
+                    </span>
                   )}
                   <span className="sr-only">
                     {t(" (go to contact form)", "（お問い合わせへ）")}
@@ -470,7 +470,7 @@ const Index = () => {
                         Dan Burgess
                       </p>
                       <p className="font-mono text-[8px] lg:text-[9px] uppercase text-ink-muted mt-1.5 whitespace-nowrap">
-                        {t("Web Designer", "Webデザイナー")}
+                        {t("Web Designer", <span className="normal-case">Webデザイナー</span>)}
                       </p>
                     </div>
                     <p className="font-mono text-sm uppercase text-ink-muted text-right leading-none shrink-0 select-none pl-1 flex items-center gap-0.5">
@@ -574,7 +574,7 @@ const Index = () => {
                       Dan Burgess
                     </p>
                     <p className="font-mono text-[8px] uppercase text-ink-muted mt-1.5 whitespace-nowrap">
-                      {t("Web Designer", "Webデザイナー")}
+                      {t("Web Designer", <span className="normal-case">Webデザイナー</span>)}
                     </p>
                   </div>
                   <p className="font-mono text-sm uppercase text-ink-muted text-right leading-none shrink-0 select-none pl-1 flex items-center gap-0.5">
@@ -769,7 +769,10 @@ const Index = () => {
                 <div className="flex items-start gap-4">
                   <dt className="text-ink-muted w-20 shrink-0">{t("Role", "職種")}</dt>
                   <dd className="text-ink">
-                    {t("Web Designer / Front-End Developer", "ウェブデザイナー／フロントエンド開発者")}
+                    {t(
+                      "Web Designer / Front-End Developer",
+                      <span className="normal-case">Webデザイナー／フロントエンド開発者</span>
+                    )}
                   </dd>
                 </div>
               </dl>

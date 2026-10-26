@@ -55,6 +55,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  :lang(ja) {
+    word-break: auto-phrase;
+  }
+
   body {
     @apply bg-background text-foreground antialiased selection:bg-[#FF6A1F] selection:text-white;
     font-family: 'IBM Plex Sans', 'Noto Sans JP', sans-serif;
