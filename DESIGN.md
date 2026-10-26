@@ -51,7 +51,9 @@ The "Ver. 2" aesthetic is inspired by high-end editorial layouts—think premium
 - **Hover**: Subject to a clockwise rotation (2 degrees) with a smooth `easeInOut` transition.
 
 ### 2. Case Study Cards
-- **Content**: Displays rich project data including summary, specific roles, and tech stack.
+- **Content**: Displays rich project data including summary, specific roles, tech stack, and interactive demo link.
+- **Process Notes Drawer**: An expandable editorial accordion ("View the process notes" / "制作プロセスを見る") featuring Challenge, Approach, Key Decisions, and Tools. Styled with hairline dividers (`rule`), uppercase monospace subheadings, and bold `+` / `−` toggles.
+- **Grid Stability**: Container articles use `items-start` grid alignment on desktop to ensure that expanding the process notes does not shift the preview screenshot downward.
 - **Action**: Hover states feature subtle scaling (`scale-[1.01]`) and shadow enhancement.
 
 ### 3. Kinetic Wordmark (Marquee)

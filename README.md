@@ -26,7 +26,7 @@ This project is a React-based single-page application (SPA) showcasing 30 years 
 - **Bilingual Interface**: Seamless English/Japanese switching via `LanguageContext`, featuring interactive hover states (flag/maple icons) and layout-shift prevention.
 - **Editorial Layout**: Signature "paper & ink" aesthetic with minimal typography and clean, accessible headings.
 - **Curated Sections**: 4 focused sections—§01 Selected Work, §02 About, §03 Skills & Approach, and §04 Contact.
-- **Case Study Hub**: Detailed project breakdowns with role and tech-stack highlights.
+- **Case Study Hub**: Detailed project breakdowns with role, tech-stack highlights, and expandable "View the process notes" (Challenge, Approach, Key Decisions, Tools).
 - **Portrait Plate**: Professional photo plate with a hover interaction.
 - **Toolkit Block**: A data-driven section showcasing capabilities with links to related project evidence.
 - **SEO & Social Sharing**: Dynamically served OpenGraph images (EN/JP) and optimized meta tags for improved discoverability.
@@ -37,3 +37,4 @@ This project is a React-based single-page application (SPA) showcasing 30 years 
 
 - [AGENTS.md](./AGENTS.md): Technical instructions for AI coding assistants.
 - [DESIGN.md](./DESIGN.md): Detailed design system and style specification.
+- [SKILLS.md](./SKILLS.md): Knowledge base & architectural guide for OpenGraph, SEO, AEO, Schema.org, i18n, and sample routing.

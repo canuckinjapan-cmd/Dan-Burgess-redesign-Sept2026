@@ -6,20 +6,23 @@ This document provides technical guidelines and implementation patterns for AI a
 - **Framework**: Vite-powered React SPA.
 - **I18n Architecture**: Multi-language support is handled via a custom `LanguageContext`. All UI text must be wrapped in the `t(en, jp)` helper function.
 - **Component Strategy**: High-density components (like `CaseStudies` and `Experience`) should be modular and data-driven via local arrays or constants.
-- **Section Structure**: The page is structured into 5 core editorial sections:
-  - §01 Selected Work (`#work`)
-  - §02 About (`#about`)
-  - §03 Services (`#services`)
-  - §04 Contact (`#contact`)
-  - §05 FAQ & Insights (`#faq`)
-  *(Note: Standalone Pricing section has been removed; project scopes and estimates are discussed directly via Contact).*
+- **Section Structure**: The page is structured into 4 core editorial sections:
+  - Selected Work (`#work`)
+  - About (`#about`)
+  - Skills & Approach (`#skills`)
+  - Contact (`#contact`)
+  *(Note: Standalone Pricing and FAQ sections have been removed; project scopes and estimates are discussed directly via Contact).*
 
 ## 🚦 Session Start Protocol
-1.  **Read Directives**: Always consult `DESIGN.md` before making UI changes.
+1.  **Read Directives**: Always consult `DESIGN.md` and `SKILLS.md` before making UI changes.
 2.  **Bilingual Compliance**: Every text modification **MUST** include both English and Japanese versions using the `t()` helper.
 3.  **Port Safety**: Ensure the dev server remains on **Port 3000**.
 
 ## 🎨 Implementation Patterns
+
+### Case Studies & Process Notes (`CaseStudies.tsx`)
+- **Process Accordion**: Each case study includes an expandable "View the process notes" (`ProcessPanel`) with Challenge, Approach, Key decisions, and Tools.
+- **Grid Stability**: The parent article grid uses `items-start` alignment so that expanding process notes downwards does not cause the desktop screenshot column to shift or drop down.
 
 ### Typography & Icons
 - **Headings**: Always use `font-serif-display` (IBM Plex Sans Bold 700 / Noto Sans JP).
