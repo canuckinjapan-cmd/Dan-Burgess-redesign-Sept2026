@@ -483,7 +483,7 @@ const Index = () => {
 
             {/* Right Column: Thoughtful Career & Background Narrative */}
             <div className="landscape:col-span-8 landscape:col-start-5 md:landscape:col-span-9 md:landscape:col-start-4 lg:col-span-7 lg:col-start-5 landscape:pt-[48px] lg:pt-[54px] xl:pt-[56px] landscape:max-w-[700px] lg:max-w-[700px]">
-              <h3 className={`font-serif-display font-bold tracking-[-0.023em] text-ink mb-5 sm:mb-6 ${t(
+              <h2 className={`font-serif-display font-bold tracking-[-0.023em] text-ink mb-5 sm:mb-6 ${t(
                 "text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] text-balance leading-[1.14]",
                 "text-2xl xs:text-3xl sm:text-4xl md:text-[2.5rem] lg:text-[2.75rem] xl:text-[3.25rem] leading-[1.25] lg:leading-[1.32] xl:leading-[1.35]"
               )}`}>
@@ -501,7 +501,7 @@ const Index = () => {
                     <span className="inline-block sm:whitespace-nowrap">のコミュニケーション。</span>
                   </>
                 )}
-              </h3>
+              </h2>
               <p className="text-ink/80 text-[15.5px] sm:text-[16px] lg:text-[16px] xl:text-[16.5px] leading-[1.7] mb-3 sm:mb-3.5 lg:mb-4 font-normal">
                 {t(
                   "I began my career in Canada in graphic design and multimedia before moving to Japan in 1992. I worked in web design at a Japanese software company, then in localization for product documentation and software interfaces at Canon's Tokyo headquarters.",

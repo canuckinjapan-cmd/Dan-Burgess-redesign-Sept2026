@@ -1,40 +1,44 @@
-# Dan Burgess Design | Ver. 2
+# Dan Burgess Design
 
-[![Live Website](https://img.shields.io/badge/Live-Website-blue?style=for-the-badge)](https://www.danburgess.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+Portfolio site of Dan Burgess, a Fukuoka-based web designer and front-end developer.
+Live: **https://danburgess.com** (日本語) · **https://danburgess.com/en/** (English)
 
-A premium, editorial-inspired portfolio website bridging Western minimalism with Japanese trust-based design.  
-福岡を拠点に活動するカナダ人デザイナー、ダン・バージェスのポートフォリオ。西洋のミニマリズムと日本の信頼重視のデザインを融合。
+福岡を拠点とするWebデザイナー／フロントエンド開発者、ダン・バージェスのポートフォリオサイトです。
 
-## 🚀 Overview / 概要
+## What this is
 
-This project is a React-based single-page application (SPA) showcasing 30 years of cross-cultural design experience—from classic game localization to modern UI/UX design and No-Code development.
+A bilingual (JP/EN) portfolio presenting three original website concepts - a 24-hour smart gym, a rural-property search site and a JDM vehicle-export shop - plus a short profile, skills and a contact form.
+The sample sites are portfolio concepts, not commissioned client work.
+Japanese and English pages are written separately for their own audiences, not machine-translated.
 
-30年にわたる異文化デザイン経験（ゲームのローカライゼーションから最新のUI/UX、ノーコード開発まで）を凝縮した、Reactベースのシングルページアプリケーション（SPA）です。
+## Tech stack
 
-## 🛠️ Tech Stack
+- React 18 + Vite, TypeScript
+- Tailwind CSS 3, `motion` (Framer Motion) for animation
+- Cloudflare Pages + Functions (contact form endpoint), deployed from GitHub
+- Fonts: IBM Plex Sans, Noto Sans JP
 
-- **Framework**: [React 18+](https://react.dev/) + [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Motion**: [Framer Motion](https://www.framer.com/motion/) (via `motion/react`)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Typography**: [IBM Plex Sans](https://fonts.google.com/specimen/IBM+Plex+Sans), [Noto Sans JP](https://fonts.google.com/specimen/Noto+Sans+JP)
-- **Deployment**: [www.danburgess.com](https://www.danburgess.com/)
+## Features
 
-## ✨ Key Features
+- **Separate JP / EN routes** (`/` and `/en/`) with hreflang, canonical URLs and static pre-rendered HTML for crawlers
+- **Selected Work** cards with expandable process notes (challenge, approach, key decisions, tools)
+- **Accessibility target: WCAG 2.1 AA** - semantic HTML, contrast-checked colour tokens, keyboard-operable controls, reduced-motion support and a pause control for the hero globe
+- **Contact form** with honeypot spam protection, inline validation and bilingual messages
+- Static Open Graph images for each language
 
-- **Bilingual Interface**: Seamless English/Japanese switching via `LanguageContext`, featuring interactive hover states (flag/maple icons) and layout-shift prevention.
-- **Editorial Layout**: Signature "paper & ink" aesthetic with minimal typography and clean, accessible headings.
-- **Curated Sections**: 4 focused sections—§01 Selected Work, §02 About, §03 Skills & Approach, and §04 Contact.
-- **Case Study Hub**: Detailed project breakdowns with role, tech-stack highlights, and expandable "View the process notes" (Challenge, Approach, Key Decisions, Tools).
-- **Portrait Plate**: Professional photo plate with a hover interaction.
-- **Toolkit Block**: A data-driven section showcasing capabilities with links to related project evidence.
-- **SEO & Social Sharing**: Dynamically served OpenGraph images (EN/JP) and optimized meta tags for improved discoverability.
-- **Optimized Favicon**: High-resolution manga avatar integrated as a favicon/shortcut icon.
+## Development
 
+​```bash
+npm install
+npm run dev      # local dev server
+npm run build    # production build
+npm run lint
+​```
 
-## 📄 Documentation
+## Workflow note
 
-- [AGENTS.md](./AGENTS.md): Technical instructions for AI coding assistants.
-- [DESIGN.md](./DESIGN.md): Detailed design system and style specification.
-- [SKILLS.md](./SKILLS.md): Knowledge base & architectural guide for OpenGraph, SEO, AEO, Schema.org, i18n, and sample routing.
+Built with an AI-assisted workflow (Google AI Studio / Antigravity, with design and code review in Claude and ChatGPT), then reviewed, edited and tested by hand. `AGENTS.md`, `DESIGN.md` and `SKILLS.md` hold the project's conventions for any AI assistants working in the repo.
+
+## License
+
+Text, photography, illustrations and AI-generated images © Dan Burgess, all rights reserved, except the background photo by Ben Wicks (Unsplash License).

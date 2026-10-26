@@ -114,7 +114,7 @@ Use a multi-entity `@graph` structure in JSON-LD. This connects the author, webs
       "name": "ダン・バージェス",
       "alternateName": "Dan Burgess",
       "url": "https://danburgess.com/",
-      "jobTitle": "Lead Web Developer & UI/UX Designer",
+      "jobTitle": "Web Designer / Front-End Developer",
       "image": "https://danburgess.com/src/assets/danface_manga.svg",
       "description": "Dan Burgess is a Fukuoka-based designer specializing in web development, UI/UX design, and bilingual localization.",
       "address": {
