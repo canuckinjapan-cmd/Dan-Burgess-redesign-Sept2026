@@ -735,13 +735,20 @@ const Index = () => {
               <h2 className="font-serif-display text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-[-0.023em] leading-[1.04] text-balance">
                 {t(
                   "Let's talk.",
-                  "お問い合わせ"
+                  <>
+                    <span className="whitespace-nowrap">お気軽に</span>
+                    <br />
+                    <span className="whitespace-nowrap">ご連絡を</span>
+                  </>
                 )}
               </h2>
-              <p className="mt-6 text-ink-muted text-lg leading-relaxed max-w-[44ch]">
+              <p className="mt-6 text-ink-muted text-lg leading-relaxed max-w-[44ch] text-pretty [word-break:auto-phrase]">
                 {t(
                   "Have a question about my work or an opportunity to discuss? I'd be happy to hear from you. I also welcome enquiries about web design and front-end roles within a team.",
-                  "作品についてのご質問や、お仕事に関するご相談など、お気軽にご連絡ください。Webデザイナー・フロントエンド開発者の採用に関するお問い合わせも歓迎しています。"
+                  <>
+                    <span className="block">作品についてのご質問や、お仕事に関するご相談など、お待ちしています。</span>
+                    <span className="block mt-3">Webデザイナー／フロントエンド職の採用に関するお話も歓迎しています。</span>
+                  </>
                 )}
               </p>
 
@@ -749,9 +756,9 @@ const Index = () => {
 
               <dl className="mt-10 space-y-5 font-mono text-[12px] uppercase">
                 <div className="flex items-start gap-4">
-                  <dt className="text-ink-muted w-20 shrink-0">{t("Contact", "お問い合わせ")}</dt>
+                  <dt className="text-ink-muted w-20 shrink-0">{t("Method", "連絡方法")}</dt>
                   <dd className="text-ink">
-                    {t("USE CONTACT FORM", "フォームよりお問い合わせください")}
+                    {t("USE THE FORM", "フォームからお願いします")}
                   </dd>
                 </div>
                 <div className="flex items-start gap-4">
