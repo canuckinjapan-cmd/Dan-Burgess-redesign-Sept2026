@@ -46,7 +46,7 @@
   }
 
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
 
   html {
@@ -70,14 +70,6 @@
 
 .bg-paper {
   background-color: #F7F3EC;
-}
-
-/* Drop-cap utility for About section initial character */
-.drop-cap-lead {
-  font-family: 'IBM Plex Sans', sans-serif;
-  font-weight: 700;
-  color: #FF6A1F;
-  line-height: 0.85;
 }
 
 /* Distinct, soft off-white text shadow for crisp legibility over moving 3D globe elements */

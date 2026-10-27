@@ -67,7 +67,7 @@ export const TopBar = () => {
         onClick={() => setLang("EN")}
         aria-current={lang === "EN" ? "page" : undefined}
         aria-label="English (EN)"
-        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "EN" ? "bg-accent-text-large text-white font-bold" : "text-ink-muted hover:text-ink"}`}
+        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "EN" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
         {lang === "JP" ? (
           <>
@@ -83,7 +83,7 @@ export const TopBar = () => {
         onClick={() => setLang("JP")}
         aria-current={lang === "JP" ? "page" : undefined}
         aria-label="日本語 (JP)"
-        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "JP" ? "bg-accent-text-large text-white font-bold" : "text-ink-muted hover:text-ink"}`}
+        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "JP" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
         {lang === "EN" ? (
           <>
@@ -127,7 +127,7 @@ export const TopBar = () => {
           aria-label="Dan Burgess Design home"
         >
           <span className="relative hidden sm:inline-block">
-            <span className="absolute -inset-1 rounded-full border border-ink/20 animate-spin-slow" aria-hidden />
+            <span className="absolute -inset-1 rounded-full border border-ink/20" aria-hidden />
             <img
               src={manga}
               alt=""

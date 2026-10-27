@@ -1,11 +1,11 @@
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider, useLanguage } from "./context/LanguageContext";
-import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
-import { SEOHead } from "./components/SEOHead";
-import { LanguageDetector } from "./components/LanguageDetector";
+import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
+import Index from "@/pages/Index";
+import NotFound from "@/pages/NotFound";
+import { SEOHead } from "@/components/SEOHead";
+import { LanguageDetector } from "@/components/LanguageDetector";
 
 function AppRoutes() {
   const { lang } = useLanguage();

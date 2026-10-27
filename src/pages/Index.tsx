@@ -34,17 +34,6 @@ const Index = () => {
 
   const currentYear = new Date().getFullYear();
 
-  const getSeasonDetails = () => {
-    return {
-      issueNo: 29,
-      seasonEn: "Winter",
-      seasonJp: "冬",
-      seasonYear: 2026,
-    };
-  };
-
-  const seasonDetails = getSeasonDetails();
-
   const capabilities = [
     {
       num: "01",

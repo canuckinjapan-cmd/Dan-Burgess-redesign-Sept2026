@@ -1,77 +1,138 @@
-# Design System Specification (DESIGN.md)
+# DESIGN.md
 
-## 🎯 Brand Identity
-**"Bridging Western minimalism and Japanese trust-based design."**
-The "Ver. 2" aesthetic is inspired by high-end editorial layouts—think premium broadsheet newspapers or architectural monographs. It balances the warmth of tactile paper with the precision of digital ink.
+Design system for the Dan Burgess Design portfolio. Tokens live in `src/index.css` (CSS variables) and
+`tailwind.config.ts` (Tailwind names). Use the Tailwind names, not raw hex values.
 
-## 🎨 Color Tokens
-| Token | HSL / Hex | Usage |
+## Brand idea
+
+Western minimalism with Japanese trust-building: a clean, editorial "paper and ink" frame, with the detail a
+Japanese client looks for (process, roles, plain contact steps) kept visible. Premium, quiet, functionally dense.
+Conversion first: one clear next step per section.
+
+## Colour tokens
+
+Contrast ratios were calculated from the actual token values against the three surfaces used on the site:
+paper `#F7F3EC`, white (cards, form fields) and the About photo wash (`#E1DBD2`–`#E8D9CE`).
+WCAG 2.1 AA needs 4.5:1 for normal text and 3:1 for large text (24px regular, or 18.66px bold) and UI components.
+
+| Token (Tailwind) | Value | Paper | White | Photo wash | Use |
+| :--- | :--- | ---: | ---: | ---: | :--- |
+| `bg-paper` / `background` | `#F7F3EC` | – | – | – | Page base |
+| `surface-elevated` / `card` | `#FFFFFF` | – | – | – | Cards, form fields |
+| `surface-soft` | `36 20% 93%` | – | – | – | Alternate section tint |
+| `ink` | `#14161A` | 16.4 | 18.1 | 13.2 | Body text, borders |
+| `ink-muted` | `#5C6370` | 5.5 | 6.1 | 4.4 | Secondary text |
+| `ink-label` / `ink-muted-strong` | `#5F636A` | 5.5 | 6.0 | 4.4 | Small mono labels, chips |
+| `ink-placeholder` | `#6B6F76` | 4.6 | 5.1 | 3.7 | Form placeholders (on white only) |
+| `ink-subtle` | `#8F96A3` | 2.7 | 3.0 | 2.2 | Decoration only, never text |
+| `ink-dark` | `#111318` | 16.8 | 18.6 | 13.5 | Text on brand orange |
+| `accent-brand` | `#FF6A1F` | 2.6 | 2.9 | 2.1 | Decorative fills only (see below) |
+| `accent-text` | `#C03F0C` | 4.8 | 5.3 | 3.9 | Orange text and links on paper or white; large text on photo wash |
+| `accent-text-large` | `#DB500F` | 3.7 | 4.1 | 3.0 | Large text only (hero and section headings, big numerals) |
+| `accent-text-on-photo` | `#A8360A` | 5.9 | 6.6 | 4.8 | Small orange labels over the About photo |
+| `accent-text-link-on-photo` | `#9A3412` | 6.6 | 7.3 | 5.3 | Underlined links over the About photo |
+| `border` / `rule` | ink at 12–15% | – | – | – | Hairline structure |
+
+`accent-brand` with `ink-dark` text is about 6.4:1. White text on `accent-brand` is about 2.9:1 and fails.
+
+### Colour rules
+
+1. Never use `accent-brand` (#FF6A1F) as text or icon stroke on a light surface, and never put white text on it.
+   It is for dots, rules, arcs, selection highlight, and buttons or pills that carry `ink-dark` text.
+2. Orange text: `accent-text` for anything normal-sized; `accent-text-large` only for large type.
+3. Over the About photo wash, use the two `on-photo` tokens (see table). Links there are underlined.
+4. White text on an orange background must use `accent-text` as the background (5.3:1).
+5. Colour never carries meaning alone: orange text links are underlined; required fields carry a visible tag.
+6. Focus outlines use ink or `accent-text` and must be visible (3:1 or better).
+7. Decorative numerals, arrows and dots are `aria-hidden`.
+
+## Typography
+
+One family stack throughout: **IBM Plex Sans** with **Noto Sans JP** as the Japanese fallback. The Tailwind
+families `display`, `serif`, `serif-display`, `sans`, `sans-body` and `mono` all resolve to this stack
+(`mono` ends in `ui-monospace`). "Mono" labels are therefore small uppercase Plex Sans, not a true monospace.
+
+| Role | Class | Notes |
 | :--- | :--- | :--- |
-| `--background` | `36 25% 96%` (#F7F3EC) | Warm paper base. |
-| `--foreground` | `220 15% 9%` | Primary ink color for text and borders. |
-| `--accent-brand`| `19 100% 56%` (#FF6A1F) | Signature brand orange for decorative fills only (dots, underlines, rules, blobs, arcs, and buttons/pills carrying dark ink text #111318). Never use as text on light backgrounds. |
-| `--accent-text` | `17 88% 40%` (#C2410C) | WCAG AA compliant (4.57:1 on paper, 3.76:1 on photo wash) for normal-size text, links, small labels, icons, and large headlines over photo washes. |
-| `--accent-text-large` | `19 87% 46%` (#D9500F) | WCAG AA compliant (3.63:1 on paper) for large text (>=24px regular or >=18.66px bold, e.g. hero headline, section headlines, section numerals). |
-| `--accent-text-on-photo` | `#A8360A` | WCAG AA compliant (4.77:1 on photo wash #E1DBD2/#E8D9CE) for small items (e.g. "About" section label) over the About photo background. |
-| `--accent-text-link-on-photo` | `#9A3412` | WCAG AA compliant (5.31:1 on photo wash #E1DBD2/#E8D9CE) for underlined links (e.g. LinkedIn link) over the About photo background. |
-| `--ink-dark` | `#111318` | Dark ink text for active language pill and high-contrast buttons on `#FF6A1F` background (6.49:1). |
-| `--ink-label` | `#5F636A` | High-contrast grey for small uppercase labels (`/ CAPABILITY`, `CORE CAPABILITIES`) and chips on paper/cards (5.46:1 on paper, 6.04:1 on white). |
-| `--ink-placeholder` | `#6B6F76` | Form input placeholder text (5.05:1 on white). |
-| `--surface-elevated`| `0 0% 100%` | High-contrast card backgrounds. |
-| `--rule` | `220 15% 9%` / 12% opacity | Hairline borders for structure. |
+| Headings | `font-serif-display font-bold` | Tracking about `-0.023em`; `text-balance` on section headings |
+| Body | `font-sans-body` | 16–20px, `leading-relaxed`, secondary text `text-ink-muted` |
+| Labels | `font-mono text-[11–12px] uppercase` | `text-ink-muted` or `ink-label` |
 
-### WCAG 2.1 AA Contrast Rules
-1. **Never use #FF6A1F as text on light backgrounds**: Brand orange `#FF6A1F` on paper (~#F4F0EC) measures 2.5–2.7:1 (fails AA). White text on `#FF6A1F` measures 2.86:1 (fails AA). Never use `#FF6A1F` with white text, or as text/icon stroke on light surfaces.
-2. **Standard Text Tokens**: Use `--accent-text` (`#C2410C`) for normal text/icons (>= 4.5:1 on paper), and `--accent-text-large` (`#D9500F`) strictly for large text (>= 3:1 on paper).
-3. **About Section Over Photo Wash**: Background photo wash measures between `#E1DBD2` and `#E8D9CE`. Large items ("02" numeral, "Design" headline) use `--accent-text` (`#C2410C`, 3.76:1). Small labels ("About") use `--accent-text-on-photo` (`#A8360A`, 4.77:1). Links ("LinkedIn ↗") use `--accent-text-link-on-photo` (`#9A3412`, 5.31:1) with an underline.
-4. **Buttons & Pills**: Buttons with `#FF6A1F` background must carry dark ink text (`--ink-dark` / `#111318`, 6.49:1). Buttons/badges with white text must use `--accent-text` (`#C2410C`, 5.18:1).
-5. **Form & Small Greys**: Form placeholders use `--ink-placeholder` (`#6B6F76`, 5.05:1 on white). Small labels and chip text use `--ink-label` (`#5F636A`, 5.46:1 on paper, 6.04:1 on white).
-6. **Decorative Numerals**: Large grey card numerals ("01-04") are decorative and marked with `aria-hidden="true"`.
-7. **Underlines on Links**: Text links must not rely on colour alone; orange text links must use an underline.
-8. **Hover & Focus**: Hover and focus states never place `#FF6A1F` text on light backgrounds. Focus outlines use dark ink or `--accent-text` (>= 3:1).
+- Fonts load from Google Fonts in `index.css` with `display=swap`. `html` has `font-feature-settings: "palt" 1`
+  (proportional Japanese kerning).
+- `:lang(ja) { word-break: auto-phrase; }` breaks Japanese at phrase boundaries. Long JP headings also use
+  `whitespace-nowrap` spans around intended break points, and body copy adds `text-pretty`.
+- Write Japanese as 「Webデザイナー」, not 「WEBデザイナー」.
+- Keep decorative English eyebrows off the Japanese page (see `AGENTS.md`).
 
-## 🖋️ Typography
-| Role | Family | Weights | Details |
-| :--- | :--- | :--- | :--- |
-| **Display** | `IBM Plex Sans` | 700 (Bold) | Authoritative, clean modern editorial headers. Kerning tightened by ~15% (`-0.029em`). |
-| **Body (Sans)** | `IBM Plex Sans` | 400 (Regular) | High legibility for bilingual content. Handles EN/JP pairing gracefully. |
-| **Monospace** | `IBM Plex Sans`| 400 (Regular) | Technical data, tool stacks, labels, and indices. Default kerning (`letter-spacing: normal`). |
-| **Japanese** | `Noto Sans JP` | 100-900 | Matched with IBM Plex Sans for a unified look. |
+## Layout and spacing
 
-## 📐 Layout & Spacing
-- **Grid Strategy**: 12-column desktop grid with a `max-w-7xl` container.
-- **Borders**: Sharp 0.25rem radius (`--radius`) for cards, combined with `rule` (12% ink) borders.
-- **Paper Texture**: A subtle radial gradient grain is applied via `.bg-paper` for tactile depth.
-- **Drop-cap**: Editorial start for the "About" section using `IBM Plex Sans` (Bold 700) and `accent-brand` color.
+- Page container: `max-w-[1320px] mx-auto px-6 lg:px-10`. Sections use `py-24 lg:py-32` and a `border-t rule` divider.
+- 12-column grids from `lg` (About, Contact). About also switches to a 12-column layout in landscape on tablets.
+- Radius is small: `--radius: 0.25rem`.
+- Sections in order: Hero (`#hero`), Selected Work (`#work`), About (`#about`), Skills & Approach (`#skills`),
+  Contact (`#contact`), footer. The nav label for Skills is 「スキル・制作」; the section heading is
+  「スキルと制作アプローチ」.
+- Tap targets are at least 44px high where practical (process-notes summary, form fields, buttons).
+- Heading order: one `<h1>` in the hero, `<h2>` for each section (About included), `<h3>` inside sections.
 
-## 🎞️ Component Patterns
+## Components
 
-### 1. Portrait Plate
-- **Interaction**: Features a timed transition from photo to manga illustration.
-- **Hover**: Subject to a clockwise rotation (2 degrees) with a smooth `easeInOut` transition.
+### TopBar
+Fixed, `h-16`, with a spacer so content does not jump. Logo with the manga avatar, section links, "Get in Touch"
+button, and a fixed-width EN/JP switch (no layout shift). Hovering a language pill shows a flag or 🍁 glyph in a
+fixed-width slot. The mobile menu is a full-screen panel (`aria-expanded` on the toggle) with LinkedIn, Instagram
+and Blogger icon links, each with an `aria-label`.
 
-### 2. Case Study Cards
-- **Content**: Displays rich project data including summary, specific roles, tech stack, and interactive demo link.
-- **Process Notes Drawer**: An expandable editorial accordion ("View the process notes" / "制作プロセスを見る") featuring Challenge, Approach, Key Decisions, and Tools. Styled with hairline dividers (`rule`), uppercase monospace subheadings, and bold `+` / `−` toggles.
-- **Grid Stability**: Container articles use `items-start` grid alignment on desktop to ensure that expanding the process notes does not shift the preview screenshot downward.
-- **Action**: Hover states feature subtle scaling (`scale-[1.01]`) and shadow enhancement.
+### Hero
+Left-aligned `<h1>` over a `cobe` globe (`ui/globe.tsx`). The text uses `.hero-support-text`, an off-white
+text-shadow halo, so it stays readable over the moving globe; mobile portrait gets a heavier outline. A pause/resume
+button controls the globe (WCAG 2.2.2), and the globe respects `prefers-reduced-motion`.
 
-### 3. Kinetic Wordmark (Marquee)
-- **Velocity**: 38s linear cycle.
-- **Optimization**: Uses `translateZ(0)` and `-webkit-optimize-contrast` for sharp rendering in Chromium browsers.
+### Selected Work cards (`CaseStudies.tsx`)
+Data-driven from the `cases` array, bilingual fields per entry. Each card has screenshot, tagline, short
+description, role, stack chips, a link to the live sample and a visible "portfolio concept" disclosure.
+- Process notes: native `<details>/<summary>` labelled "View the process notes" / 「制作プロセスを見る」, with a
+  `+` / `−` indicator, hairline dividers and uppercase labels (Challenge, Approach, Key decisions, Tools).
+- The grid uses `items-start` so expanding the notes never moves the screenshot.
 
-## 🏗️ Motion Guidelines
-- **Ease**: Prefer `cubic-bezier(0.16, 1, 0.3, 1)` for entrances (the "fade-up" effect).
-- **Subtlety**: Animations should feel authoritative and smooth, never "bouncy" or distracting.
-- **Responsive**: Complex hover effects are maintained through the `motion` library's `whileHover` prop.
+### About
+Portrait plate (`PortraitPlate.tsx`) in a white framed card that scales slightly on hover (`whileHover` 1.02), beside
+the bio. The plate is a static photograph with alt text; it is not a photo-to-illustration transition. Small
+labels and links over the photo wash use the `on-photo` tokens.
 
-## 🎨 Block Illustrations (Section Graphics)
-To enrich sections visually, pristine inline vector SVGs are dynamically rendered under headers/descriptions in the left-hand column (with the exception of §02 — About):
-- **Aesthetic**: Minimalist hand-drawn manga/sketched brush stroke style with clean, organic shapes, solid white inner boundaries, and a single solid accent of bright orange (`#FF6A1F`).
-- **Styling Specs**: Sized precisely at `w-40 md:w-48` and marked as `pointer-events-none` to remain elegant, crispy high-resolution landmarks. Fully transparent backgrounds outside outline boundaries.
-- **Component Mapping (/src/components/SectionIllustrations.tsx)**:
-  - **§01 Selected Work**: `SelectedWorkIllustration` — Sketch-style browser wireframe mockup with custom click arrow and orange CTA action.
-  - **§03 Services**: `BilingualServicesIllustration` — Intersecting handwritten dialogue balloons showing bilingual mastery ("ABC" in English serif, "あいう" in Japanese Mincho serif with orange accent).
-  - **§04 Contact**: `ContactIllustration` — Stylized folded origami paper crane carrying an international letter with orange postmark stamp.
-  - **§05 FAQ**: `FAQIllustration` — Integrated custom portrait line-drawing from `danface_only-2025.svg` paired with an elegant floating vector thought bubble enclosing a bold orange question mark (`?`).
-  *(Note: The standalone Pricing section and table have been removed in favor of bespoke consultation via Contact).*
+### Skills & Approach
+Capability cards with decorative numerals (`aria-hidden`), a toolkit block and a short "how I work" note.
+
+### Contact (`ContactForm.tsx`)
+Left column: heading, short paragraph and a details list (method, location, hours). Right column: the form.
+- Fields: name, email, company, message. Required / Optional is a visible tag (必須 / 任意), not an asterisk.
+- Manual validation: `aria-invalid` and `aria-invalid:border-red-700`; focus moves to the first bad field.
+- Placeholders use `ink-placeholder` on white; Japanese examples are 「例：山田 太郎」, `example@company.co.jp`,
+  「例：株式会社〇〇」.
+- Submit button: ink background, `accent-text` on hover, arrow nudges on `group-hover`.
+- Honeypot field is off-screen, `aria-hidden`, `tabIndex={-1}`.
+- `ContactIllustration` (origami crane with letter) is the only section illustration in use.
+
+## Motion
+
+- Entrances use `cubic-bezier(0.16, 1, 0.3, 1)` (the `fade-in-up` keyframe). Nothing bouncy.
+- Use `motion/react` for hover and entrance animation. Add `transform: translateZ(0)` to animated images that look
+  soft in Chromium.
+- Honour `prefers-reduced-motion` through `usePrefersReducedMotion` (`src/hooks/use-reduced-motion.ts`).
+- Anything that moves for more than 5 seconds needs a visible pause control (the globe has one).
+- `motion-safe:animate-in` (from `tailwindcss-animate`) is used on the process-notes panel.
+
+## Imagery
+
+- Photos and screenshots: meaningful alt text; decorative art is `aria-hidden`.
+- OG images are 1200 × 630 PNGs, `DJB-og-image-EN.png` and `DJB-og-image-JP.png`, currently 450–470 KB.
+  Aim for under 300 KB.
+- Small icons that look soft can take `imageRendering: "-webkit-optimize-contrast"`.
+
+## Notes
+
+- `SectionIllustrations.tsx` now exports only `ContactIllustration`. Add new section art there, with `aria-hidden`.
+- The logo ring (`TopBar.tsx`) and portrait ring (`PortraitPlate.tsx`) are static. If you animate them, define the
+  keyframe in `tailwind.config.ts`, wrap it in `motion-safe:`, and respect `usePrefersReducedMotion`.
+- The About section has no drop cap.

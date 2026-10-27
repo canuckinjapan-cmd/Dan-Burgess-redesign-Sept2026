@@ -28,12 +28,12 @@ Japanese and English pages are written separately for their own audiences, not m
 
 ## Development
 
-​```bash
+```bash
 npm install
 npm run dev      # local dev server
 npm run build    # production build
 npm run lint
-​```
+```
 
 ## Workflow note
 
