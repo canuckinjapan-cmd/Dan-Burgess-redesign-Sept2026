@@ -4,43 +4,70 @@ interface SEOHeadProps {
   lang: "EN" | "JP";
 }
 
+const SITE = "https://danburgess.com";
+
+// Keep these strings identical to the static <head> in index.html (JP) and
+// en/index.html (EN). Crawlers and social scrapers read the static HTML; this
+// component only keeps the head in sync after a client-side language switch.
+const META = {
+  EN: {
+    path: "/en/",
+    locale: "en_US",
+    title: "Dan Burgess Design | Web Production, UI/UX Design & Localization (Fukuoka, Japan)",
+    ogTitle: "Dan Burgess Design | Web Production, UI/UX Design & Localization",
+    description:
+      "Dan Burgess is a Canadian web designer and front-end developer, based in Japan since 1992. Bilingual websites, UI/UX design and localization from Fukuoka.",
+    ogDescription:
+      "Connecting Japanese businesses to global audiences through thoughtful design, modern web production, and cross-cultural communication.",
+    image: `${SITE}/DJB-og-image-EN.png`,
+  },
+  JP: {
+    path: "/",
+    locale: "ja_JP",
+    title: "ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ（福岡・日本）",
+    ogTitle: "ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ",
+    description:
+      "ダン・バージェスは福岡を拠点に活動するWebデザイナー／フロントエンド開発者。1992年から日本在住。日英バイリンガルサイト制作、UI/UXデザイン、ローカライズに取り組んでいます。",
+    ogDescription:
+      "日本企業の海外発信を支援するWebデザイナー。デザイン、Web制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。",
+    image: `${SITE}/DJB-og-image-JP.png`,
+  },
+} as const;
+
+// Update a <meta> tag, creating it if the static HTML doesn't have it.
+const setMeta = (attr: "name" | "property", key: string, value: string) => {
+  let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", value);
+};
+
 export const SEOHead = ({ lang }: SEOHeadProps) => {
   useEffect(() => {
-    const isEn = lang === "EN";
+    const m = META[lang];
+    const url = `${SITE}${m.path}`;
 
-    const title = isEn
-      ? "Dan Burgess Design | Web Production, UI/UX Design & Localization (Fukuoka, Japan)"
-      : "ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ（福岡・日本）";
+    document.title = m.title;
 
-    const description = isEn
-      ? "Dan Burgess is a Canadian web designer and developer in Japan specializing in bilingual websites, UI/UX design, and localization since 1992."
-      : "ダン・バージェスは福岡を拠点に、海外へ伝わるWebサイト制作、UI/UXデザイン、ローカライズを提供しています。1992年からの実績で日・英コミュニケーションを成功に導きます。";
+    setMeta("name", "description", m.description);
 
-    document.title = title;
+    setMeta("property", "og:title", m.ogTitle);
+    setMeta("property", "og:description", m.ogDescription);
+    setMeta("property", "og:image", m.image);
+    setMeta("property", "og:url", url);
+    setMeta("property", "og:locale", m.locale);
 
-    const descMeta = document.querySelector('meta[name="description"]');
-    if (descMeta) {
-      descMeta.setAttribute("content", description);
-    }
+    setMeta("name", "twitter:title", m.ogTitle);
+    setMeta("name", "twitter:description", m.ogDescription);
+    setMeta("name", "twitter:image", m.image);
+    setMeta("name", "twitter:url", url);
 
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) {
-      ogTitle.setAttribute("content", title);
-    }
-
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    if (ogDesc) {
-      ogDesc.setAttribute("content", description);
-    }
-
-    const ogImage = document.querySelector('meta[property="og:image"]');
-    if (ogImage) {
-      ogImage.setAttribute("content", isEn ? "https://danburgess.com/DJB-og-image-EN.png" : "https://danburgess.com/DJB-og-image-JP.png");
-    }
-
-    const twitterImage = document.querySelector('meta[name="twitter:image"]');
-    if (twitterImage) {
-      twitterImage.setAttribute("content", isEn ? "https://danburgess.com/DJB-og-image-EN.png" : "https://danburgess.com/DJB-og-image-JP.png");
+    const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute("href", url);
     }
   }, [lang]);
 
