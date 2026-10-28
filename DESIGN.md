@@ -107,7 +107,8 @@ Capability cards with decorative numerals (`aria-hidden`), a toolkit block and a
 ### Contact (`ContactForm.tsx`)
 Left column: heading, short paragraph and a details list (method, location, hours). Right column: the form.
 - Fields: name, email, company, message. Required / Optional is a visible tag (必須 / 任意), not an asterisk.
-- Manual validation: `aria-invalid` and `aria-invalid:border-red-700`; focus moves to the first bad field.
+- Manual validation: inline bilingual error text under each bad field (`text-red-700`, linked with `aria-describedby`),
+  `aria-invalid`, and focus moved to the first bad field.
 - Placeholders use `ink-placeholder` on white; Japanese examples are 「例：山田 太郎」, `example@company.co.jp`,
   「例：株式会社〇〇」.
 - Submit button: ink background, `accent-text` on hover, arrow nudges on `group-hover`.

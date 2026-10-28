@@ -89,7 +89,8 @@ validates the fields, silently accepts honeypot hits (`hp_field`), then sends th
 - Environment variables, set in Cloudflare and never committed: `SMTP_USER`, `SMTP_PASS`, `CONTACT_EMAIL`, optionally `SMTP_HOST`
   (defaults to `smtp.gmail.com`).
 - Required / optional state is a visible tag (必須 / 任意, Required / Optional), not an asterisk or a placeholder.
-- Validation is manual (`noValidate`): invalid fields get `aria-invalid` and the first one receives focus.
+- Validation is manual (`noValidate`): each invalid field shows an inline message (`#name-error`, `#email-error`,
+  `#message-error`) linked by `aria-describedby`, gets `aria-invalid`, and the first one receives focus.
 - The request has a 15 second timeout.
 
 ## Accessibility (target: WCAG 2.1 AA)
