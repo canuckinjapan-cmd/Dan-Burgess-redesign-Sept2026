@@ -238,8 +238,7 @@ export const CaseStudies = () => {
                   rel="noopener noreferrer"
                   className="block relative group cursor-pointer"
                 >
-                  <div className="absolute -inset-px bg-gradient-to-br from-accent-brand/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden />
-                  <div className="relative bg-white p-2 sm:p-3 border rule shadow-[0_30px_60px_-30px_hsl(var(--ink)/0.25)]">
+                  <div className="relative bg-white p-2 sm:p-3 border rule group-hover:border-accent-brand shadow-[0_30px_60px_-30px_hsl(var(--ink)/0.25)]">
                     <div className="flex items-center justify-between font-mono text-[10px] uppercase text-ink-muted px-2 py-1.5">
                       <span>{c.index} / {t(c.client, c.clientJp)}</span>
                       <span>{c.year}</span>
@@ -262,8 +261,8 @@ export const CaseStudies = () => {
                           src={currentImage}
                           alt={`${t(c.client, c.clientJp)} - ${t(c.title, c.titleJp)}`}
                           loading="lazy"
-                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top ease-in-out group-hover:scale-[1.03]`}
-                          style={{ transitionDuration: '20000ms' }}
+                          className={`w-full ${(c.id === 'taka' || c.id === 'lumina' || c.id === 'apex') ? 'h-auto' : 'h-full'} object-cover object-top ease-in-out group-hover:scale-[1.05]`}
+                          style={{ transitionDuration: '700ms' }}
                         />
                       </picture>
                     </div>
@@ -271,8 +270,7 @@ export const CaseStudies = () => {
                 </a>
               ) : (
                 <div className="relative group">
-                  <div className="absolute -inset-px bg-gradient-to-br from-accent-brand/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" aria-hidden />
-                  <div className="relative bg-white p-2 sm:p-3 border rule shadow-[0_30px_60px_-30px_hsl(var(--ink)/0.25)]">
+                  <div className="relative bg-white p-2 sm:p-3 border rule group-hover:border-accent-brand shadow-[0_30px_60px_-30px_hsl(var(--ink)/0.25)]">
                     <div className="flex items-center justify-between font-mono text-[10px] uppercase text-ink-muted px-2 py-1.5">
                       <span>{c.index} / {t(c.client, c.clientJp)}</span>
                       <span>{c.year}</span>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -20,6 +20,16 @@ export const TopBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const firstMenuLinkRef = useRef<HTMLAnchorElement>(null);
+
+  // Close the mobile menu. Escape and the toggle button hand focus back to the
+  // hamburger; choosing a link lets the browser move focus to the target section.
+  const closeMenu = useCallback((returnFocus: boolean) => {
+    setIsMenuOpen(false);
+    if (returnFocus) requestAnimationFrame(() => menuButtonRef.current?.focus());
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -43,22 +53,46 @@ export const TopBar = () => {
   }, []);
 
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && isMenuOpen) {
-        setIsMenuOpen(false);
+    if (!isMenuOpen) return;
+
+    document.body.style.overflow = "hidden";
+
+    // Move focus into the menu once it has mounted.
+    const focusTimer = window.setTimeout(() => firstMenuLinkRef.current?.focus(), 50);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeMenu(true);
+        return;
+      }
+      if (e.key !== "Tab" || !headerRef.current) return;
+
+      // Keep Tab inside the header (logo, language switch, toggle, menu links)
+      // so keyboard users never land on the page behind the open menu.
+      const focusables = Array.from(
+        headerRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')
+      ).filter((el) => el.getClientRects().length > 0 && el.tabIndex >= 0);
+      if (focusables.length === 0) return;
+
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      document.body.style.overflow = "unset";
+      window.clearTimeout(focusTimer);
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, closeMenu]);
 
   const renderLangSwitcher = (extraClass = "") => (
     <div className={`group flex items-center gap-0.5 sm:gap-1 font-mono text-[9px] sm:text-[10px] uppercase border rule rounded-sm p-0.5 sm:px-1 sm:py-0.5 ${extraClass}`}>
@@ -107,6 +141,7 @@ export const TopBar = () => {
       </a>
       <div className="h-16 w-full relative">
       <header
+        ref={headerRef}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isMenuOpen
             ? "bg-surface border-b rule"
@@ -157,7 +192,7 @@ export const TopBar = () => {
         </a>
 
         {/* Desktop/Tablet Landscape Center: Nav */}
-        <nav className="hidden md:landscape:flex lg:portrait:hidden flex-1 items-center justify-center gap-6 xl:gap-8 font-mono text-[12px] lg:text-[13px] uppercase">
+        <nav aria-label={t("Primary", "メインメニュー")} className="hidden md:landscape:flex lg:portrait:hidden flex-1 items-center justify-center gap-6 xl:gap-8 font-mono text-[12px] lg:text-[13px] uppercase">
           {navItems.map((n) => (
             <a key={n.label} href={n.href} className="px-1.5 py-1 text-ink-muted hover:text-white hover:bg-accent-text rounded-sm transition-all whitespace-nowrap">
               {t(n.label, n.jpLabel)}
@@ -183,8 +218,11 @@ export const TopBar = () => {
           {/* Mobile Right: Hamburger (Visible on mobile/tablet portrait, hidden on desktop/tablet landscape) */}
           <div className="relative md:landscape:hidden lg:hidden flex items-center">
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              ref={menuButtonRef}
+              type="button"
+              onClick={() => (isMenuOpen ? closeMenu(true) : setIsMenuOpen(true))}
               aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
               aria-label={isMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               className="p-1 sm:p-2 text-ink hover:text-accent-text transition-colors flex items-center justify-center relative z-10"
             >
@@ -201,6 +239,7 @@ export const TopBar = () => {
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.2 }}
                   onClick={() => setIsMenuOpen(true)}
+                  aria-hidden="true"
                   className="absolute right-0 top-[calc(100%+8px)] bg-surface text-ink border border-ink shadow-2xl rounded-sm py-1.5 px-3 font-mono text-[9px] uppercase whitespace-nowrap z-30 cursor-pointer hover:bg-accent-text hover:text-white hover:border-accent-text transition-all flex items-center group"
                 >
                   {t("Navigation Menu", "ナビメニュー")}
@@ -217,6 +256,7 @@ export const TopBar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-menu"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
@@ -224,12 +264,13 @@ export const TopBar = () => {
             className="fixed inset-0 top-16 z-40 bg-surface md:landscape:hidden lg:hidden lg:portrait:block border-t rule shadow-2xl overflow-y-auto"
           >
             <div className="bg-paper absolute inset-0 -z-10" /> {/* Solid texture background */}
-            <nav className="flex flex-col p-8 gap-8 landscape:p-6 landscape:gap-3">
+            <nav aria-label={t("Mobile", "モバイルメニュー")} className="flex flex-col p-8 gap-8 landscape:p-6 landscape:gap-3">
               {navItems.map((n, i) => (
                 <motion.a
                   key={n.label}
+                  ref={i === 0 ? firstMenuLinkRef : undefined}
                   href={n.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  onClick={() => closeMenu(false)}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 + 0.1 }}

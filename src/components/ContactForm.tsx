@@ -3,11 +3,12 @@ import { toast } from "@/hooks/use-toast";
 import { useLanguage } from "@/context/LanguageContext";
 
 type FieldId = "name" | "email" | "message";
+type FieldErrors = Partial<Record<FieldId, string>>;
 
 export const ContactForm = () => {
   const { t } = useLanguage();
   const [submitting, setSubmitting] = useState(false);
-  const [invalid, setInvalid] = useState<FieldId[]>([]);
+  const [errors, setErrors] = useState<FieldErrors>({});
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,46 +17,54 @@ export const ContactForm = () => {
     hp_field: "",
   });
 
-  // Clear a field's error state as soon as the visitor edits it.
-  const clearInvalid = (id: FieldId) =>
-    setInvalid((prev) => prev.filter((f) => f !== id));
+  // Clear a field's error as soon as the visitor edits it.
+  const clearError = (id: FieldId) =>
+    setErrors((prev) => {
+      if (!prev[id]) return prev;
+      const next = { ...prev };
+      delete next[id];
+      return next;
+    });
 
-  // Move focus to the first field with a problem so keyboard and screen-reader
-  // users land where the fix is needed (WCAG 3.3.1 / 3.3.3).
-  const flagInvalid = (ids: FieldId[]) => {
-    setInvalid(ids);
-    document.getElementById(ids[0])?.focus();
+  // Show an error under each bad field and move focus to the first one, so
+  // keyboard and screen-reader users land where the fix is needed
+  // (WCAG 3.3.1 / 3.3.3). Each field points at its message via aria-describedby.
+  const flagErrors = (next: FieldErrors) => {
+    setErrors(next);
+    const first = (["name", "email", "message"] as FieldId[]).find((id) => next[id]);
+    if (first) document.getElementById(first)?.focus();
   };
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const missing: FieldId[] = [];
-    if (!form.name.trim()) missing.push("name");
-    if (!form.email.trim()) missing.push("email");
-    if (!form.message.trim()) missing.push("message");
-
-    if (missing.length > 0) {
-      flagInvalid(missing);
-      toast({
-        title: t("Missing details", "入力漏れがあります"),
-        description: t("Please fill in your name, email, and message.", "お名前、メールアドレス、メッセージをご入力ください。"),
-      });
-      return;
+    const found: FieldErrors = {};
+    if (!form.name.trim()) {
+      found.name = t("Please enter your name.", "お名前をご入力ください。");
+    }
+    if (!form.email.trim()) {
+      found.email = t("Please enter your email address.", "メールアドレスをご入力ください。");
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      found.email = t(
+        "Please check the email address format, e.g. name@example.com.",
+        "メールアドレスの形式をご確認ください（例：example@company.co.jp）。"
+      );
+    }
+    if (!form.message.trim()) {
+      found.message = t("Please enter a message.", "メッセージをご入力ください。");
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form.email.trim())) {
-      flagInvalid(["email"]);
+    if (Object.keys(found).length > 0) {
+      flagErrors(found);
       toast({
         variant: "destructive",
-        title: t("Invalid email", "無効なメールアドレス"),
-        description: t("Please enter a valid email address.", "有効なメールアドレスを入力してください。")
+        title: t("Please check the form", "入力内容をご確認ください"),
+        description: t("Some fields need your attention.", "ご確認が必要な項目があります。"),
       });
       return;
     }
 
-    setInvalid([]);
+    setErrors({});
     setSubmitting(true);
     const targetUrl = "/api/contact";
 
@@ -114,6 +123,7 @@ export const ContactForm = () => {
 
   const field =
     "w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-placeholder focus:outline-none focus:border-accent-text focus:bg-white transition-all aria-invalid:border-red-700";
+  const errorText = "mt-1.5 text-[13px] leading-snug text-red-700";
   const label = "block font-mono text-[12px] uppercase text-ink-muted mb-1.5 font-normal";
 
   // Visible Required / Optional tag (必須 / 任意 in Japanese). Replaces the "*"
@@ -145,13 +155,15 @@ export const ContactForm = () => {
             value={form.name}
             onChange={(e) => {
               setForm({ ...form, name: e.target.value });
-              clearInvalid("name");
+              clearError("name");
             }}
             placeholder={t("Your full name", "例：山田 太郎")}
             required
-            aria-invalid={invalid.includes("name")}
+            aria-invalid={errors.name ? true : undefined}
+            aria-describedby={errors.name ? "name-error" : undefined}
             autoComplete="name"
           />
+          {errors.name && <p id="name-error" className={errorText}>{errors.name}</p>}
         </div>
 
         <div>
@@ -166,13 +178,15 @@ export const ContactForm = () => {
             value={form.email}
             onChange={(e) => {
               setForm({ ...form, email: e.target.value });
-              clearInvalid("email");
+              clearError("email");
             }}
             placeholder={t("you@company.com", "example@company.co.jp")}
             required
-            aria-invalid={invalid.includes("email")}
+            aria-invalid={errors.email ? true : undefined}
+            aria-describedby={errors.email ? "email-error" : undefined}
             autoComplete="email"
           />
+          {errors.email && <p id="email-error" className={errorText}>{errors.email}</p>}
         </div>
       </div>
 
@@ -203,15 +217,17 @@ export const ContactForm = () => {
           value={form.message}
           onChange={(e) => {
             setForm({ ...form, message: e.target.value });
-            clearInvalid("message");
+            clearError("message");
           }}
           placeholder={t(
             "Share details about your question, opportunity, or goals.",
             "ご用件をご記入ください（例：作品について／採用について／お仕事のご相談）"
           )}
           required
-          aria-invalid={invalid.includes("message")}
+          aria-invalid={errors.message ? true : undefined}
+          aria-describedby={errors.message ? "message-error" : undefined}
         />
+        {errors.message && <p id="message-error" className={errorText}>{errors.message}</p>}
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
