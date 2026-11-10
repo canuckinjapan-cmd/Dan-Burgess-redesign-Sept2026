@@ -5,6 +5,24 @@ import { useLanguage } from "@/context/LanguageContext";
 type FieldId = "name" | "email" | "message";
 type FieldErrors = Partial<Record<FieldId, string>>;
 
+// Visible Required / Optional tag (必須 / 任意 in Japanese). Replaces the "*"
+// asterisk, which screen readers announce as "star", and replaces the
+// "任意" placeholder, which disappears as soon as the visitor types.
+const Tag = ({ kind }: { kind: "required" | "optional" }) => {
+  const { t } = useLanguage();
+  return (
+    <span
+      className={`ml-2 inline-block align-middle border px-1.5 py-[3px] text-[10px] leading-none ${
+        kind === "required"
+          ? "border-accent-text text-accent-text"
+          : "border-ink/30 text-ink-muted"
+      }`}
+    >
+      {kind === "required" ? t("Required", "必須") : t("Optional", "任意")}
+    </span>
+  );
+};
+
 export const ContactForm = () => {
   const { t } = useLanguage();
   const [submitting, setSubmitting] = useState(false);
@@ -125,21 +143,6 @@ export const ContactForm = () => {
     "w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-placeholder focus:outline-none focus:border-accent-text focus:bg-white transition-all aria-invalid:border-red-700";
   const errorText = "mt-1.5 text-[13px] leading-snug text-red-700";
   const label = "block font-mono text-[12px] uppercase text-ink-muted mb-1.5 font-normal";
-
-  // Visible Required / Optional tag (必須 / 任意 in Japanese). Replaces the "*"
-  // asterisk, which screen readers announce as "star", and replaces the
-  // "任意" placeholder, which disappears as soon as the visitor types.
-  const Tag = ({ kind }: { kind: "required" | "optional" }) => (
-    <span
-      className={`ml-2 inline-block align-middle border px-1.5 py-[3px] text-[10px] leading-none ${
-        kind === "required"
-          ? "border-accent-text text-accent-text"
-          : "border-ink/30 text-ink-muted"
-      }`}
-    >
-      {kind === "required" ? t("Required", "必須") : t("Optional", "任意")}
-    </span>
-  );
 
   return (
     <form onSubmit={onSubmit} className="space-y-5" noValidate id="contact-custom-form">

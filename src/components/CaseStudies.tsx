@@ -56,9 +56,9 @@ const cases: CaseStudy[] = [
       "A contemporary bilingual website concept for a new type of unmanned gym that has been growing in popularity in Japan. Designed around flexible access, allowing members to train at any time - including during hours when staff are not on site.",
     summaryJp: "スタッフが常駐しない時間帯でも利用できる、スマートアクセス型の24時間ジムを想定したWebサイトの制作サンプルです。日常の「隙間時間」に合わせて、いつでもトレーニングできる新しいジムの利用スタイルを、シンプルで現代的なデザインで表現しました。",
     roleDetails:
-      "concept, logo and visual design, AI-generated imagery, responsive front end, and EN/JP content",
+      "concept, logo and visual design, image creation and editing, responsive front-end development, and EN/JP content",
     roleDetailsJp:
-      "コンセプト、ロゴおよびビジュアルデザイン、AI生成画像、レスポンシブ対応のフロントエンド、英語・日本語のコンテンツ",
+      "コンセプト、ロゴおよびビジュアルデザイン、画像制作・編集、レスポンシブ対応のフロントエンド開発、英語・日本語コンテンツ",
     process: {
       challenge:
         "The first version looked like a generic gym template and had nothing to set it apart.",
@@ -70,7 +70,7 @@ const cases: CaseStudy[] = [
         "Facilities are limited to four tiles to keep mobile scrolling manageable.",
         "The JP and EN versions are written separately, not translated.",
       ],
-      tools: "HTML / CSS / JavaScript, Google AI Studio, Gemini (image generation and editing), GitHub, Cloudflare",
+      tools: "HTML / CSS / JavaScript, image creation and editing, GitHub, Cloudflare",
     },
     processJp: {
       challenge:
@@ -83,7 +83,7 @@ const cases: CaseStudy[] = [
         "施設紹介は4枚に限定し、モバイルでも長くなりすぎないようにしました。",
         "日本語版と英語版は翻訳ではなく、それぞれ別に書いています。",
       ],
-      tools: "HTML / CSS / JavaScript、Google AI Studio、Gemini（画像生成・編集）、GitHub、Cloudflare",
+      tools: "HTML / CSS / JavaScript、画像制作・編集、GitHub、Cloudflare",
     },
     demoAlign: "left",
     arrowSide: "left",
@@ -172,9 +172,9 @@ const cases: CaseStudy[] = [
       "A streamlined online shop that simplifies bidding, paperwork, and shipping for customers buying vehicles from Japan.",
     summaryJp: "入札から輸出手続きまでを分かりやすく整理し、海外からでも安心して利用できる購入フローを設計しました。",
     roleDetails:
-      "concept, logo and visual design, AI-generated imagery, responsive front end, vehicle database, currency converter, and EN/JP content",
+      "concept, logo and visual design, image creation and editing, responsive front end, vehicle database, currency converter, and EN/JP content",
     roleDetailsJp:
-      "コンセプト、ロゴおよびビジュアルデザイン、AI生成画像、レスポンシブフロントエンド、車両データベース、通貨換算機能、英語・日本語のコンテンツ",
+      "コンセプト、ロゴおよびビジュアルデザイン、画像制作・編集、レスポンシブフロントエンド、車両データベース、通貨換算機能、英語・日本語のコンテンツ",
     process: {
       challenge:
         "Japanese used-car auctions are hard to understand for overseas buyers, and the path from bidding to export is full of uncertainty.",
@@ -185,7 +185,7 @@ const cases: CaseStudy[] = [
         "The purchase flow answers the usual worry points before they come up.",
         "Logo, visuals and AI-generated imagery were designed together for a consistent look.",
       ],
-      tools: "HTML / CSS / JavaScript, Google AI Studio, Gemini (image generation), GitHub, Cloudflare",
+      tools: "HTML / CSS / JavaScript, image creation and editing, GitHub, Cloudflare",
     },
     processJp: {
       challenge:
@@ -197,7 +197,7 @@ const cases: CaseStudy[] = [
         "購入フローは、不安になりやすいポイントを先回りして示す設計にしました。",
         "ロゴ、ビジュアル、AI生成画像をまとめて設計し、一貫した世界観に統一しました。",
       ],
-      tools: "HTML / CSS / JavaScript、Google AI Studio、Gemini（画像生成）、GitHub、Cloudflare",
+      tools: "HTML / CSS / JavaScript、画像制作・編集、GitHub、Cloudflare",
     },
     demoAlign: "left",
     arrowSide: "left",

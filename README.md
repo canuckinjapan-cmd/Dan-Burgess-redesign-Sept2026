@@ -37,7 +37,8 @@ npm run lint
 
 ## Workflow note
 
-Built with an AI-assisted workflow (Google AI Studio / Antigravity, with design and code review in Claude and ChatGPT), then reviewed, edited and tested by hand. `AGENTS.md`, `DESIGN.md` and `SKILLS.md` hold the project's conventions for any AI assistants working in the repo.
+The project was designed and developed using a combination of professional tools and AI-assisted workflows. All output is reviewed, edited and tested by hand.
+AGENTS.md, DESIGN.md and SKILLS.md document the project's conventions and provide guidance for AI assistants working in the repository.
 
 ## License
 

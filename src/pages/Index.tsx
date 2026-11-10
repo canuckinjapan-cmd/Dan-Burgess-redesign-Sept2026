@@ -21,7 +21,7 @@ import { Pause, Play } from "lucide-react";
 const Index = () => {
   const [globePaused, setGlobePaused] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const { t, lang } = useLanguage();
+  const { t } = useLanguage();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 200]);
   
