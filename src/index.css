@@ -51,12 +51,22 @@
 
   html {
     scroll-behavior: smooth;
-    font-feature-settings: "palt" 1;
     -webkit-tap-highlight-color: transparent;
   }
 
   :lang(ja) {
     word-break: auto-phrase;
+    line-break: strict;
+  }
+
+  :lang(ja) h1,
+  :lang(ja) h2,
+  :lang(ja) h3,
+  :lang(ja) h4 {
+    font-feature-settings: "palt" 1;
+    word-break: auto-phrase;
+    line-break: strict;
+    text-wrap: balance;
   }
 
   body {
@@ -131,3 +141,49 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 106, 31, 0.6);
 }
+
+/* Mobile landscape & tablet portrait: place identity block beside portrait, keep bio full-width below */
+@media (orientation: landscape) and (max-height: 540px),
+       (orientation: portrait) and (min-width: 600px) and (max-width: 1023px) {
+  .hero-profile-grid.grid {
+    grid-template-columns: 168px minmax(0, 1fr);
+    column-gap: 1.75rem;
+    row-gap: 1.75rem;
+    align-items: start;
+  }
+
+  .hero-profile-grid .hero-portrait {
+    width: 100%;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .hero-profile-grid .hero-content {
+    display: contents;
+  }
+
+  .hero-profile-grid .hero-identity {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0.25rem;
+  }
+
+  .hero-profile-grid .hero-rule {
+    margin-bottom: 0;
+  }
+
+  .hero-profile-grid .hero-bio {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 540px) and (min-width: 640px),
+       (orientation: portrait) and (min-width: 640px) and (max-width: 1023px) {
+  .hero-profile-grid.grid {
+    grid-template-columns: 192px minmax(0, 1fr);
+    column-gap: 2.25rem;
+    row-gap: 2rem;
+  }
+}
+

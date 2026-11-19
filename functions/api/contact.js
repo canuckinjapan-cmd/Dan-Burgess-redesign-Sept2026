@@ -1,5 +1,5 @@
 import { connect } from "cloudflare:sockets";
-import { isSameOrigin, validateContact, buildMessage, sendMail } from "../_lib/contact.js";
+import { isSameOrigin, validateContact, verifyTurnstile, buildMessage, sendMail } from "../_lib/contact.js";
 
 const json = (body, status = 200) =>
   new Response(JSON.stringify(body), {
@@ -25,8 +25,23 @@ export const onRequestPost = async ({ request, env }) => {
   }
 
   const result = validateContact(data);
-  if (!result.ok) return json({ message: "Invalid request", field: result.field }, 400);
   if (result.spam) return json({ message: "Success" }); // honeypot: pretend it worked
+  if (!result.ok) return json({ message: "Invalid request", field: result.field }, 400);
+
+  if (!env.TURNSTILE_SECRET_KEY) {
+    console.error("contact: TURNSTILE_SECRET_KEY is not set");
+    return json({ message: "Server error" }, 500);
+  }
+
+  const clientIp = request.headers.get("CF-Connecting-IP") || "";
+  const turnstileResult = await verifyTurnstile({
+    token: data.turnstileToken,
+    secret: env.TURNSTILE_SECRET_KEY,
+    ip: clientIp,
+  });
+  if (!turnstileResult.success) {
+    return json({ message: "Verification failed", field: "turnstile" }, 400);
+  }
 
   if (!env.SMTP_USER || !env.SMTP_PASS) {
     console.error("contact: SMTP_USER / SMTP_PASS are not set");

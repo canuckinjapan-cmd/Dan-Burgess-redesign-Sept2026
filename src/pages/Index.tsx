@@ -14,14 +14,17 @@ import {
 import instagramLogo from "@/assets/instagram-logo-org.svg";
 import bloggerLogo from "@/assets/blogger-logo-org.svg";
 import linkedinLogo from "@/assets/linkedin-logo-org.svg";
+import headshot from "@/assets/DJB-headshot01.jpg";
 import { useLanguage } from "@/context/LanguageContext";
 import { usePrefersReducedMotion } from "@/hooks/use-reduced-motion";
 import { Pause, Play } from "lucide-react";
 
+const COMING_SOON_MODE = true; // Set to false to restore the full portfolio
+
 const Index = () => {
   const [globePaused, setGlobePaused] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 200]);
   
@@ -33,6 +36,454 @@ const Index = () => {
   const aboutY = useTransform(aboutScrollProgress, [0, 1], [-80, 80]);
 
   const currentYear = new Date().getFullYear();
+
+  if (COMING_SOON_MODE) {
+    const experienceItems = [
+      {
+        num: "01",
+        title: t(
+          "SOFTWARE LOCALIZATION & WEB DESIGN",
+          "ソフトウェアの翻訳・ローカライズ、Webデザイン"
+        ),
+        titleChunks:
+          lang === "EN"
+            ? ["SOFTWARE", " ", "LOCALIZATION", " ", "&", " ", "WEB", " ", "DESIGN"]
+            : ["ソフトウェアの", "翻訳・", "ローカライズ、", "Webデザイン"],
+        duration: t("1994 - 2004", "1994 - 2004"),
+        company: t("Japanese software company", "日本のソフトウェア会社"),
+        description: t(
+          "Translation and localization of Windows PC games and other software, alongside website design.",
+          "Windows PCゲームや各種ソフトウェアの翻訳・ローカライズ、Webサイトのデザインを担当。"
+        ),
+      },
+      {
+        num: "02",
+        title: t(
+          "TECHNICAL TRANSLATION & UI LOCALIZATION",
+          "技術翻訳・ユーザーインターフェースのローカライズ"
+        ),
+        titleChunks:
+          lang === "EN"
+            ? ["TECHNICAL", " ", "TRANSLATION", " ", "&", " ", "UI", " ", "LOCALIZATION"]
+            : ["技術翻訳・", "ユーザー", "インターフェースの", "ローカライズ"],
+        duration: t("2004 - 2007", "2004 - 2007"),
+        company: t("Canon Inc. · Tokyo", "キヤノン本社 · 東京"),
+        description: t(
+          "Camera development documentation and user interface localization at Canon HQ.",
+          "キヤノン本社にてカメラ開発部門における技術資料やユーザーインターフェースのローカライズを担当。"
+        ),
+      },
+      {
+        num: "03",
+        title: t(
+          "FREELANCE TRANSLATION & LOCALIZATION",
+          "フリーランス翻訳・ローカライズ"
+        ),
+        titleChunks:
+          lang === "EN"
+            ? ["FREELANCE", " ", "TRANSLATION", " ", "&", " ", "LOCALIZATION"]
+            : ["フリーランス", "翻訳・", "ローカライズ"],
+        duration: t("2007 – Present", "2007年〜現在"),
+        company: t("Freelance", "フリーランス"),
+        description: t(
+          "Japanese-English translation and localization assignments for Japanese translation agencies and corporate clients.",
+          "国内の翻訳会社や企業から依頼を受け、日英翻訳・ローカライズ業務に従事。"
+        ),
+      },
+    ];
+
+    const metaItems =
+      lang === "EN"
+        ? [
+            "Native English",
+            "US spelling by default; Canadian on request",
+            "Accepting new projects",
+            "Based in Fukuoka, Japan",
+          ]
+        : [
+            "米国式スペルを標準、カナダ式も対応可",
+            "新規のご依頼を受付中",
+            "福岡を拠点に活動",
+          ];
+
+    const specializations = [
+      t(
+        "Software / UI strings",
+        <>
+          <span className="inline-block">ソフトウェア・</span>
+          <wbr />
+          <span className="inline-block">UI文字列</span>
+        </>
+      ),
+      t("Games", "ゲーム"),
+      t(
+        "Camera and electronics documentation",
+        <>
+          <span className="inline-block">カメラ・</span>
+          <wbr />
+          <span className="inline-block">電子機器の</span>
+          <wbr />
+          <span className="inline-block">技術資料</span>
+        </>
+      ),
+      t(
+        "SaaS and web content",
+        <>
+          <span className="inline-block">SaaS・</span>
+          <wbr />
+          <span className="inline-block">Webコンテンツ</span>
+        </>
+      ),
+      t(
+        "Presentations",
+        <span className="inline-block">プレゼンテーション資料</span>
+      ),
+      t("Subtitling (translation)", "字幕翻訳"),
+    ];
+
+    return (
+      <div id="top" className="bg-paper text-ink min-h-dvh font-sans-body w-full overflow-x-hidden relative flex flex-col justify-between">
+        <TopBar isComingSoon={true} />
+
+        <main id="main-content" className="w-full flex-grow py-12 sm:py-16 lg:py-20 px-6 lg:px-10">
+          <div className="max-w-[920px] w-full mx-auto">
+            {/* PERSONAL INTRODUCTION / HERO */}
+            <section aria-labelledby="profile-heading" className="mb-14 sm:mb-16">
+              <motion.div
+                className="hero-profile-grid grid grid-cols-1 md:grid-cols-[200px_1fr] lg:grid-cols-[224px_1fr] gap-8 lg:gap-12 items-start"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
+              >
+                {/* Portrait */}
+                <motion.div
+                  whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
+                  transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
+                  style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
+                  className="hero-portrait w-[172px] sm:w-[192px] md:w-full bg-surface-elevated border rule p-1.5 shadow-[0_20px_50px_-30px_hsl(var(--ink)/0.22)] shrink-0"
+                >
+                  <img
+                    src={headshot}
+                    alt={t("Portrait of Dan Burgess", "ダン・バージェスの顔写真")}
+                    className="w-full aspect-square object-cover"
+                    loading="eager"
+                  />
+                </motion.div>
+
+                {/* Identity & Introduction */}
+                <div className="hero-content min-w-0">
+                  <div className="hero-identity">
+                    <h1
+                      id="profile-heading"
+                      className="font-serif-display font-bold tracking-[-0.023em] text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.2] text-ink"
+                    >
+                      {t("Dan Burgess", "ダン・バージェス")}
+                    </h1>
+                    <p className="font-serif-display font-semibold text-lg sm:text-xl leading-[1.4] text-accent-text mt-2">
+                      {t(
+                        "Japanese → English translator for software, UI, and technical content.",
+                        <>
+                          <span className="inline-block">日英翻訳者。</span>
+                          <wbr />
+                          <span className="inline-block">ソフトウェア・UI・</span>
+                          <wbr />
+                          <span className="inline-block">技術文書が専門。</span>
+                          <wbr />
+                          <span className="inline-block">英語ネイティブ。</span>
+                        </>
+                      )}
+                    </p>
+                    <ul
+                      aria-label={t("Translator details", "対応条件・拠点")}
+                      className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm sm:text-[15px] leading-[1.55] text-ink-muted"
+                    >
+                      {metaItems.map((meta, idx) => (
+                        <li key={idx} className="inline-flex items-center gap-2">
+                          {idx > 0 && (
+                            <span aria-hidden="true" className="text-ink-muted/60 select-none">
+                              ·
+                            </span>
+                          )}
+                          <span>{meta}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="hero-rule h-0.5 w-12 bg-accent-brand my-6 sm:my-7" aria-hidden="true" />
+                  </div>
+
+                  <div className="hero-bio space-y-5 text-ink/90 text-base sm:text-[17px] leading-[1.75] text-pretty [word-break:auto-phrase]">
+                    <p>
+                      {t(
+                        "I'm a Canadian professional based in Fukuoka, Japan, with extensive experience in Japanese-English translation and localization.",
+                        "カナダ出身、福岡を拠点に活動しています。日本語から英語への翻訳・ローカライズを中心に、長年にわたり幅広い分野の業務に携わってきました。"
+                      )}
+                    </p>
+                    <p>
+                      {t(
+                        "My background includes approximately 10 years at a Japanese software company, working on the translation and localization of Windows PC games and other software, as well as designing client websites. This was followed by three years at Canon's Tokyo headquarters, specializing in camera-related technical documentation and user interface localization.",
+                        "日本のソフトウェア会社では約10年間、Windows PCゲームや各種ソフトウェアの翻訳・ローカライズを担当するとともに、Webサイトのデザインにも携わりました。その後、キヤノン東京本社のカメラ開発部門で3年間、技術資料やユーザーインターフェースのローカライズを担当しました。"
+                      )}
+                    </p>
+                    <p>
+                      {t(
+                        "Since then, I've continued working as a freelance translator and localization specialist, undertaking assignments for Japanese translation agencies and corporate clients.",
+                        "以降はフリーランスとして、国内の翻訳会社や企業から依頼を受け、翻訳・ローカライズ業務を継続しています。"
+                      )}
+                    </p>
+                    <p>
+                      {t(
+                        <>
+                          I also have a background in print, multimedia and web design, bringing an additional understanding of technology and visual communication to my language work.
+                          <br />
+                          See more info about my work history at{" "}
+                          <a
+                            href="https://www.linkedin.com/in/danburgessinjapan"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-text underline decoration-accent-text underline-offset-4 hover:text-ink hover:decoration-ink font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                          >
+                            LinkedIn
+                          </a>
+                          .
+                        </>,
+                        <>
+                          また、印刷物やマルチメディア、Webデザインの経験もあり、技術やビジュアルコミュニケーションへの理解も強みとしています。
+                          <br />
+                          私の職歴に関する詳細については、
+                          <a
+                            href="https://www.linkedin.com/in/danburgessinjapan"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-text underline decoration-accent-text underline-offset-4 hover:text-ink hover:decoration-ink font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                          >
+                            LinkedIn
+                          </a>
+                          をご覧ください。
+                        </>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            </section>
+
+            {/* PROFESSIONAL EXPERIENCE */}
+            <section
+              aria-labelledby="experience-heading"
+              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+            >
+              <h2
+                id="experience-heading"
+                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-8 font-bold"
+              >
+                {t("PROFESSIONAL EXPERIENCE", "職務経験")}
+              </h2>
+
+              <ol className="border-l-2 border-accent-brand/50 pl-6 sm:pl-8 divide-y divide-ink/10">
+                {experienceItems.map((item, idx) => {
+                  const totalChars = item.titleChunks.reduce(
+                    (acc, chunk) => acc + (/^\s+$/.test(chunk) ? 1 : Array.from(chunk).length),
+                    0
+                  );
+                  const stepMs = Math.max(10, Math.min(18, Math.round(380 / Math.max(totalChars, 1))));
+                  let runningOffset = 0;
+                  const chunkOffsets = item.titleChunks.map((chunk) => {
+                    const start = runningOffset;
+                    runningOffset += /^\s+$/.test(chunk) ? 1 : Array.from(chunk).length;
+                    return start;
+                  });
+                  return (
+                    <li
+                      key={item.num}
+                      className={`group ${idx === 0 ? "pb-7 sm:pb-8" : idx === experienceItems.length - 1 ? "pt-7 sm:pt-8" : "py-7 sm:py-8"}`}
+                    >
+                      <h3 className="font-serif-display font-bold text-lg sm:text-xl leading-[1.4] tracking-[-0.015em]">
+                        <span className="text-accent-text group-hover:text-ink transition-colors duration-200 mr-2">
+                          {item.num} –
+                        </span>
+                        <span>
+                          <span className="sr-only">{item.title}</span>
+                          <span aria-hidden="true">
+                            {item.titleChunks.map((chunk, chunkIdx) => {
+                              if (/^\s+$/.test(chunk)) {
+                                return <span key={chunkIdx}>{chunk}</span>;
+                              }
+                              const startOffset = chunkOffsets[chunkIdx];
+                              return (
+                                <span key={chunkIdx}>
+                                  {chunkIdx > 0 && lang === "JP" && <wbr />}
+                                  <span className="inline-block whitespace-nowrap">
+                                    {Array.from(chunk).map((char, localIdx) => (
+                                      <span
+                                        key={localIdx}
+                                        className="text-ink group-hover:text-accent-text transition-colors duration-400"
+                                        style={
+                                          prefersReducedMotion
+                                            ? undefined
+                                            : { transitionDelay: `${(startOffset + localIdx) * stepMs}ms` }
+                                        }
+                                      >
+                                        {char}
+                                      </span>
+                                    ))}
+                                  </span>
+                                </span>
+                              );
+                            })}
+                          </span>
+                        </span>
+                      </h3>
+                      <p className="font-mono text-xs sm:text-[13px] text-ink-muted mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                        <span>{item.duration}</span>
+                        <span aria-hidden="true" className="text-ink/30">/</span>
+                        <span>{item.company}</span>
+                      </p>
+                      <p className="text-ink/85 text-[15.5px] sm:text-base leading-[1.7] mt-2.5 text-pretty [word-break:auto-phrase]">
+                        {item.description}
+                      </p>
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+
+            {/* SPECIALIZATIONS */}
+            <section
+              aria-labelledby="specializations-heading"
+              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+            >
+              <h2
+                id="specializations-heading"
+                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-6 font-bold"
+              >
+                {t("SPECIALIZATIONS", "得意分野")}
+              </h2>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-ink/90 text-base sm:text-[16.5px] leading-[1.6]">
+                {specializations.map((spec, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="mt-[0.58em] h-1.5 w-1.5 shrink-0 bg-accent-brand"
+                    />
+                    <span>{spec}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {/* TOOLS & FORMATS */}
+            <section
+              aria-labelledby="tools-heading"
+              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+            >
+              <h2
+                id="tools-heading"
+                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+              >
+                {t("TOOLS & FORMATS", "使用ツール・対応形式")}
+              </h2>
+              <p className="text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]">
+                {t(
+                  "CAT tools: Trados, Felix (HTML, JSON, and XLIFF files supported).",
+                  "CATツール：Trados、Felix（HTML・JSON・XLIFF形式に対応）"
+                )}
+              </p>
+            </section>
+
+            {/* WEB & TECHNICAL BACKGROUND */}
+            <section
+              aria-labelledby="background-heading"
+              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+            >
+              <h2
+                id="background-heading"
+                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+              >
+                {t("WEB & TECHNICAL BACKGROUND", "Web・技術的バックグラウンド")}
+              </h2>
+              <p className="text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]">
+                {t(
+                  "With a background in web development, I work directly in HTML, JSON, and XLIFF. I keep tags and placeholders intact and check localized pages in the browser before delivery.",
+                  <>
+                    <span className="inline-block">Web制作の経験があるため、</span>
+                    <wbr />
+                    <span className="inline-block">HTML・JSON・XLIFFなどを</span>
+                    <wbr />
+                    <span className="inline-block">直接扱えます。</span>
+                    <wbr />
+                    <span className="inline-block">タグやプレースホルダーを</span>
+                    <wbr />
+                    <span className="inline-block">保護したまま翻訳し、</span>
+                    <wbr />
+                    <span className="inline-block">ブラウザ上での表示確認まで</span>
+                    <wbr />
+                    <span className="inline-block">対応可能です。</span>
+                  </>
+                )}
+              </p>
+            </section>
+
+            {/* CONTACT */}
+            <section
+              id="contact"
+              aria-labelledby="contact-heading"
+              className="w-full text-left bg-surface-elevated border rule p-6 sm:p-10 shadow-[0_30px_80px_-40px_hsl(var(--ink)/0.18)]"
+            >
+              <h2
+                id="contact-heading"
+                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-3 font-bold"
+              >
+                {t("PROFESSIONAL ENQUIRIES", "お問い合わせ")}
+              </h2>
+              <p className="text-ink/85 text-sm sm:text-[15.5px] leading-[1.6] mb-6 text-pretty [word-break:auto-phrase]">
+                {t(
+                  "CV available on request. Please use the form below.",
+                  "職務経歴書はご依頼に応じてご提供いたします。お問い合わせフォームよりご連絡ください。"
+                )}
+              </p>
+              <ContactForm />
+            </section>
+          </div>
+        </main>
+
+        <footer className="py-10 border-t rule bg-surface-soft/10 text-xs w-full">
+          <div className="max-w-[1320px] mx-auto px-6 lg:px-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <p className="text-ink-muted">
+              &copy; {currentYear} Dan Burgess
+            </p>
+            <div className="flex items-center gap-4">
+              <span className="text-ink-muted">{t("Social →", "SNS →")}</span>
+
+              {/* LinkedIn */}
+              <div className="relative group">
+                <a
+                  href="https://www.linkedin.com/in/danburgessinjapan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center size-8 transition-transform hover:scale-110"
+                >
+                  <img
+                    src={linkedinLogo}
+                    alt="LinkedIn"
+                    className="w-full h-full object-contain"
+                    style={{ imageRendering: "-webkit-optimize-contrast" }}
+                  />
+                </a>
+
+                <div className="absolute left-1/2 -translate-x-1/2 bottom-[calc(100%+12px)] opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-y-1 group-hover:translate-y-0">
+                  <div className="relative bg-ink text-surface text-[9px] font-mono uppercase px-2.5 py-1.5 rounded-sm whitespace-nowrap shadow-2xl">
+                    {t("PROFESSIONAL PROFILE", "プロフェッショナル履歴")}
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-ink rotate-45" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    );
+  }
 
   const capabilities = [
     {

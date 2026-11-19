@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -15,8 +14,8 @@ const navItems = [
   { label: "Contact", jpLabel: "お問い合わせ", href: "#contact" },
 ];
 
-export const TopBar = () => {
-  const { lang, setLang, t } = useLanguage();
+export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => {
+  const { lang, t } = useLanguage();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
@@ -96,9 +95,9 @@ export const TopBar = () => {
 
   const renderLangSwitcher = (extraClass = "") => (
     <div className={`group flex items-center gap-0.5 sm:gap-1 font-mono text-[9px] sm:text-[10px] uppercase border rule rounded-sm p-0.5 sm:px-1 sm:py-0.5 ${extraClass}`}>
-      <Link
-        to="/en/"
-        onClick={() => setLang("EN")}
+      <a
+        href="/en/"
+        hrefLang="en"
         aria-current={lang === "EN" ? "page" : undefined}
         aria-label="English (EN)"
         className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "EN" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
@@ -111,10 +110,10 @@ export const TopBar = () => {
         ) : (
           <span className="inline-block w-4 sm:w-5 text-center">EN</span>
         )}
-      </Link>
-      <Link
-        to="/"
-        onClick={() => setLang("JP")}
+      </a>
+      <a
+        href="/"
+        hrefLang="ja"
         aria-current={lang === "JP" ? "page" : undefined}
         aria-label="日本語 (JP)"
         className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "JP" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
@@ -127,7 +126,7 @@ export const TopBar = () => {
         ) : (
           <span className="inline-block w-4 sm:w-5 text-center">JP</span>
         )}
-      </Link>
+      </a>
     </div>
   );
 
@@ -159,14 +158,14 @@ export const TopBar = () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
           className="flex items-center gap-2 sm:gap-3 group shrink-0 relative h-10" 
-          aria-label="Dan Burgess Design home"
+          aria-label="danburgess.com home"
         >
-          <span className="relative hidden sm:inline-block">
+          <span className="relative inline-block shrink-0">
             <span className="absolute -inset-1 rounded-full border border-ink/20" aria-hidden />
             <img
               src={manga}
               alt=""
-              className="relative w-11 h-11 rounded-full bg-white object-cover"
+              className="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white object-cover"
               style={{ imageRendering: "-webkit-optimize-contrast", transform: "translateZ(0)" }}
               loading="eager"
             />
@@ -174,7 +173,7 @@ export const TopBar = () => {
           <span className="font-serif-display font-extrabold tracking-tight text-[21px] sm:text-[23px] md:text-2xl whitespace-nowrap">
             <span className="text-black">DAN</span>
             <span className="text-accent-text-large">BURGESS</span>
-            <span className="text-black">DESIGN</span>
+            <span className="text-black">.COM</span>
           </span>
           {/* Tooltip Balloon - persistent when at bottom, interactive on hover otherwise */}
           <div 
@@ -192,13 +191,15 @@ export const TopBar = () => {
         </a>
 
         {/* Desktop/Tablet Landscape Center: Nav */}
-        <nav aria-label={t("Primary", "メインメニュー")} className="hidden md:landscape:flex lg:portrait:hidden flex-1 items-center justify-center gap-6 xl:gap-8 font-mono text-[12px] lg:text-[13px] uppercase">
-          {navItems.map((n) => (
-            <a key={n.label} href={n.href} className="px-1.5 py-1 text-ink-muted hover:text-white hover:bg-accent-text rounded-sm transition-all whitespace-nowrap">
-              {t(n.label, n.jpLabel)}
-            </a>
-          ))}
-        </nav>
+        {!isComingSoon && (
+          <nav aria-label={t("Primary", "メインメニュー")} className="hidden md:landscape:flex lg:portrait:hidden flex-1 items-center justify-center gap-6 xl:gap-8 font-mono text-[12px] lg:text-[13px] uppercase">
+            {navItems.map((n) => (
+              <a key={n.label} href={n.href} className="px-1.5 py-1 text-ink-muted hover:text-white hover:bg-accent-text rounded-sm transition-all whitespace-nowrap">
+                {t(n.label, n.jpLabel)}
+              </a>
+            ))}
+          </nav>
+        )}
 
         {/* Right Side Tools */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
@@ -206,16 +207,19 @@ export const TopBar = () => {
           {renderLangSwitcher("flex ml-0 sm:ml-4 md:ml-8 lg:ml-10")}
           
           {/* Desktop/Tablet Landscape Tools */}
-          <div className="hidden xl:flex items-center ml-2.5 lg:ml-3">
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 bg-ink text-surface px-3 py-1.5 landscape:px-3 landscape:py-1.5 lg:px-4 lg:py-2 font-mono text-[10px] lg:text-[11px] uppercase hover:bg-accent-text transition-colors"
-            >
-              {t("Get in Touch", "お問い合わせ")} <span aria-hidden>→</span>
-            </a>
-          </div>
+          {!isComingSoon && (
+            <div className="hidden xl:flex items-center ml-2.5 lg:ml-3">
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 bg-ink text-surface px-3 py-1.5 landscape:px-3 landscape:py-1.5 lg:px-4 lg:py-2 font-mono text-[10px] lg:text-[11px] uppercase hover:bg-accent-text transition-colors"
+              >
+                {t("Get in Touch", "お問い合わせ")} <span aria-hidden>→</span>
+              </a>
+            </div>
+          )}
 
           {/* Mobile Right: Hamburger (Visible on mobile/tablet portrait, hidden on desktop/tablet landscape) */}
+          {!isComingSoon && (
           <div className="relative md:landscape:hidden lg:hidden flex items-center">
             <button
               ref={menuButtonRef}
@@ -249,10 +253,12 @@ export const TopBar = () => {
               )}
             </AnimatePresence>
           </div>
+          )}
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
+      {!isComingSoon && (
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -330,6 +336,7 @@ export const TopBar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      )}
     </header>
   </div>
     </>

@@ -1,0 +1,7 @@
+# Prevent search engines from indexing sample portfolio sites
+/samples/*
+  X-Robots-Tag: noindex, nofollow
+
+# Prevent indexing of Cloudflare Pages .pages.dev domains / previews
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex

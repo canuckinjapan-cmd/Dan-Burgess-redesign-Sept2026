@@ -5,7 +5,6 @@ import { LanguageProvider, useLanguage } from "@/context/LanguageContext";
 import Index from "@/pages/Index";
 import NotFound from "@/pages/NotFound";
 import { SEOHead } from "@/components/SEOHead";
-import { LanguageDetector } from "@/components/LanguageDetector";
 
 function AppRoutes() {
   const { lang } = useLanguage();
@@ -25,14 +24,12 @@ function AppRoutes() {
 const App = () => {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <LanguageDetector>
-        <LanguageProvider>
-          <TooltipProvider>
-            <Toaster />
-            <AppRoutes />
-          </TooltipProvider>
-        </LanguageProvider>
-      </LanguageDetector>
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <AppRoutes />
+        </TooltipProvider>
+      </LanguageProvider>
     </BrowserRouter>
   );
 };

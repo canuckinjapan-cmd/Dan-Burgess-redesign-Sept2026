@@ -1,7 +1,7 @@
 // Run with: node --test functions/_lib/contact.test.mjs
 import test from "node:test";
 import assert from "node:assert/strict";
-import { validateContact, buildMessage, encodeSubject, isSameOrigin, sendMail } from "./contact.js";
+import { validateContact, verifyTurnstile, buildMessage, encodeSubject, isSameOrigin, sendMail } from "./contact.js";
 
 const good = { name: "Taro", email: "taro@example.co.jp", company: "", message: "Hello" };
 
@@ -22,7 +22,41 @@ test("validate: limits, types and honeypot", () => {
   assert.equal(validateContact({ ...good, message: "x".repeat(5001) }).ok, false);
   assert.equal(validateContact({ ...good, name: 5 }).ok, false);
   assert.equal(validateContact(null).ok, false);
-  assert.equal(validateContact({ ...good, hp_field: "buy now" }).spam, true);
+  assert.equal(validateContact({ ...good, website: "https://spam.example" }).spam, true);
+  assert.equal(validateContact({ ...good, website: " " }).spam, true);
+});
+
+test("verifyTurnstile: sends secret, response, and remoteip to Cloudflare siteverify", async () => {
+  let capturedUrl = "";
+  let capturedBody = null;
+  const mockFetch = async (url, init) => {
+    capturedUrl = url;
+    capturedBody = init.body;
+    return { ok: true, json: async () => ({ success: true }) };
+  };
+
+  const okRes = await verifyTurnstile({
+    token: "test-token",
+    secret: "1x0000000000000000000000000000000AA",
+    ip: "203.0.113.10",
+    fetchFn: mockFetch,
+  });
+  assert.equal(okRes.success, true);
+  assert.equal(capturedUrl, "https://challenges.cloudflare.com/turnstile/v0/siteverify");
+  assert.equal(capturedBody.get("secret"), "1x0000000000000000000000000000000AA");
+  assert.equal(capturedBody.get("response"), "test-token");
+  assert.equal(capturedBody.get("remoteip"), "203.0.113.10");
+
+  const missing = await verifyTurnstile({ token: "", secret: "1x0000000000000000000000000000000AA", fetchFn: mockFetch });
+  assert.equal(missing.success, false);
+
+  const failed = await verifyTurnstile({
+    token: "bad-token",
+    secret: "1x0000000000000000000000000000000AA",
+    fetchFn: async () => ({ ok: true, json: async () => ({ success: false, "error-codes": ["invalid-input-response"] }) }),
+  });
+  assert.equal(failed.success, false);
+  assert.deepEqual(failed.errorCodes, ["invalid-input-response"]);
 });
 
 test("encodeSubject: every encoded-word <= 75 chars, Japanese intact", () => {

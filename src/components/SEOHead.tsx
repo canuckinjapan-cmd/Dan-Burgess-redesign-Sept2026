@@ -13,23 +13,23 @@ const META = {
   EN: {
     path: "/en/",
     locale: "en_US",
-    title: "Dan Burgess Design | Web Production, UI/UX Design & Localization (Fukuoka, Japan)",
-    ogTitle: "Dan Burgess Design | Web Production, UI/UX Design & Localization",
+    title: "Dan Burgess | Japanese → English Translator (Fukuoka, Japan)",
+    ogTitle: "Dan Burgess | Japanese → English Translator",
     description:
-      "Dan Burgess is a Canadian web designer and front-end developer, based in Japan since 1992. Bilingual websites, UI/UX design and localization from Fukuoka.",
+      "Native Japanese to English translator in Fukuoka, Japan specializing in software, UI strings, games, SaaS, camera documentation, and subtitling.",
     ogDescription:
-      "Connecting Japanese businesses to global audiences through thoughtful design, modern web production, and cross-cultural communication.",
+      "Japanese → English translator for software, UI, games, SaaS, and technical documentation. Uses Trados, Felix, HTML, JSON, and XLIFF.",
     image: `${SITE}/DJB-og-image-EN.png`,
   },
   JP: {
     path: "/",
     locale: "ja_JP",
-    title: "ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ（福岡・日本）",
-    ogTitle: "ダン・バージェス デザイン | Web開発・UI/UXデザイン・ローカライズ",
+    title: "ダン・バージェス | 日英翻訳者（ソフトウェア・UI・技術文書）",
+    ogTitle: "ダン・バージェス | 日英翻訳者（ソフトウェア・UI・技術文書）",
     description:
-      "ダン・バージェスは福岡を拠点に活動するWebデザイナー／フロントエンド開発者。1992年から日本在住。日英バイリンガルサイト制作、UI/UXデザイン、ローカライズに取り組んでいます。",
+      "福岡を拠点とする英語ネイティブの日英翻訳者。ソフトウェア・UI、ゲーム、カメラ・電子機器の技術資料、SaaS、字幕翻訳に対応。Trados・Felix使用、HTML・JSON・XLIFF直接対応可。",
     ogDescription:
-      "日本企業の海外発信を支援するWebデザイナー。デザイン、Web制作、日英のコミュニケーション経験を活かして、伝わるWebサイトをつくります。",
+      "ソフトウェア・UI・技術文書専門の日英翻訳者（福岡拠点・英語ネイティブ）。Trados・FelixやHTML・JSON・XLIFFの直接編集に対応。",
     image: `${SITE}/DJB-og-image-JP.png`,
   },
 } as const;

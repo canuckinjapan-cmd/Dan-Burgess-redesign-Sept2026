@@ -21,11 +21,12 @@ const oneLine = (v) => String(v ?? "").replace(CONTROL_RE, " ").trim();
 /**
  * Validates and normalises the payload. Header-bound fields (name, email, company)
  * are collapsed to one line, which is what prevents header injection.
- * `hp_field` is a honeypot: humans never see it, bots fill it.
+ * `website` is a honeypot: humans never see it, bots fill it.
  */
 export function validateContact(data) {
   if (!data || typeof data !== "object" || Array.isArray(data)) return { ok: false, field: "body" };
-  if (typeof data.hp_field === "string" && data.hp_field.trim() !== "") return { ok: true, spam: true };
+  if (typeof data.website === "string" && data.website.length > 0) return { ok: true, spam: true };
+  if (typeof data.hp_field === "string" && data.hp_field.length > 0) return { ok: true, spam: true };
 
   for (const k of ["name", "email", "company", "message"]) {
     if (data[k] != null && typeof data[k] !== "string") return { ok: false, field: k };
@@ -42,6 +43,35 @@ export function validateContact(data) {
   if (!message || message.length > LIMITS.message) return { ok: false, field: "message" };
 
   return { ok: true, value: { name, email, company, message } };
+}
+
+/** Verifies a Cloudflare Turnstile token via Cloudflare's siteverify endpoint. */
+export async function verifyTurnstile({ token, secret, ip = "", fetchFn = fetch }) {
+  if (typeof token !== "string" || !token.trim() || !secret) {
+    return { success: false, errorCodes: ["missing-input-response"] };
+  }
+
+  const body = new URLSearchParams();
+  body.set("secret", secret);
+  body.set("response", token.trim());
+  if (ip) body.set("remoteip", ip);
+
+  try {
+    const res = await fetchFn("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      body,
+    });
+    if (!res.ok) {
+      return { success: false, errorCodes: [`http-${res.status}`] };
+    }
+    const json = await res.json();
+    return {
+      success: Boolean(json?.success),
+      errorCodes: Array.isArray(json?.["error-codes"]) ? json["error-codes"] : [],
+    };
+  } catch {
+    return { success: false, errorCodes: ["network-error"] };
+  }
 }
 
 const enc = new TextEncoder();
