@@ -195,17 +195,10 @@ const Index = () => {
                     </p>
                     <ul
                       aria-label={t("Translator details", "対応条件・拠点")}
-                      className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm sm:text-[15px] leading-[1.55] text-ink-muted"
+                      className="mt-2.5 flex flex-col gap-1 text-sm sm:text-[15px] leading-[1.55] text-ink-muted"
                     >
                       {metaItems.map((meta, idx) => (
-                        <li key={idx} className="inline-flex items-center gap-2">
-                          {idx > 0 && (
-                            <span aria-hidden="true" className="text-ink-muted/60 select-none">
-                              ·
-                            </span>
-                          )}
-                          <span>{meta}</span>
-                        </li>
+                        <li key={idx}>{meta}</li>
                       ))}
                     </ul>
 
@@ -215,7 +208,7 @@ const Index = () => {
                   <div className="hero-bio space-y-5 text-ink/90 text-base sm:text-[17px] leading-[1.75] text-pretty [word-break:auto-phrase]">
                     <p>
                       {t(
-                        "I'm a Canadian professional based in Fukuoka, Japan, with extensive experience in Japanese-English translation and localization.",
+                        "Originally from Canada, I'm a Japanese-English translator and localization specialist based in Fukuoka, with over 30 years in the field.",
                         "カナダ出身、福岡を拠点に活動しています。日本語から英語への翻訳・ローカライズを中心に、長年にわたり幅広い分野の業務に携わってきました。"
                       )}
                     </p>
@@ -434,7 +427,7 @@ const Index = () => {
                 id="contact-heading"
                 className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-3 font-bold"
               >
-                {t("PROFESSIONAL ENQUIRIES", "お問い合わせ")}
+                {t("PROFESSIONAL INQUIRIES", "お問い合わせ")}
               </h2>
               <p className="text-ink/85 text-sm sm:text-[15.5px] leading-[1.6] mb-6 text-pretty [word-break:auto-phrase]">
                 {t(

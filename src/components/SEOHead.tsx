@@ -16,7 +16,7 @@ const META = {
     title: "Dan Burgess | Japanese → English Translator (Fukuoka, Japan)",
     ogTitle: "Dan Burgess | Japanese → English Translator",
     description:
-      "Native Japanese to English translator in Fukuoka, Japan specializing in software, UI strings, games, SaaS, camera documentation, and subtitling.",
+      "English-native Japanese → English translator in Fukuoka, Japan, specializing in software, UI strings, games, SaaS, camera documentation, and subtitling.",
     ogDescription:
       "Japanese → English translator for software, UI, games, SaaS, and technical documentation. Uses Trados, Felix, HTML, JSON, and XLIFF.",
     image: `${SITE}/DJB-og-image-EN.png`,
