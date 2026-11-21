@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js-reveal");
+      }
+    </script>
     <title>ダン・バージェス | 日英翻訳者（ソフトウェア・UI・技術文書）</title>
     <meta name="description" content="福岡を拠点とする英語ネイティブの日英翻訳者。ソフトウェア・UI、ゲーム、カメラ・電子機器の技術資料、SaaS、字幕翻訳に対応。Trados・Felix使用、HTML・JSON・XLIFF直接対応可。" />
     <meta name="author" content="Dan Burgess" />

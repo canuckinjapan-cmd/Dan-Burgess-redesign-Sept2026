@@ -32,14 +32,14 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-      
       const scrollY = window.scrollY;
+      setScrolled(scrollY > 20);
+
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      
-      // Determine if scrolled all the way to the bottom with a 15px margin
-      setIsAtBottom(windowHeight + scrollY >= documentHeight - 15);
+
+      // Only show pinned bottom balloon after user has actually scrolled down
+      setIsAtBottom(scrollY > 80 && windowHeight + scrollY >= documentHeight - 15);
     };
     
     onScroll();
@@ -94,19 +94,19 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
   }, [isMenuOpen, closeMenu]);
 
   const renderLangSwitcher = (extraClass = "") => (
-    <div className={`group flex items-center gap-0.5 sm:gap-1 font-mono text-[9px] sm:text-[10px] uppercase border rule rounded-sm p-0.5 sm:px-1 sm:py-0.5 ${extraClass}`}>
+    <div className={`lang-switcher-group flex items-center gap-0.5 sm:gap-1 font-mono text-[9px] sm:text-[10px] uppercase border rule rounded-sm p-0.5 sm:px-1 sm:py-0.5 ${extraClass}`}>
       <a
         href="/en/"
         hrefLang="en"
         aria-current={lang === "EN" ? "page" : undefined}
         aria-label="English (EN)"
-        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "EN" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
+        className={`lang-pill w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center border border-transparent rounded-sm ${lang === "EN" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
         {lang === "JP" ? (
-          <>
-            <span className="group-hover:hidden w-4 sm:w-5 text-center inline-block">EN</span>
-            <span className="hidden group-hover:inline-block w-4 sm:w-5 text-center">🍁</span>
-          </>
+          <span className="relative w-4 sm:w-5 h-4 inline-flex items-center justify-center">
+            <span className="lang-label-text inline-block">EN</span>
+            <span aria-hidden="true" className="lang-label-flag absolute inset-0 flex items-center justify-center pointer-events-none">🍁</span>
+          </span>
         ) : (
           <span className="inline-block w-4 sm:w-5 text-center">EN</span>
         )}
@@ -116,13 +116,13 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
         hrefLang="ja"
         aria-current={lang === "JP" ? "page" : undefined}
         aria-label="日本語 (JP)"
-        className={`w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center transition-colors border border-transparent hover:border-accent-text rounded-sm ${lang === "JP" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
+        className={`lang-pill w-7 sm:w-9 h-5 sm:h-6 flex items-center justify-center border border-transparent rounded-sm ${lang === "JP" ? "bg-accent-text text-white font-bold" : "text-ink-muted hover:text-ink"}`}
       >
         {lang === "EN" ? (
-          <>
-            <span className="group-hover:hidden w-4 sm:w-5 text-center inline-block">JP</span>
-            <span className="hidden group-hover:inline-block w-4 sm:w-5 text-center group-hover:scale-150 transition-transform">🇯🇵</span>
-          </>
+          <span className="relative w-4 sm:w-5 h-4 inline-flex items-center justify-center">
+            <span className="lang-label-text inline-block">JP</span>
+            <span aria-hidden="true" className="lang-label-flag absolute inset-0 flex items-center justify-center pointer-events-none">🇯🇵</span>
+          </span>
         ) : (
           <span className="inline-block w-4 sm:w-5 text-center">JP</span>
         )}
@@ -141,7 +141,7 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
       <div className="h-16 w-full relative">
       <header
         ref={headerRef}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`header-bar fixed top-0 left-0 right-0 z-50 ${
           isMenuOpen
             ? "bg-surface border-b rule"
             : scrolled
@@ -157,7 +157,7 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="flex items-center gap-2 sm:gap-3 group shrink-0 relative h-10" 
+          className="flex items-center gap-2 sm:gap-3 group shrink-0 relative h-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent-text rounded-sm" 
           aria-label="danburgess.com home"
         >
           <span className="relative inline-block shrink-0">
@@ -175,17 +175,13 @@ export const TopBar = ({ isComingSoon = false }: { isComingSoon?: boolean }) => 
             <span className="text-accent-text-large">BURGESS</span>
             <span className="text-black">.COM</span>
           </span>
-          {/* Tooltip Balloon - persistent when at bottom, interactive on hover otherwise */}
+          {/* Tooltip Balloon - persistent when scrolled to bottom, interactive on hover/focus-visible otherwise */}
           <div 
-            className={`absolute left-1/2 -translate-x-1/2 top-[calc(100%+8px)] transition-all duration-200 pointer-events-none z-30 ${
-              isAtBottom 
-                ? "opacity-100 translate-y-0" 
-                : "opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0"
-            }`}
+            className={`tooltip-balloon ${isAtBottom ? "is-pinned" : ""} absolute left-0 sm:left-1/2 sm:-translate-x-1/2 top-[calc(100%+14px)] pointer-events-none z-30`}
           >
             <div className="relative bg-ink text-surface text-[9px] font-mono uppercase px-2.5 py-1.5 rounded-sm whitespace-nowrap shadow-2xl">
               {t("Return to top", "トップへ戻る")}
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-ink rotate-45" />
+              <div className="absolute -top-1 left-6 sm:left-1/2 sm:-translate-x-1/2 w-2 h-2 bg-ink rotate-45" />
             </div>
           </div>
         </a>

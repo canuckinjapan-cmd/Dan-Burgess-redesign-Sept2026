@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { TopBar } from "@/components/TopBar";
 import { CaseStudies } from "@/components/CaseStudies";
@@ -27,13 +27,117 @@ const Index = () => {
   const { t, lang } = useLanguage();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 1000], [0, 200]);
-  
+
   const aboutRef = useRef<HTMLElement>(null);
   const { scrollYProgress: aboutScrollProgress } = useScroll({
     target: aboutRef,
     offset: ["start end", "end start"]
   });
   const aboutY = useTransform(aboutScrollProgress, [0, 1], [-80, 80]);
+
+  const mainContainerRef = useRef<HTMLDivElement>(null);
+  const expItemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const [activeExpIdx, setActiveExpIdx] = useState(0);
+
+  // Progressive section reveal: already-visible sections skip hidden state on load;
+  // below-the-fold sections reveal once via IntersectionObserver.
+  useLayoutEffect(() => {
+    if (!COMING_SOON_MODE) return;
+    const container = mainContainerRef.current;
+    if (!container) return;
+
+    const sections = Array.from(container.querySelectorAll<HTMLElement>(".reveal-section"));
+    if (sections.length === 0) return;
+
+    if (prefersReducedMotion || typeof IntersectionObserver === "undefined") {
+      sections.forEach((s) => s.classList.add("is-visible", "reveal-instant"));
+      return;
+    }
+
+    const viewportLimit = window.innerHeight * 0.92;
+    const pending: HTMLElement[] = [];
+
+    sections.forEach((s) => {
+      if (s.getBoundingClientRect().top < viewportLimit) {
+        s.classList.add("is-visible", "reveal-instant");
+      } else {
+        pending.push(s);
+      }
+    });
+
+    if (pending.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
+    );
+
+    pending.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [prefersReducedMotion]);
+
+  // Touch (hover: none): highlight the single experience entry nearest viewport vertical center.
+  useEffect(() => {
+    if (!COMING_SOON_MODE || typeof window === "undefined") return;
+    if (!window.matchMedia("(hover: none)").matches) return;
+
+    const items = expItemRefs.current.filter((el): el is HTMLLIElement => el !== null);
+    if (items.length === 0) return;
+
+    const visibleSet = new Set<Element>();
+
+    const pickNearestCenter = () => {
+      const candidates = visibleSet.size > 0 ? items.filter((el) => visibleSet.has(el)) : items;
+      const centerY = window.innerHeight / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+
+      candidates.forEach((el) => {
+        const idx = items.indexOf(el);
+        const rect = el.getBoundingClientRect();
+        const itemCenter = rect.top + rect.height / 2;
+        const dist = Math.abs(itemCenter - centerY);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestIdx = idx;
+        }
+      });
+      setActiveExpIdx(bestIdx);
+    };
+
+    const observer =
+      typeof IntersectionObserver !== "undefined"
+        ? new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) visibleSet.add(entry.target);
+                else visibleSet.delete(entry.target);
+              });
+              pickNearestCenter();
+            },
+            { threshold: [0, 0.25, 0.5, 0.75, 1] }
+          )
+        : null;
+
+    items.forEach((el) => observer?.observe(el));
+    pickNearestCenter();
+
+    window.addEventListener("scroll", pickNearestCenter, { passive: true });
+    window.addEventListener("resize", pickNearestCenter, { passive: true });
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("scroll", pickNearestCenter);
+      window.removeEventListener("resize", pickNearestCenter);
+    };
+  }, []);
 
   const currentYear = new Date().getFullYear();
 
@@ -145,21 +249,14 @@ const Index = () => {
         <TopBar isComingSoon={true} />
 
         <main id="main-content" className="w-full flex-grow py-12 sm:py-16 lg:py-20 px-6 lg:px-10">
-          <div className="max-w-[920px] w-full mx-auto">
+          <div ref={mainContainerRef} className="max-w-[920px] w-full mx-auto">
             {/* PERSONAL INTRODUCTION / HERO */}
             <section aria-labelledby="profile-heading" className="mb-14 sm:mb-16">
-              <motion.div
-                className="hero-profile-grid grid grid-cols-1 md:grid-cols-[200px_1fr] lg:grid-cols-[224px_1fr] gap-8 lg:gap-12 items-start"
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.21, 0.47, 0.32, 0.98] }}
-              >
+              <div className="hero-profile-grid hero-rise grid grid-cols-1 md:grid-cols-[200px_1fr] lg:grid-cols-[224px_1fr] gap-8 lg:gap-12 items-start">
                 {/* Portrait */}
-                <motion.div
-                  whileHover={prefersReducedMotion ? undefined : { scale: 1.02 }}
-                  transition={{ duration: 0.4, ease: [0.25, 1, 0.5, 1] }}
-                  style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
-                  className="hero-portrait w-[172px] sm:w-[192px] md:w-full bg-surface-elevated border rule p-1.5 shadow-[0_20px_50px_-30px_hsl(var(--ink)/0.22)] shrink-0"
+                <div
+                  style={{ backfaceVisibility: "hidden" }}
+                  className="portrait-card hero-portrait w-[172px] sm:w-[192px] md:w-full bg-surface-elevated border rule p-1.5 shadow-[0_20px_50px_-30px_hsl(var(--ink)/0.22)] shrink-0"
                 >
                   <img
                     src={headshot}
@@ -167,7 +264,7 @@ const Index = () => {
                     className="w-full aspect-square object-cover"
                     loading="eager"
                   />
-                </motion.div>
+                </div>
 
                 {/* Identity & Introduction */}
                 <div className="hero-content min-w-0">
@@ -233,7 +330,7 @@ const Index = () => {
                             href="https://www.linkedin.com/in/danburgessinjapan"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-accent-text underline decoration-accent-text underline-offset-4 hover:text-ink hover:decoration-ink font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                            className="link-wipe font-medium"
                           >
                             LinkedIn
                           </a>
@@ -247,7 +344,7 @@ const Index = () => {
                             href="https://www.linkedin.com/in/danburgessinjapan"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-accent-text underline decoration-accent-text underline-offset-4 hover:text-ink hover:decoration-ink font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                            className="link-wipe font-medium"
                           >
                             LinkedIn
                           </a>
@@ -257,22 +354,26 @@ const Index = () => {
                     </p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </section>
 
             {/* PROFESSIONAL EXPERIENCE */}
             <section
               aria-labelledby="experience-heading"
-              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+              className="reveal-section mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
             >
               <h2
                 id="experience-heading"
-                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-8 font-bold"
+                style={{ "--stagger": 0 } as CSSProperties}
+                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-8 font-bold"
               >
                 {t("PROFESSIONAL EXPERIENCE", "職務経験")}
               </h2>
 
-              <ol className="border-l-2 border-accent-brand/50 pl-6 sm:pl-8 divide-y divide-ink/10">
+              <ol
+                style={{ "--stagger": 1 } as CSSProperties}
+                className="reveal-child exp-list relative border-l-2 border-accent-brand/50 pl-4 sm:pl-5 divide-y divide-ink/10"
+              >
                 {experienceItems.map((item, idx) => {
                   const totalChars = item.titleChunks.reduce(
                     (acc, chunk) => acc + (/^\s+$/.test(chunk) ? 1 : Array.from(chunk).length),
@@ -288,10 +389,18 @@ const Index = () => {
                   return (
                     <li
                       key={item.num}
-                      className={`group ${idx === 0 ? "pb-7 sm:pb-8" : idx === experienceItems.length - 1 ? "pt-7 sm:pt-8" : "py-7 sm:py-8"}`}
+                      ref={(el) => {
+                        expItemRefs.current[idx] = el;
+                      }}
+                      data-active={activeExpIdx === idx ? "true" : "false"}
+                      className={`exp-item group pl-3 pr-3 sm:pl-4 sm:pr-4 ${idx === 0 ? "pt-3 pb-7 sm:pb-8" : idx === experienceItems.length - 1 ? "pt-7 sm:pt-8 pb-3" : "py-7 sm:py-8"}`}
                     >
+                      <span
+                        aria-hidden="true"
+                        className="exp-rule-indicator -left-[18px] sm:-left-[22px]"
+                      />
                       <h3 className="font-serif-display font-bold text-lg sm:text-xl leading-[1.4] tracking-[-0.015em]">
-                        <span className="text-accent-text group-hover:text-ink transition-colors duration-200 mr-2">
+                        <span className="exp-num mr-2">
                           {item.num} –
                         </span>
                         <span>
@@ -309,7 +418,7 @@ const Index = () => {
                                     {Array.from(chunk).map((char, localIdx) => (
                                       <span
                                         key={localIdx}
-                                        className="text-ink group-hover:text-accent-text transition-colors duration-400"
+                                        className="exp-char"
                                         style={
                                           prefersReducedMotion
                                             ? undefined
@@ -343,22 +452,22 @@ const Index = () => {
             {/* SPECIALIZATIONS */}
             <section
               aria-labelledby="specializations-heading"
-              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+              className="reveal-section mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
             >
               <h2
                 id="specializations-heading"
-                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-6 font-bold"
+                style={{ "--stagger": 0 } as CSSProperties}
+                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-6 font-bold"
               >
                 {t("SPECIALIZATIONS", "得意分野")}
               </h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 text-ink/90 text-base sm:text-[16.5px] leading-[1.6]">
+              <ul
+                style={{ "--stagger": 1 } as CSSProperties}
+                className="reveal-child grid grid-cols-1 sm:grid-cols-2 gap-3 text-ink/90 text-base sm:text-[16.5px] leading-[1.6]"
+              >
                 {specializations.map((spec, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="mt-[0.58em] h-1.5 w-1.5 shrink-0 bg-accent-brand"
-                    />
-                    <span>{spec}</span>
+                  <li key={idx} className="spec-tag px-3.5 py-2.5 sm:px-4 sm:py-3 w-full">
+                    {spec}
                   </li>
                 ))}
               </ul>
@@ -367,15 +476,19 @@ const Index = () => {
             {/* TOOLS & FORMATS */}
             <section
               aria-labelledby="tools-heading"
-              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+              className="reveal-section mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
             >
               <h2
                 id="tools-heading"
-                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+                style={{ "--stagger": 0 } as CSSProperties}
+                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
               >
                 {t("TOOLS & FORMATS", "使用ツール・対応形式")}
               </h2>
-              <p className="text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]">
+              <p
+                style={{ "--stagger": 1 } as CSSProperties}
+                className="reveal-child text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]"
+              >
                 {t(
                   "CAT tools: Trados, Felix (HTML, JSON, and XLIFF files supported).",
                   "CATツール：Trados、Felix（HTML・JSON・XLIFF形式に対応）"
@@ -386,15 +499,19 @@ const Index = () => {
             {/* WEB & TECHNICAL BACKGROUND */}
             <section
               aria-labelledby="background-heading"
-              className="mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
+              className="reveal-section mb-14 sm:mb-16 pt-12 sm:pt-14 border-t rule"
             >
               <h2
                 id="background-heading"
-                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+                style={{ "--stagger": 0 } as CSSProperties}
+                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
               >
                 {t("WEB & TECHNICAL BACKGROUND", "Web・技術的バックグラウンド")}
               </h2>
-              <p className="text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]">
+              <p
+                style={{ "--stagger": 1 } as CSSProperties}
+                className="reveal-child text-ink/90 text-base sm:text-[17px] leading-[1.75] max-w-[68ch] text-pretty [word-break:auto-phrase]"
+              >
                 {t(
                   "With a background in web development, I work directly in HTML, JSON, and XLIFF. I keep tags and placeholders intact and check localized pages in the browser before delivery.",
                   <>
@@ -420,21 +537,27 @@ const Index = () => {
             <section
               id="contact"
               aria-labelledby="contact-heading"
-              className="w-full text-left bg-surface-elevated border rule p-6 sm:p-10 shadow-[0_30px_80px_-40px_hsl(var(--ink)/0.18)]"
+              className="reveal-section w-full text-left bg-surface-elevated border rule p-6 sm:p-10 shadow-[0_30px_80px_-40px_hsl(var(--ink)/0.18)]"
             >
               <h2
                 id="contact-heading"
-                className="font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-3 font-bold"
+                style={{ "--stagger": 0 } as CSSProperties}
+                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-3 font-bold"
               >
                 {t("PROFESSIONAL INQUIRIES", "お問い合わせ")}
               </h2>
-              <p className="text-ink/85 text-sm sm:text-[15.5px] leading-[1.6] mb-6 text-pretty [word-break:auto-phrase]">
+              <p
+                style={{ "--stagger": 1 } as CSSProperties}
+                className="reveal-child text-ink/85 text-sm sm:text-[15.5px] leading-[1.6] mb-6 text-pretty [word-break:auto-phrase]"
+              >
                 {t(
                   "CV available on request. Please use the form below.",
                   "職務経歴書はご依頼に応じてご提供いたします。お問い合わせフォームよりご連絡ください。"
                 )}
               </p>
-              <ContactForm />
+              <div style={{ "--stagger": 2 } as CSSProperties} className="reveal-child">
+                <ContactForm />
+              </div>
             </section>
           </div>
         </main>
@@ -453,20 +576,22 @@ const Index = () => {
                   href="https://www.linkedin.com/in/danburgessinjapan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center size-8 transition-transform hover:scale-110"
+                  aria-label={t("LinkedIn", "LinkedIn プロフィール")}
+                  className="social-icon-link flex items-center justify-center size-8"
                 >
                   <img
                     src={linkedinLogo}
-                    alt="LinkedIn"
+                    alt=""
+                    aria-hidden="true"
                     className="w-full h-full object-contain"
                     style={{ imageRendering: "-webkit-optimize-contrast" }}
                   />
                 </a>
 
-                <div className="absolute left-1/2 -translate-x-1/2 bottom-[calc(100%+12px)] opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none translate-y-1 group-hover:translate-y-0">
+                <div className="tooltip-balloon absolute left-1/2 -translate-x-1/2 sm:left-auto sm:right-0 sm:translate-x-0 bottom-[calc(100%+12px)] pointer-events-none z-20">
                   <div className="relative bg-ink text-surface text-[9px] font-mono uppercase px-2.5 py-1.5 rounded-sm whitespace-nowrap shadow-2xl">
                     {t("PROFESSIONAL PROFILE", "プロフェッショナル履歴")}
-                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-ink rotate-45" />
+                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 sm:left-auto sm:right-3 sm:translate-x-0 w-2 h-2 bg-ink rotate-45" />
                   </div>
                 </div>
               </div>

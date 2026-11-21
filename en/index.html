@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("js-reveal");
+      }
+    </script>
     <title>Dan Burgess | Japanese → English Translator (Fukuoka, Japan)</title>
     <meta name="description" content="English-native Japanese → English translator in Fukuoka, Japan, specializing in software, UI strings, games, SaaS, camera documentation, and subtitling." />
     <meta name="author" content="Dan Burgess" />

@@ -43,6 +43,9 @@
     --ink-placeholder: #6B6F76;
     --ink-muted: 220 10% 40%;
     --ink-subtle: 220 10% 60%;
+    --motion-fast: 200ms;
+    --motion-slow: 500ms;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   * {
@@ -187,3 +190,385 @@
   }
 }
 
+/* =========================================================
+   Shared Motion System & Translator Profile Micro-Interactions
+   ========================================================= */
+
+@keyframes hero-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-opacity {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.js-reveal .hero-rise {
+  animation: hero-rise-in var(--motion-slow) var(--ease) both;
+}
+
+/* Progressive scroll reveals: visible by default when JS disabled, crawlers, or print */
+.js-reveal .reveal-section .reveal-child {
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--motion-slow) var(--ease),
+    transform var(--motion-slow) var(--ease);
+  transition-delay: calc(var(--stagger, 0) * 60ms);
+}
+
+.js-reveal .reveal-section.is-visible .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.js-reveal .reveal-section.reveal-instant .reveal-child {
+  opacity: 1;
+  transform: translateY(0);
+  transition: none;
+}
+
+@media print {
+  .js-reveal .reveal-section .reveal-child,
+  .js-reveal .hero-rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* Header scroll hairline & backdrop */
+.header-bar {
+  transition:
+    background-color var(--motion-fast) var(--ease),
+    border-color var(--motion-fast) var(--ease),
+    backdrop-filter var(--motion-fast) var(--ease);
+}
+
+/* Portrait hover/focus scale (<= 1.03) */
+.portrait-card {
+  transition: transform var(--motion-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .portrait-card:hover {
+    transform: scale(1.02);
+  }
+}
+
+.portrait-card:focus-within {
+  transform: scale(1.02);
+}
+
+/* Intro text link left-to-right underline wipe */
+.link-wipe {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: hsl(var(--accent-text));
+  transition: color var(--motion-fast) var(--ease);
+}
+
+.link-wipe::before,
+.link-wipe::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.08em;
+  height: 1.5px;
+  pointer-events: none;
+}
+
+.link-wipe::before {
+  background-color: hsl(var(--accent-text) / 0.45);
+}
+
+.link-wipe::after {
+  background-color: hsl(var(--ink));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 380ms var(--ease);
+}
+
+@media (hover: hover) {
+  .link-wipe:hover {
+    color: hsl(var(--ink));
+  }
+  .link-wipe:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+.link-wipe:focus-visible {
+  color: hsl(var(--ink));
+  outline: 2px solid hsl(var(--accent-text));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.link-wipe:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Tooltips & Language Switcher Flags (hover on hover-capable, plus :focus-visible) */
+.tooltip-balloon {
+  opacity: 0;
+  transform: translateY(4px);
+  transition:
+    opacity var(--motion-fast) var(--ease),
+    transform var(--motion-fast) var(--ease);
+}
+
+.tooltip-balloon.is-pinned {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (hover: hover) {
+  .group:hover > .tooltip-balloon {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.group:focus-within > .tooltip-balloon,
+.group:has(:focus-visible) > .tooltip-balloon {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lang-pill {
+  transition:
+    color var(--motion-fast) var(--ease),
+    background-color var(--motion-fast) var(--ease),
+    border-color var(--motion-fast) var(--ease);
+}
+
+.lang-pill:focus-visible {
+  outline: 2px solid hsl(var(--accent-text));
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .lang-pill:hover {
+    border-color: hsl(var(--accent-text));
+  }
+}
+
+.lang-label-text {
+  opacity: 1;
+  transition: opacity var(--motion-fast) var(--ease);
+}
+
+.lang-label-flag {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity var(--motion-fast) var(--ease),
+    transform var(--motion-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .lang-switcher-group:hover .lang-label-text {
+    opacity: 0;
+  }
+  .lang-switcher-group:hover .lang-label-flag {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.lang-switcher-group:focus-within .lang-label-text {
+  opacity: 0;
+}
+
+.lang-switcher-group:focus-within .lang-label-flag {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Social icon button */
+.social-icon-link {
+  transition:
+    transform var(--motion-fast) var(--ease),
+    border-color var(--motion-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .social-icon-link:hover {
+    transform: scale(1.08);
+  }
+}
+
+.social-icon-link:focus-visible {
+  transform: scale(1.08);
+  outline: 2px solid hsl(var(--accent-text));
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Professional Experience timeline items */
+.exp-item {
+  position: relative;
+  border-radius: 2px;
+  transition:
+    background-color var(--motion-fast) var(--ease),
+    box-shadow var(--motion-fast) var(--ease);
+}
+
+.exp-num {
+  color: hsl(var(--accent-text));
+  transition: color var(--motion-fast) var(--ease);
+}
+
+.exp-char {
+  color: hsl(var(--ink));
+  transition-property: color;
+  transition-duration: var(--motion-fast);
+  transition-timing-function: var(--ease);
+}
+
+.exp-rule-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: hsl(var(--accent-brand));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .exp-item:hover,
+  .exp-item:focus-within {
+    background-color: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 8px 24px -14px rgba(20, 22, 26, 0.14);
+  }
+
+  .exp-item:hover .exp-num,
+  .exp-item:focus-within .exp-num {
+    color: hsl(var(--ink));
+  }
+
+  .exp-item:hover .exp-char,
+  .exp-item:focus-within .exp-char {
+    color: hsl(var(--accent-text));
+  }
+}
+
+@media (hover: none) {
+  .exp-list {
+    border-left-color: hsl(var(--accent-brand) / 0.3);
+  }
+
+  .exp-item .exp-num {
+    color: hsl(var(--ink));
+  }
+
+  .exp-item[data-active="true"] .exp-num {
+    color: hsl(var(--accent-text));
+  }
+
+  .exp-item[data-active="true"] .exp-rule-indicator {
+    opacity: 1;
+  }
+}
+
+/* Specializations Tag Grid */
+.spec-tag {
+  border: 1px solid rgba(20, 22, 26, 0.16);
+  border-radius: 2px;
+  cursor: default;
+  transition:
+    background-color var(--motion-fast) var(--ease),
+    border-color var(--motion-fast) var(--ease);
+}
+
+@media (hover: hover) {
+  .spec-tag:hover,
+  .spec-tag:focus-within {
+    background-color: #ffffff;
+    border-color: hsl(var(--accent-text));
+  }
+}
+
+/* Contact form inputs & error/status fade */
+.contact-input {
+  transition:
+    border-color var(--motion-fast) var(--ease),
+    background-color var(--motion-fast) var(--ease),
+    box-shadow var(--motion-fast) var(--ease);
+}
+
+.contact-input:focus,
+.contact-input:focus-visible {
+  outline: none;
+  border-color: hsl(var(--accent-text));
+  background-color: #ffffff;
+}
+
+.fade-in-fast {
+  animation: fade-in-opacity var(--motion-fast) var(--ease) both;
+}
+
+/* Reduced motion: disable scroll reveals, hero rise, portrait scale, and all transforms; allow instant color swaps */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .js-reveal .hero-rise,
+  .hero-rise {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .js-reveal .reveal-section .reveal-child,
+  .js-reveal .reveal-section.is-visible .reveal-child {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .portrait-card,
+  .portrait-card:hover,
+  .portrait-card:focus-within,
+  .social-icon-link,
+  .social-icon-link:hover,
+  .social-icon-link:focus-visible,
+  .tooltip-balloon,
+  .lang-label-flag {
+    transform: none !important;
+  }
+
+  .link-wipe::after {
+    transform: none !important;
+    opacity: 0;
+  }
+
+  .link-wipe:hover::after,
+  .link-wipe:focus-visible::after {
+    opacity: 1;
+  }
+
+  .fade-in-fast {
+    animation: none !important;
+  }
+}

@@ -321,8 +321,8 @@ export const ContactForm = () => {
   };
 
   const field =
-    "w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-placeholder focus:outline-none focus:border-accent-text focus:bg-white transition-all aria-invalid:border-red-700";
-  const errorText = "mt-1.5 text-[13px] leading-snug text-red-700";
+    "contact-input w-full bg-white/40 border rule px-4 py-3 font-sans-body text-base placeholder:text-ink-placeholder aria-invalid:border-red-700";
+  const errorText = "fade-in-fast mt-1.5 text-[13px] leading-snug text-red-700";
   const label = "block font-mono text-[12px] uppercase text-ink-muted mb-1.5 font-normal";
 
   return (
