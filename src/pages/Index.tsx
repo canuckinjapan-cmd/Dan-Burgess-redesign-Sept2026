@@ -96,7 +96,6 @@ const Index = () => {
       lang === "EN"
         ? [
             "Native English",
-            "US spelling by default; Canadian on request",
             "Accepting new projects",
             "Based in Fukuoka, Japan",
           ]
