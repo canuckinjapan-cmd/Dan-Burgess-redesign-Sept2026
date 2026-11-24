@@ -17,7 +17,7 @@ WCAG 2.1 AA needs 4.5:1 for normal text, 3:1 for large text (24px regular or 18.
 
 | Token (Tailwind) | Value | On paper | On white | Use |
 | :--- | :--- | ---: | ---: | :--- |
-| `bg-paper` / `background` | `#F7F3EC` | – | – | Page base |
+| `bg-paper` / `background` | `#F7F3EC` | – | – | Page base with subtle seamless *washi* paper texture (`paper-texture.webp`, omitted in print) |
 | `surface-elevated` / `card` | `#FFFFFF` | – | – | Form card, fields, hover lift |
 | `ink` | `#14161A` | 16.4 | 18.1 | Body text, borders |
 | `ink-muted` | `#5C6370` | 5.5 | 6.1 | Secondary text |
@@ -41,7 +41,8 @@ WCAG 2.1 AA needs 4.5:1 for normal text, 3:1 for large text (24px regular or 18.
 
 ## Typography
 
-One stack: **IBM Plex Sans** with **Noto Sans JP** as the Japanese fallback. Pair them consistently in both languages.
+One main stack throughout: **IBM Plex Sans** with **Noto Sans JP** as the Japanese fallback. Pair them consistently in both languages.
+Handwritten exceptions for the Polaroid portrait caption only: **Homemade Apple** (English) and **Yuji Boku** (Japanese).
 
 | Role | Style |
 | :--- | :--- |
@@ -60,7 +61,7 @@ Japanese rules:
 
 ## Layout
 
-- Cream page background, content in a centered column (wide max width, `px-6 lg:px-10`). Sections separated by hairline rules.
+- Cream page background (`#F7F3EC`) with a subtle, low-detail seamless *washi* paper texture (`420px` tile; mean `#F7F3EC`, darkest spot still ≥ 4.5:1 for `accent-text`), content in a centered column (wide max width, `px-6 lg:px-10`). Sections separated by hairline rules.
 - Desktop: portrait on the left, name + positioning line + meta list + intro on the right. Mobile: single column, stacked.
 - The meta list (Native English · US spelling by default; Canadian on request · Accepting new projects · Based in
   Fukuoka, Japan) is a list with subtle separators.
@@ -78,7 +79,10 @@ Fixed bar: logo (manga avatar) + wordmark DANBURGESS.COM (BURGESS in orange) on 
   Glyphs are decorative (`aria-hidden`); the EN / JP text is the real indicator.
 
 ### Hero and portrait
-White-framed portrait, scales up slightly on hover (max 1.03). Hero content rises into place on load.
+White Polaroid-style frame with a larger bottom margin. No scale-up on hover; instead, hovering on desktop or
+tapping on touch devices displays a centered black caption in the bottom margin character by character left-to-right
+(`Hi there!` in Homemade Apple on `/en/`, `こんにちは!` in Yuji Boku on `/`), disappearing right-to-left on mouse out
+or when tapped again / outside on touch. Hero content rises into place on load.
 
 ### Professional Experience items
 Timeline with a left vertical rule. Three items: numbered heading, dates / company line, description.
@@ -115,13 +119,13 @@ The icon link has an `aria-label`. No Instagram or Blogger.
 Define once as CSS variables and reuse everywhere:
 - `--motion-fast: 200ms` (hover / focus), `--motion-slow: 500ms` (reveals), `--ease: cubic-bezier(0.22, 1, 0.36, 1)`.
 - Animate only `transform`, `opacity`, `color`, `background-color`, `border-color`, `box-shadow`. No layout properties.
-- `@media (prefers-reduced-motion: reduce)` disables reveals, the hero rise, the portrait scale and all transforms.
-  Colour changes may stay as instant swaps.
+- `@media (prefers-reduced-motion: reduce)` disables reveals, the hero rise, staggered transition delays, and all transforms.
+  Colour and opacity changes may stay as instant swaps.
 - Every hover effect also applies on `:focus-visible` / `:focus-within`. Hover-only styling lives in `@media (hover: hover)`.
 - Scroll reveal is progressive enhancement: content is visible by default (no JS, crawlers, print). Hiding may only
   start after JS adds a class to `<html>` before first paint. Nothing already in view on load animates. Do not make the
   effect stronger unless Dan asks.
-- Do NOT add parallax, cursor followers, typewriter text, animated counters, looping or bouncing animation, spinners.
+- Do NOT add parallax, cursor followers, body typewriter text, animated counters, looping or bouncing animation, spinners (the Polaroid caption character reveal is the sole exception).
 
 ## Imagery
 

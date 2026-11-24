@@ -36,8 +36,23 @@ const Index = () => {
   const aboutY = useTransform(aboutScrollProgress, [0, 1], [-80, 80]);
 
   const mainContainerRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const lastPortraitPointerType = useRef<string>("mouse");
+  const [polaroidRevealed, setPolaroidRevealed] = useState(false);
   const expItemRefs = useRef<(HTMLLIElement | null)[]>([]);
   const [activeExpIdx, setActiveExpIdx] = useState(0);
+
+  // Dismiss touch-revealed Polaroid caption when tapping outside the photo frame
+  useEffect(() => {
+    if (!polaroidRevealed) return;
+    const handleOutside = (e: PointerEvent) => {
+      if (portraitRef.current && !portraitRef.current.contains(e.target as Node)) {
+        setPolaroidRevealed(false);
+      }
+    };
+    document.addEventListener("pointerdown", handleOutside, { passive: true });
+    return () => document.removeEventListener("pointerdown", handleOutside);
+  }, [polaroidRevealed]);
 
   // Progressive section reveal: already-visible sections skip hidden state on load;
   // below-the-fold sections reveal once via IntersectionObserver.
@@ -253,10 +268,22 @@ const Index = () => {
             {/* PERSONAL INTRODUCTION / HERO */}
             <section aria-labelledby="profile-heading" className="mb-14 sm:mb-16">
               <div className="hero-profile-grid hero-rise grid grid-cols-1 md:grid-cols-[200px_1fr] lg:grid-cols-[224px_1fr] gap-8 lg:gap-12 items-start">
-                {/* Portrait */}
+                {/* Portrait (Polaroid frame) */}
                 <div
-                  style={{ backfaceVisibility: "hidden" }}
-                  className="portrait-card hero-portrait w-[172px] sm:w-[192px] md:w-full bg-surface-elevated border rule p-1.5 shadow-[0_20px_50px_-30px_hsl(var(--ink)/0.22)] shrink-0"
+                  ref={portraitRef}
+                  data-revealed={polaroidRevealed ? "true" : "false"}
+                  onPointerDown={(e) => {
+                    lastPortraitPointerType.current = e.pointerType;
+                  }}
+                  onClick={() => {
+                    const isTouchLike =
+                      lastPortraitPointerType.current !== "mouse" ||
+                      window.matchMedia("(hover: none)").matches;
+                    if (isTouchLike) {
+                      setPolaroidRevealed((prev) => !prev);
+                    }
+                  }}
+                  className="portrait-card hero-portrait relative w-[172px] sm:w-[192px] md:w-full bg-surface-elevated border rule p-2 pb-8 sm:p-2.5 sm:pb-10 md:p-3 md:pb-11 shadow-[0_20px_50px_-30px_hsl(var(--ink)/0.22)] shrink-0"
                 >
                   <img
                     src={headshot}
@@ -264,6 +291,34 @@ const Index = () => {
                     className="w-full aspect-square object-cover"
                     loading="eager"
                   />
+                  <p
+                    aria-hidden="true"
+                    className={`absolute bottom-0 left-0 right-0 h-8 sm:h-10 md:h-11 flex items-center justify-center text-center text-black select-none pointer-events-none px-2 leading-none ${
+                      lang === "EN"
+                        ? "polaroid-caption-en text-[13.5px] sm:text-[16px] md:text-[17.5px]"
+                        : "polaroid-caption-jp text-[15px] sm:text-[18px] md:text-[19px]"
+                    }`}
+                  >
+                    <span>
+                      {(() => {
+                        const chars = Array.from(lang === "EN" ? "Hi there!" : "こんにちは!");
+                        return chars.map((char, idx) => (
+                          <span
+                            key={`${lang}-${idx}`}
+                            className="polaroid-char"
+                            style={
+                              {
+                                "--char-index": idx,
+                                "--char-rev": chars.length - 1 - idx,
+                              } as CSSProperties
+                            }
+                          >
+                            {char}
+                          </span>
+                        ));
+                      })()}
+                    </span>
+                  </p>
                 </div>
 
                 {/* Identity & Introduction */}

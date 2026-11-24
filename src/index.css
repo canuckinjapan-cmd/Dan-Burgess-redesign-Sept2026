@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Homemade+Apple&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Yuji+Boku&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -76,6 +76,9 @@
     @apply bg-background text-foreground antialiased selection:bg-[#FF6A1F] selection:text-white;
     font-family: 'IBM Plex Sans', 'Noto Sans JP', sans-serif;
     background-color: #F7F3EC;
+    background-image: url("./assets/paper-texture.webp");
+    background-repeat: repeat;
+    background-size: 420px 420px;
     color: #14171A;
     overflow-x: hidden;
   }
@@ -83,6 +86,9 @@
 
 .bg-paper {
   background-color: #F7F3EC;
+  background-image: url("./assets/paper-texture.webp");
+  background-repeat: repeat;
+  background-size: 420px 420px;
 }
 
 /* Distinct, soft off-white text shadow for crisp legibility over moving 3D globe elements */
@@ -240,6 +246,11 @@
 }
 
 @media print {
+  body,
+  .bg-paper {
+    background-image: none !important;
+  }
+
   .js-reveal .reveal-section .reveal-child,
   .js-reveal .hero-rise {
     opacity: 1 !important;
@@ -256,29 +267,38 @@
     backdrop-filter var(--motion-fast) var(--ease);
 }
 
-/* Portrait hover/focus scale (<= 1.03) — persistent GPU layer prevents Chromium subpixel jitter */
-.portrait-card {
-  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
-  transform-origin: center center;
-  backface-visibility: hidden;
-  will-change: transform;
-  transition: transform 350ms var(--ease);
-}
-
+/* Polaroid portrait frame & handwritten hover caption (no frame enlargement) */
 .portrait-card > img {
   display: block;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+}
+
+.polaroid-caption-en {
+  font-family: 'Homemade Apple', cursive;
+}
+
+.polaroid-caption-jp {
+  font-family: 'Yuji Boku', serif;
+}
+
+.polaroid-char {
+  display: inline;
+  white-space: pre;
+  opacity: 0;
+  transition: opacity 110ms var(--ease);
+  transition-delay: calc(var(--char-rev, 0) * 45ms);
 }
 
 @media (hover: hover) {
-  .portrait-card:hover {
-    transform: translate3d(0, 0, 0) scale3d(1.02, 1.02, 1);
+  .portrait-card:hover .polaroid-char {
+    opacity: 1;
+    transition-delay: calc(var(--char-index, 0) * 55ms);
   }
 }
 
-.portrait-card:focus-within {
-  transform: translate3d(0, 0, 0) scale3d(1.02, 1.02, 1);
+.portrait-card:focus-within .polaroid-char,
+.portrait-card[data-revealed="true"] .polaroid-char {
+  opacity: 1;
+  transition-delay: calc(var(--char-index, 0) * 55ms);
 }
 
 /* Intro text link left-to-right underline wipe */
@@ -557,17 +577,12 @@
     transition: none !important;
   }
 
-  .portrait-card,
-  .portrait-card:hover,
-  .portrait-card:focus-within,
-  .portrait-card > img,
   .social-icon-link,
   .social-icon-link:hover,
   .social-icon-link:focus-visible,
   .tooltip-balloon,
   .lang-label-flag {
     transform: none !important;
-    will-change: auto !important;
   }
 
   .link-wipe::after {
