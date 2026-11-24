@@ -256,19 +256,29 @@
     backdrop-filter var(--motion-fast) var(--ease);
 }
 
-/* Portrait hover/focus scale (<= 1.03) */
+/* Portrait hover/focus scale (<= 1.03) — persistent GPU layer prevents Chromium subpixel jitter */
 .portrait-card {
-  transition: transform var(--motion-fast) var(--ease);
+  transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  transform-origin: center center;
+  backface-visibility: hidden;
+  will-change: transform;
+  transition: transform 350ms var(--ease);
+}
+
+.portrait-card > img {
+  display: block;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 @media (hover: hover) {
   .portrait-card:hover {
-    transform: scale(1.02);
+    transform: translate3d(0, 0, 0) scale3d(1.02, 1.02, 1);
   }
 }
 
 .portrait-card:focus-within {
-  transform: scale(1.02);
+  transform: translate3d(0, 0, 0) scale3d(1.02, 1.02, 1);
 }
 
 /* Intro text link left-to-right underline wipe */
@@ -550,12 +560,14 @@
   .portrait-card,
   .portrait-card:hover,
   .portrait-card:focus-within,
+  .portrait-card > img,
   .social-icon-link,
   .social-icon-link:hover,
   .social-icon-link:focus-visible,
   .tooltip-balloon,
   .lang-label-flag {
     transform: none !important;
+    will-change: auto !important;
   }
 
   .link-wipe::after {

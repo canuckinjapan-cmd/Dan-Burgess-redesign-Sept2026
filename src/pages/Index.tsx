@@ -365,9 +365,9 @@ const Index = () => {
               <h2
                 id="experience-heading"
                 style={{ "--stagger": 0 } as CSSProperties}
-                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-8 font-bold"
+                className="reveal-child font-serif-display font-bold text-xl sm:text-2xl text-accent-text tracking-[-0.02em] leading-tight mb-7 sm:mb-8"
               >
-                {t("PROFESSIONAL EXPERIENCE", "職務経験")}
+                {t("Professional Experience", "職務経験")}
               </h2>
 
               <ol
@@ -457,9 +457,9 @@ const Index = () => {
               <h2
                 id="specializations-heading"
                 style={{ "--stagger": 0 } as CSSProperties}
-                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-6 font-bold"
+                className="reveal-child font-serif-display font-bold text-xl sm:text-2xl text-accent-text tracking-[-0.02em] leading-tight mb-5 sm:mb-6"
               >
-                {t("SPECIALIZATIONS", "得意分野")}
+                {t("Specializations", "得意分野")}
               </h2>
               <ul
                 style={{ "--stagger": 1 } as CSSProperties}
@@ -481,9 +481,9 @@ const Index = () => {
               <h2
                 id="tools-heading"
                 style={{ "--stagger": 0 } as CSSProperties}
-                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+                className="reveal-child font-serif-display font-bold text-xl sm:text-2xl text-accent-text tracking-[-0.02em] leading-tight mb-3.5 sm:mb-4"
               >
-                {t("TOOLS & FORMATS", "使用ツール・対応形式")}
+                {t("Tools & Formats", "使用ツール・対応形式")}
               </h2>
               <p
                 style={{ "--stagger": 1 } as CSSProperties}
@@ -504,9 +504,9 @@ const Index = () => {
               <h2
                 id="background-heading"
                 style={{ "--stagger": 0 } as CSSProperties}
-                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-4 font-bold"
+                className="reveal-child font-serif-display font-bold text-xl sm:text-2xl text-accent-text tracking-[-0.02em] leading-tight mb-3.5 sm:mb-4"
               >
-                {t("WEB & TECHNICAL BACKGROUND", "Web・技術的バックグラウンド")}
+                {t("Web & Technical Background", "Web・技術的バックグラウンド")}
               </h2>
               <p
                 style={{ "--stagger": 1 } as CSSProperties}
@@ -542,9 +542,9 @@ const Index = () => {
               <h2
                 id="contact-heading"
                 style={{ "--stagger": 0 } as CSSProperties}
-                className="reveal-child font-mono text-xs sm:text-[13px] uppercase tracking-widest text-accent-text mb-3 font-bold"
+                className="reveal-child font-serif-display font-bold text-xl sm:text-2xl text-accent-text tracking-[-0.02em] leading-tight mb-3"
               >
-                {t("PROFESSIONAL INQUIRIES", "お問い合わせ")}
+                {t("Professional Inquiries", "お問い合わせ")}
               </h2>
               <p
                 style={{ "--stagger": 1 } as CSSProperties}
